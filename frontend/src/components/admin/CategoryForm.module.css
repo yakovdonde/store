@@ -3,7 +3,7 @@
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e5e5;
 }
 
 .formGroup {
@@ -13,8 +13,9 @@
 .formGroup label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: #2c3e50;
+  font-weight: 500;
+  color: #1a1a1a;
+  font-size: 0.9375rem;
 }
 
 .formGroup input,
@@ -22,19 +23,19 @@
 .formGroup select {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #bdc3c7;
-  border-radius: 4px;
+  border: 1px solid #d4d4d4;
+  border-radius: 6px;
   font-family: inherit;
-  font-size: 1rem;
-  transition: border-color 0.3s;
+  font-size: 0.9375rem;
+  transition: border-color 0.15s ease;
 }
 
 .formGroup input:focus,
 .formGroup textarea:focus,
 .formGroup select:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: #737373;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
 .formGroup textarea {
@@ -42,38 +43,42 @@
 }
 
 .languageSection {
-  background: #f8f9fa;
+  background: #fafafa;
   padding: 1.5rem;
-  border-radius: 4px;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
   margin-bottom: 1.5rem;
 }
 
 .languageSection h3 {
   margin-top: 0;
   margin-bottom: 1rem;
-  font-size: 1.1rem;
-  color: #2c3e50;
+  font-size: 1.0625rem;
+  color: #1a1a1a;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .submitButton {
   width: 100%;
   padding: 0.75rem;
-  background-color: #27ae60;
+  background-color: #1a1a1a;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
+  border-radius: 6px;
+  font-size: 0.9375rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.15s ease;
 }
 
 .submitButton:hover:not(:disabled) {
-  background-color: #229954;
+  background-color: #404040;
 }
 
 .submitButton:disabled {
-  background-color: #95a5a6;
+  background-color: #d4d4d4;
+  color: #737373;
   cursor: not-allowed;
 }
 

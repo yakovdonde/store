@@ -1,16 +1,17 @@
 .searchContainer {
-  background: #f8f9fa;
-  padding: 20px;
-  margin-bottom: 30px;
+  background: #ffffff;
+  padding: 1.75rem;
+  margin-bottom: 2.5rem;
   border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e5e5e5;
 }
 
 .searchTitle {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
-  margin-bottom: 15px;
-  color: #333;
+  margin-bottom: 1.25rem;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
 }
 
 .formGroup {
@@ -33,29 +34,30 @@
 }
 
 .label {
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: #666;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  margin-bottom: 0.375rem;
+  color: #525252;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03em;
 }
 
 .input,
 .select {
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid #d4d4d4;
+  border-radius: 6px;
+  font-size: 0.9375rem;
   font-family: inherit;
-  transition: border-color 0.2s;
+  transition: border-color 0.15s ease;
+  background-color: #ffffff;
 }
 
 .input:focus,
 .select:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  border-color: #737373;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
 .priceGroup {
@@ -70,34 +72,35 @@
 }
 
 .button {
-  padding: 10px 20px;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 6px;
+  font-size: 0.9375rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s ease;
 }
 
 .searchBtn {
-  background: #007bff;
+  background: #1a1a1a;
   color: white;
   flex: 1;
 }
 
 .searchBtn:hover {
-  background: #0056b3;
+  background: #404040;
 }
 
 .resetBtn {
-  background: #fff;
-  color: #666;
-  border: 1px solid #ddd;
+  background: #ffffff;
+  color: #525252;
+  border: 1px solid #d4d4d4;
 }
 
 .resetBtn:hover {
-  background: #f0f0f0;
-  border-color: #999;
+  background: #fafafa;
+  border-color: #a3a3a3;
+  color: #1a1a1a;
 }
 
 .loading {
@@ -106,23 +109,25 @@
 }
 
 .resultsInfo {
-  padding: 15px;
-  background: #fff;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  font-size: 14px;
-  color: #666;
+  padding: 1rem 1.25rem;
+  background: #fafafa;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9375rem;
+  color: #525252;
+  border: 1px solid #e5e5e5;
 }
 
 .noResults {
   text-align: center;
-  padding: 40px 20px;
-  background: #f8f9fa;
+  padding: 3rem 2rem;
+  background: #fafafa;
   border-radius: 8px;
-  color: #999;
+  color: #737373;
+  border: 1px solid #e5e5e5;
 }
 
 .noResults p {
   margin: 0;
-  font-size: 16px;
+  font-size: 0.9375rem;
 }

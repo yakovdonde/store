@@ -5,23 +5,29 @@
 }
 
 .hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-color: #1a1a1a;
   color: white;
-  padding: 4rem 2rem;
-  border-radius: 12px;
-  margin: 2rem 0;
+  padding: 5rem 2.5rem;
+  border-radius: 0;
+  margin: 0 0 3.5rem 0;
   text-align: center;
 }
 
 .heroContent h1 {
-  font-size: 2.5rem;
+  font-size: 2.75rem;
   margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
 }
 
 .heroContent p {
-  font-size: 1.2rem;
+  font-size: 1.125rem;
   margin: 0;
-  opacity: 0.9;
+  color: #d4d4d4;
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .section {
@@ -29,11 +35,13 @@
 }
 
 .section h2 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #2c3e50;
-  border-bottom: 2px solid #e74c3c;
-  padding-bottom: 0.5rem;
+  font-size: 1.875rem;
+  margin-bottom: 1.75rem;
+  color: #1a1a1a;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .categoryFilters {
@@ -45,34 +53,32 @@
 
 .categoryFilterBtn {
   padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 500;
-  color: #2c3e50;
-  background-color: #ecf0f1;
-  border: 2px solid #bdc3c7;
-  border-radius: 25px;
+  color: #525252;
+  background-color: #ffffff;
+  border: 1px solid #d4d4d4;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.15s ease;
   white-space: nowrap;
 }
 
 .categoryFilterBtn:hover {
-  background-color: #d5dbdb;
-  border-color: #95a5a6;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fafafa;
+  border-color: #a3a3a3;
+  color: #1a1a1a;
 }
 
 .categoryFilterBtn.active {
-  background-color: #667eea;
+  background-color: #1a1a1a;
   color: white;
-  border-color: #667eea;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  border-color: #1a1a1a;
 }
 
 .categoryFilterBtn.active:hover {
-  background-color: #5568d3;
-  border-color: #5568d3;
+  background-color: #404040;
+  border-color: #404040;
 }
 
 @media (max-width: 768px) {
