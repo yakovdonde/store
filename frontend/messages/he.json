@@ -1,0 +1,137 @@
+{
+  "common": {
+    "appName": "חנות יודאיקה",
+    "loading": "טוען...",
+    "error": "שגיאה",
+    "success": "הצלחה",
+    "save": "שמור",
+    "cancel": "ביטול",
+    "delete": "מחק",
+    "edit": "ערוך",
+    "create": "צור",
+    "search": "חפש",
+    "filters": "סינון",
+    "sortBy": "מיין לפי",
+    "price": "מחיר",
+    "currency": "₼"
+  },
+  "nav": {
+    "home": "דף הבית",
+    "storefront": "חנות",
+    "categories": "קטגוריות",
+    "cart": "עגלה",
+    "login": "התחבר",
+    "logout": "התנתק",
+    "admin": "ניהול"
+  },
+  "storefront": {
+    "title": "עיין באוסף שלנו",
+    "description": "המקור העיקרי שלך לפריטי יודאיקה, חפצי פולחן ומתנות",
+    "viewCategory": "צפה בקטגוריה",
+    "viewProduct": "צפה בפרטים",
+    "addToCart": "הוסף לעגלה",
+    "outOfStock": "אזל מהמלאי",
+    "inStock": "במלאי",
+    "categories": "קטגוריות",
+    "products": "מוצרים",
+    "noProducts": "לא נמצאו מוצרים",
+    "searchPlaceholder": "חפש מוצרים..."
+  },
+  "product": {
+    "details": "פרטי המוצר",
+    "description": "תיאור",
+    "price": "מחיר",
+    "stock": "מלאי",
+    "category": "קטגוריה",
+    "sku": "מק״ט",
+    "availability": "זמינות"
+  },
+  "cart": {
+    "title": "עגלת קניות",
+    "empty": "העגלה שלך ריקה",
+    "subtotal": "ביניים",
+    "total": "סה״כ",
+    "checkout": "המשך לתשלום",
+    "continueShopping": "המשך בקניות",
+    "remove": "הסר",
+    "quantity": "כמות"
+  },
+  "admin": {
+    "dashboard": "לוח בקרה",
+    "categories": "קטגוריות",
+    "products": "מוצרים",
+    "users": "משתמשים",
+    "settings": "הגדרות",
+    "analytics": "ניתוח נתונים",
+    "orders": "הזמנות",
+    "welcome": "ברוך הבא לפאנל הניהול",
+    "overview": "סקירה כללית"
+  },
+  "adminCategories": {
+    "title": "ניהול קטגוריות",
+    "addNew": "הוסף קטגוריה חדשה",
+    "editCategory": "ערוך קטגוריה",
+    "name": "שם הקטגוריה",
+    "description": "תיאור",
+    "parent": "קטגוריית אב",
+    "noParent": "ללא (רמה עליונה)",
+    "order": "סדר תצוגה",
+    "imageUrl": "כתובת תמונה",
+    "actions": "פעולות",
+    "deleteConfirm": "האם אתה בטוח שברצונך למחוק קטגוריה זו?"
+  },
+  "adminProducts": {
+    "title": "ניהול מוצרים",
+    "addNew": "הוסף מוצר חדש",
+    "editProduct": "ערוך מוצר",
+    "name": "שם המוצר",
+    "description": "תיאור",
+    "price": "מחיר",
+    "stock": "כמות במלאי",
+    "category": "קטגוריה",
+    "sku": "מק״ט",
+    "imageUrl": "כתובת תמונה",
+    "actions": "פעולות",
+    "deleteConfirm": "האם אתה בטוח שברצונך למחוק מוצר זה?"
+  },
+  "adminUsers": {
+    "title": "ניהול משתמשים",
+    "addNew": "הוסף משתמש חדש",
+    "email": "אימייל",
+    "username": "שם משתמש",
+    "role": "תפקיד",
+    "password": "סיסמה",
+    "actions": "פעולות",
+    "admin": "מנהל",
+    "user": "משתמש"
+  },
+  "adminSettings": {
+    "title": "הגדרות חנות",
+    "storeName": "שם החנות",
+    "storeEmail": "אימייל החנות",
+    "storePhone": "טלפון החנות",
+    "currency": "מטבע",
+    "language": "שפת ברירת מחדל",
+    "timezone": "אזור זמן",
+    "saveSettings": "שמור הגדרות"
+  },
+  "auth": {
+    "login": "התחבר",
+    "logout": "התנתק",
+    "email": "אימייל",
+    "password": "סיסמה",
+    "username": "שם משתמש",
+    "loginButton": "היכנס",
+    "loginTitle": "כניסה למערכת",
+    "loginDescription": "הזן את פרטי הכניסה שלך כדי לגשת לפאנל הניהול",
+    "invalidCredentials": "אימייל או סיסמה שגויים",
+    "required": "שדה חובה"
+  },
+  "footer": {
+    "about": "אודות",
+    "contact": "צור קשר",
+    "terms": "תנאי שימוש",
+    "privacy": "מדיניות פרטיות",
+    "allRightsReserved": "כל הזכויות שמורות"
+  }
+}

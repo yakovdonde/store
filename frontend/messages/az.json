@@ -1,0 +1,137 @@
+{
+  "common": {
+    "appName": "Yəhudi Mədəniyyəti Mağazası",
+    "loading": "Yüklənir...",
+    "error": "Xəta",
+    "success": "Uğurlu",
+    "save": "Yadda Saxla",
+    "cancel": "Ləğv Et",
+    "delete": "Sil",
+    "edit": "Redaktə Et",
+    "create": "Yarat",
+    "search": "Axtar",
+    "filters": "Filtrlər",
+    "sortBy": "Sırala",
+    "price": "Qiymət",
+    "currency": "₼"
+  },
+  "nav": {
+    "home": "Ana Səhifə",
+    "storefront": "Mağaza",
+    "categories": "Kateqoriyalar",
+    "cart": "Səbət",
+    "login": "Daxil Ol",
+    "logout": "Çıxış",
+    "admin": "İdarəetmə Paneli"
+  },
+  "storefront": {
+    "title": "Kolleksiyamıza Baxın",
+    "description": "Yəhudi mədəniyyəti əşyaları, ritual obyektləri və hədiyyələr üçün əsas mənbəyiniz",
+    "viewCategory": "Kateqoriyaya Bax",
+    "viewProduct": "Ətraflı Bax",
+    "addToCart": "Səbətə At",
+    "outOfStock": "Stokda Yoxdur",
+    "inStock": "Stokda Var",
+    "categories": "Kateqoriyalar",
+    "products": "Məhsullar",
+    "noProducts": "Məhsul tapılmadı",
+    "searchPlaceholder": "Məhsul axtar..."
+  },
+  "product": {
+    "details": "Məhsul Təfərrüatları",
+    "description": "Təsvir",
+    "price": "Qiymət",
+    "stock": "Stok",
+    "category": "Kateqoriya",
+    "sku": "SKU",
+    "availability": "Mövcudluq"
+  },
+  "cart": {
+    "title": "Alış-Veriş Səbəti",
+    "empty": "Səbətiniz boşdur",
+    "subtotal": "Ara Cəm",
+    "total": "Cəmi",
+    "checkout": "Sifarişi Tamamla",
+    "continueShopping": "Alış-Verişə Davam Et",
+    "remove": "Sil",
+    "quantity": "Say"
+  },
+  "admin": {
+    "dashboard": "İdarəetmə Paneli",
+    "categories": "Kateqoriyalar",
+    "products": "Məhsullar",
+    "users": "İstifadəçilər",
+    "settings": "Tənzimləmələr",
+    "analytics": "Analitika",
+    "orders": "Sifarişlər",
+    "welcome": "İdarəetmə Panelinə Xoş Gəldiniz",
+    "overview": "Ümumi Baxış"
+  },
+  "adminCategories": {
+    "title": "Kateqoriyaların İdarə Edilməsi",
+    "addNew": "Yeni Kateqoriya Əlavə Et",
+    "editCategory": "Kateqoriyanı Redaktə Et",
+    "name": "Kateqoriya Adı",
+    "description": "Təsvir",
+    "parent": "Ana Kateqoriya",
+    "noParent": "Yoxdur (Üst Səviyyə)",
+    "order": "Göstəriş Sırası",
+    "imageUrl": "Şəkil URL-i",
+    "actions": "Əməliyyatlar",
+    "deleteConfirm": "Bu kateqoriyanı silmək istədiyinizə əminsiniz?"
+  },
+  "adminProducts": {
+    "title": "Məhsulların İdarə Edilməsi",
+    "addNew": "Yeni Məhsul Əlavə Et",
+    "editProduct": "Məhsulu Redaktə Et",
+    "name": "Məhsul Adı",
+    "description": "Təsvir",
+    "price": "Qiymət",
+    "stock": "Stokda Say",
+    "category": "Kateqoriya",
+    "sku": "SKU",
+    "imageUrl": "Şəkil URL-i",
+    "actions": "Əməliyyatlar",
+    "deleteConfirm": "Bu məhsulu silmək istədiyinizə əminsiniz?"
+  },
+  "adminUsers": {
+    "title": "İstifadəçilərin İdarə Edilməsi",
+    "addNew": "Yeni İstifadəçi Əlavə Et",
+    "email": "Email",
+    "username": "İstifadəçi Adı",
+    "role": "Rol",
+    "password": "Şifrə",
+    "actions": "Əməliyyatlar",
+    "admin": "Administrator",
+    "user": "İstifadəçi"
+  },
+  "adminSettings": {
+    "title": "Mağaza Tənzimləmələri",
+    "storeName": "Mağaza Adı",
+    "storeEmail": "Mağaza Email-i",
+    "storePhone": "Mağaza Telefonu",
+    "currency": "Valyuta",
+    "language": "Standart Dil",
+    "timezone": "Saat Qurşağı",
+    "saveSettings": "Tənzimləmələri Saxla"
+  },
+  "auth": {
+    "login": "Daxil Ol",
+    "logout": "Çıxış",
+    "email": "Email",
+    "password": "Şifrə",
+    "username": "İstifadəçi Adı",
+    "loginButton": "Daxil Ol",
+    "loginTitle": "Admin Girişi",
+    "loginDescription": "İdarəetmə panelinə daxil olmaq üçün məlumatlarınızı daxil edin",
+    "invalidCredentials": "Yanlış email və ya şifrə",
+    "required": "Bu sahə mütləqdir"
+  },
+  "footer": {
+    "about": "Haqqımızda",
+    "contact": "Əlaqə",
+    "terms": "İstifadə Şərtləri",
+    "privacy": "Məxfilik Siyasəti",
+    "allRightsReserved": "Bütün hüquqlar qorunur"
+  }
+}

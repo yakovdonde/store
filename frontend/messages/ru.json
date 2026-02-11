@@ -1,0 +1,137 @@
+{
+  "common": {
+    "appName": "Магазин Иудаики",
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успешно",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "create": "Создать",
+    "search": "Поиск",
+    "filters": "Фильтры",
+    "sortBy": "Сортировать по",
+    "price": "Цена",
+    "currency": "₼"
+  },
+  "nav": {
+    "home": "Главная",
+    "storefront": "Магазин",
+    "categories": "Категории",
+    "cart": "Корзина",
+    "login": "Вход",
+    "logout": "Выход",
+    "admin": "Админ Панель"
+  },
+  "storefront": {
+    "title": "Просмотр Коллекции",
+    "description": "Ваш главный источник предметов иудаики, ритуальных объектов и подарков",
+    "viewCategory": "Посмотреть Категорию",
+    "viewProduct": "Подробнее",
+    "addToCart": "В Корзину",
+    "outOfStock": "Нет в Наличии",
+    "inStock": "В Наличии",
+    "categories": "Категории",
+    "products": "Товары",
+    "noProducts": "Товары не найдены",
+    "searchPlaceholder": "Поиск товаров..."
+  },
+  "product": {
+    "details": "Детали Товара",
+    "description": "Описание",
+    "price": "Цена",
+    "stock": "Наличие",
+    "category": "Категория",
+    "sku": "Артикул",
+    "availability": "Доступность"
+  },
+  "cart": {
+    "title": "Корзина Покупок",
+    "empty": "Ваша корзина пуста",
+    "subtotal": "Промежуточный Итог",
+    "total": "Итого",
+    "checkout": "Оформить Заказ",
+    "continueShopping": "Продолжить Покупки",
+    "remove": "Удалить",
+    "quantity": "Количество"
+  },
+  "admin": {
+    "dashboard": "Панель Управления",
+    "categories": "Категории",
+    "products": "Товары",
+    "users": "Пользователи",
+    "settings": "Настройки",
+    "analytics": "Аналитика",
+    "orders": "Заказы",
+    "welcome": "Добро пожаловать в Админ Панель",
+    "overview": "Обзор"
+  },
+  "adminCategories": {
+    "title": "Управление Категориями",
+    "addNew": "Добавить Категорию",
+    "editCategory": "Редактировать Категорию",
+    "name": "Название Категории",
+    "description": "Описание",
+    "parent": "Родительская Категория",
+    "noParent": "Нет (Верхний Уровень)",
+    "order": "Порядок Отображения",
+    "imageUrl": "URL Изображения",
+    "actions": "Действия",
+    "deleteConfirm": "Вы уверены, что хотите удалить эту категорию?"
+  },
+  "adminProducts": {
+    "title": "Управление Товарами",
+    "addNew": "Добавить Товар",
+    "editProduct": "Редактировать Товар",
+    "name": "Название Товара",
+    "description": "Описание",
+    "price": "Цена",
+    "stock": "Количество на Складе",
+    "category": "Категория",
+    "sku": "Артикул",
+    "imageUrl": "URL Изображения",
+    "actions": "Действия",
+    "deleteConfirm": "Вы уверены, что хотите удалить этот товар?"
+  },
+  "adminUsers": {
+    "title": "Управление Пользователями",
+    "addNew": "Добавить Пользователя",
+    "email": "Email",
+    "username": "Имя Пользователя",
+    "role": "Роль",
+    "password": "Пароль",
+    "actions": "Действия",
+    "admin": "Администратор",
+    "user": "Пользователь"
+  },
+  "adminSettings": {
+    "title": "Настройки Магазина",
+    "storeName": "Название Магазина",
+    "storeEmail": "Email Магазина",
+    "storePhone": "Телефон Магазина",
+    "currency": "Валюта",
+    "language": "Язык по Умолчанию",
+    "timezone": "Часовой Пояс",
+    "saveSettings": "Сохранить Настройки"
+  },
+  "auth": {
+    "login": "Вход",
+    "logout": "Выход",
+    "email": "Email",
+    "password": "Пароль",
+    "username": "Имя Пользователя",
+    "loginButton": "Войти",
+    "loginTitle": "Вход в Систему",
+    "loginDescription": "Введите свои учетные данные для доступа к панели администратора",
+    "invalidCredentials": "Неверный email или пароль",
+    "required": "Это поле обязательно"
+  },
+  "footer": {
+    "about": "О Нас",
+    "contact": "Контакты",
+    "terms": "Условия Использования",
+    "privacy": "Политика Конфиденциальности",
+    "allRightsReserved": "Все права защищены"
+  }
+}
