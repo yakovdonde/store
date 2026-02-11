@@ -68,6 +68,15 @@
   border-bottom: 1px solid #ecf0f1;
 }
 
+.thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+  background-color: #f2f2f2;
+}
+
 .table tbody tr:hover {
   background-color: #f8f9fa;
 }

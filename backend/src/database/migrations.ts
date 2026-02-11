@@ -44,6 +44,10 @@ export async function runMigrations() {
         title VARCHAR(255) NOT NULL,
         description TEXT NOT NULL,
         price DECIMAL(10, 2) NOT NULL,
+        price_usd DECIMAL(10, 2),
+        price_eur DECIMAL(10, 2),
+        price_ils DECIMAL(10, 2),
+        price_azn DECIMAL(10, 2),
         image_url VARCHAR(500),
         category_id INTEGER NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
         item_order_index INTEGER DEFAULT 0,
@@ -52,6 +56,29 @@ export async function runMigrations() {
       )
     `)
     console.log('✓ products table created')
+
+    await query(`
+      ALTER TABLE products
+      ADD COLUMN IF NOT EXISTS price_usd DECIMAL(10, 2)
+    `)
+    await query(`
+      ALTER TABLE products
+      ADD COLUMN IF NOT EXISTS price_eur DECIMAL(10, 2)
+    `)
+    await query(`
+      ALTER TABLE products
+      ADD COLUMN IF NOT EXISTS price_ils DECIMAL(10, 2)
+    `)
+    await query(`
+      ALTER TABLE products
+      ADD COLUMN IF NOT EXISTS price_azn DECIMAL(10, 2)
+    `)
+
+    await query(`
+      UPDATE products
+      SET price_usd = price
+      WHERE price_usd IS NULL
+    `)
 
     // Create store_settings table
     await query(`

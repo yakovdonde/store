@@ -5,12 +5,18 @@ import { Header, Footer, CartSidebar } from '@/components/common'
 import { ProductGrid } from '@/components/storefront'
 import { addToCart, getCart, removeFromCart, updateCartItemQuantity, CartItem } from '@/lib/cart'
 import apiClient from '@/lib/apiClient'
+import { resolveImageUrl } from '@/lib/config'
+import { getPriceMap } from '@/lib/currency'
 import styles from './page.module.css'
 
 interface Product {
   id: string
   title: string
   price: number
+  price_usd?: number
+  price_eur?: number
+  price_ils?: number
+  price_azn?: number
   description: string
   categoryId: string
   imageUrl?: string
@@ -54,10 +60,14 @@ export default function CategoryPage({ params }: PageProps) {
           .map((p: any) => ({
             id: p.id.toString(),
             title: p.title,
-            price: parseFloat(p.price),
+            price: parseFloat(p.price_usd ?? p.price),
+            price_usd: p.price_usd ?? p.price,
+            price_eur: p.price_eur ?? null,
+            price_ils: p.price_ils ?? null,
+            price_azn: p.price_azn ?? null,
             description: p.description,
             categoryId: p.category_id.toString(),
-            imageUrl: p.image_url || 'https://via.placeholder.com/250x200?text=Product',
+            imageUrl: resolveImageUrl(p.image_url) || 'https://via.placeholder.com/250x200?text=Product',
           }))
 
         setProducts(categoryProducts)
@@ -75,6 +85,7 @@ export default function CategoryPage({ params }: PageProps) {
       productId: product.id,
       title: product.title,
       price: product.price,
+      prices: getPriceMap(product),
       quantity: 1,
       imageUrl: product.imageUrl,
     }

@@ -6,9 +6,11 @@ import { Header, Footer, CartSidebar } from '@/components/common'
 import { CategoryGrid, ProductGrid, Product, SearchBar } from '@/components/storefront'
 import { addToCart, getCart, removeFromCart, updateCartItemQuantity, CartItem } from '@/lib/cart'
 import apiClient from '@/lib/apiClient'
+import { resolveImageUrl } from '@/lib/config'
+import { getPriceMap } from '@/lib/currency'
 import styles from './page.module.css'
 
-export default function StorefrontHome() {
+export function StorefrontHome() {
   const t = useTranslations()
   const locale = useLocale()
   const [cartItems, setCartItems] = useState<CartItem[]>([])
@@ -17,6 +19,7 @@ export default function StorefrontHome() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
   const [searchResults, setSearchResults] = useState<Product[]>([])
   const [isSearching, setIsSearching] = useState(false)
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
   const [storeInfo] = useState({
@@ -55,10 +58,14 @@ export default function StorefrontHome() {
       const products = productsData.map((p: any) => ({
         id: p.id.toString(),
         title: p.title,
-        price: parseFloat(p.price),
+        price: parseFloat(p.price_usd ?? p.price),
+        price_usd: p.price_usd ?? p.price,
+        price_eur: p.price_eur ?? null,
+        price_ils: p.price_ils ?? null,
+        price_azn: p.price_azn ?? null,
         description: p.description,
         categoryId: p.category_id.toString(),
-        imageUrl: p.image_url || 'https://via.placeholder.com/250x200?text=Product',
+        imageUrl: resolveImageUrl(p.image_url) || 'https://via.placeholder.com/250x200?text=Product',
       }))
       
       setFeaturedProducts(products)
@@ -76,6 +83,7 @@ export default function StorefrontHome() {
       productId: product.id,
       title: product.title,
       price: product.price,
+      prices: getPriceMap(product),
       quantity: 1,
       imageUrl: product.imageUrl,
     }
@@ -97,10 +105,14 @@ export default function StorefrontHome() {
     const transformedResults = results.map((p: any) => ({
       id: p.id.toString(),
       title: p.title,
-      price: parseFloat(p.price),
+      price: parseFloat(p.price_usd ?? p.price),
+      price_usd: p.price_usd ?? p.price,
+      price_eur: p.price_eur ?? null,
+      price_ils: p.price_ils ?? null,
+      price_azn: p.price_azn ?? null,
       description: p.description,
       categoryId: p.category_id.toString(),
-      imageUrl: p.image_url || 'https://via.placeholder.com/250x200?text=Product',
+      imageUrl: resolveImageUrl(p.image_url) || 'https://via.placeholder.com/250x200?text=Product',
     }))
     setSearchResults(transformedResults)
     setIsSearching(true)
@@ -110,6 +122,14 @@ export default function StorefrontHome() {
     setSearchResults([])
     setIsSearching(false)
   }
+
+  const handleCategoryClick = (categoryId: string | null) => {
+    setSelectedCategoryId(categoryId)
+  }
+
+  const filteredProducts = selectedCategoryId
+    ? featuredProducts.filter(p => p.categoryId === selectedCategoryId)
+    : featuredProducts
 
   const handleViewDetails = (productId: string) => {
     window.location.href = `/${locale}/storefront/product/${productId}`
@@ -187,17 +207,44 @@ export default function StorefrontHome() {
             {!isSearching && (
               <>
                 <section className={styles.section}>
-                  <h2>{t('storefront.products')}</h2>
-                  <ProductGrid
-                    products={featuredProducts}
-                    onAddToCart={handleAddToCart}
-                    onViewDetails={handleViewDetails}
-                  />
+                  <h2>{t('storefront.categories')}</h2>
+                  <div className={styles.categoryFilters}>
+                    <button
+                      className={`${styles.categoryFilterBtn} ${!selectedCategoryId ? styles.active : ''}`}
+                      onClick={() => handleCategoryClick(null)}
+                    >
+                      {t('storefront.allCategories')}
+                    </button>
+                    {categories.map((cat) => (
+                      <button
+                        key={cat.id}
+                        className={`${styles.categoryFilterBtn} ${selectedCategoryId === cat.id ? styles.active : ''}`}
+                        onClick={() => handleCategoryClick(cat.id)}
+                      >
+                        {cat.name}
+                      </button>
+                    ))}
+                  </div>
                 </section>
 
                 <section className={styles.section}>
-                  <h2>{t('storefront.categories')}</h2>
-                  <CategoryGrid categories={categories} />
+                  <h2>
+                    {selectedCategoryId 
+                      ? categories.find(c => c.id === selectedCategoryId)?.name || t('storefront.products')
+                      : t('storefront.products')
+                    }
+                  </h2>
+                  {filteredProducts.length > 0 ? (
+                    <ProductGrid
+                      products={filteredProducts}
+                      onAddToCart={handleAddToCart}
+                      onViewDetails={handleViewDetails}
+                    />
+                  ) : (
+                    <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>
+                      <p>{t('storefront.noProducts')}</p>
+                    </div>
+                  )}
                 </section>
               </>
             )}
@@ -209,3 +256,5 @@ export default function StorefrontHome() {
     </>
   )
 }
+
+export default StorefrontHome

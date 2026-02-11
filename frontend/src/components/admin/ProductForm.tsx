@@ -1,13 +1,19 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import styles from './ProductForm.module.css'
 import apiClient from '@/lib/apiClient'
+import { resolveImageUrl } from '@/lib/config'
 
 interface Product {
   id: number
   title: string
   price: number
+  price_usd?: number
+  price_eur?: number
+  price_ils?: number
+  price_azn?: number
   description: string
   category_id: number
   image_url?: string
@@ -35,9 +41,14 @@ export default function ProductForm({
   onSubmit,
   isLoading = false,
 }: ProductFormProps) {
+  const t = useTranslations('adminProducts')
+  
   const [formData, setFormData] = useState({
     title: '',
-    price: 0,
+    price_usd: 0,
+    price_eur: 0,
+    price_ils: 0,
+    price_azn: 0,
     description: '',
     category_id: '',
     image_url: '',
@@ -50,13 +61,16 @@ export default function ProductForm({
     if (product) {
       setFormData({
         title: product.title,
-        price: product.price,
+        price_usd: product.price_usd ?? product.price ?? 0,
+        price_eur: product.price_eur ?? 0,
+        price_ils: product.price_ils ?? 0,
+        price_azn: product.price_azn ?? 0,
         description: product.description,
         category_id: product.category_id.toString(),
         image_url: product.image_url || '',
       })
       if (product.image_url) {
-        setPreviewImage(product.image_url)
+        setPreviewImage(resolveImageUrl(product.image_url))
       }
     }
   }, [product])
@@ -65,9 +79,10 @@ export default function ProductForm({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target
+    const isPriceField = name.startsWith('price_')
     setFormData((prev) => ({
       ...prev,
-      [name]: name === 'price' ? parseFloat(value) || 0 : value,
+      [name]: isPriceField ? parseFloat(value) || 0 : value,
     }))
   }
 
@@ -92,7 +107,7 @@ export default function ProductForm({
           ...prev,
           image_url: imageUrl,
         }))
-        setPreviewImage(imageUrl)
+        setPreviewImage(resolveImageUrl(imageUrl))
       }
     } catch (error) {
       console.error('Image upload failed:', error)
@@ -113,7 +128,7 @@ export default function ProductForm({
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.formGroup}>
-        <label htmlFor="title">Product Title</label>
+        <label htmlFor="title">{t('productTitle')}</label>
         <input
           type="text"
           id="title"
@@ -122,27 +137,71 @@ export default function ProductForm({
           onChange={handleChange}
           required
           disabled={isLoading}
-          placeholder="e.g., Handmade Tallit"
+          placeholder={t('titlePlaceholder')}
         />
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="price">Price</label>
-        <input
-          type="number"
-          id="price"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          step="0.01"
-          required
-          disabled={isLoading}
-          min="0"
-        />
+        <label>{t('prices')}</label>
+        <div className={styles.priceGrid}>
+          <div className={styles.priceField}>
+            <label htmlFor="price_usd">USD</label>
+            <input
+              type="number"
+              id="price_usd"
+              name="price_usd"
+              value={formData.price_usd}
+              onChange={handleChange}
+              step="0.01"
+              required
+              disabled={isLoading}
+              min="0"
+            />
+          </div>
+          <div className={styles.priceField}>
+            <label htmlFor="price_eur">EUR</label>
+            <input
+              type="number"
+              id="price_eur"
+              name="price_eur"
+              value={formData.price_eur}
+              onChange={handleChange}
+              step="0.01"
+              disabled={isLoading}
+              min="0"
+            />
+          </div>
+          <div className={styles.priceField}>
+            <label htmlFor="price_ils">ILS</label>
+            <input
+              type="number"
+              id="price_ils"
+              name="price_ils"
+              value={formData.price_ils}
+              onChange={handleChange}
+              step="0.01"
+              disabled={isLoading}
+              min="0"
+            />
+          </div>
+          <div className={styles.priceField}>
+            <label htmlFor="price_azn">AZN</label>
+            <input
+              type="number"
+              id="price_azn"
+              name="price_azn"
+              value={formData.price_azn}
+              onChange={handleChange}
+              step="0.01"
+              disabled={isLoading}
+              min="0"
+            />
+          </div>
+        </div>
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="category_id">Category</label>
+        <label htmlFor="category_id">{t('category')}</label>
         <select
           id="category_id"
           name="category_id"
@@ -151,7 +210,7 @@ export default function ProductForm({
           required
           disabled={isLoading}
         >
-          <option value="">Select a category</option>
+          <option value="">{t('selectCategory')}</option>
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.name}
@@ -161,7 +220,7 @@ export default function ProductForm({
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="image_upload">Product Image</label>
+        <label htmlFor="image_upload">{t('productImage')}</label>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
           <div style={{ flex: 1 }}>
             <input
@@ -172,9 +231,9 @@ export default function ProductForm({
               disabled={uploadingImage || isLoading}
               style={{ marginBottom: '0.5rem' }}
             />
-            {uploadingImage && <p style={{ fontSize: '0.9rem', color: '#3498db' }}>Uploading...</p>}
+            {uploadingImage && <p style={{ fontSize: '0.9rem', color: '#3498db' }}>{t('uploading')}</p>}
             {formData.image_url && (
-              <p style={{ fontSize: '0.85rem', color: '#27ae60' }}>✓ Image uploaded</p>
+              <p style={{ fontSize: '0.85rem', color: '#27ae60' }}>{t('imageUploaded')}</p>
             )}
           </div>
           {previewImage && (
@@ -194,7 +253,7 @@ export default function ProductForm({
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description">{t('description')}</label>
         <textarea
           id="description"
           name="description"
@@ -203,12 +262,12 @@ export default function ProductForm({
           rows={4}
           required
           disabled={isLoading}
-          placeholder="Detailed product description..."
+          placeholder={t('descriptionPlaceholder')}
         />
       </div>
 
       <button type="submit" className={styles.submitButton} disabled={isLoading || uploadingImage}>
-        {isLoading ? 'Saving...' : product ? 'Update Product' : 'Create Product'}
+        {isLoading ? t('saving') : product ? t('updateProduct') : t('createProduct')}
       </button>
     </form>
   )

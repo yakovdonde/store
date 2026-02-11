@@ -3,6 +3,12 @@ export interface CartItem {
   productId: string
   title: string
   price: number
+  prices?: {
+    USD: number
+    EUR: number
+    ILS: number
+    AZN: number
+  }
   quantity: number
   imageUrl?: string
 }

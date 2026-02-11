@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import styles from './SearchBar.module.css'
 
 interface Category {
@@ -16,6 +17,8 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ categories, onSearch, onLoading }: SearchBarProps) {
+  const t = useTranslations('storefront')
+  
   const [query, setQuery] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [minPrice, setMinPrice] = useState('')
@@ -27,7 +30,7 @@ export default function SearchBar({ categories, onSearch, onLoading }: SearchBar
     e.preventDefault()
 
     if (!query.trim()) {
-      alert('Please enter a search term')
+      alert(t('pleaseEnterSearchTerm'))
       return
     }
 
@@ -48,11 +51,11 @@ export default function SearchBar({ categories, onSearch, onLoading }: SearchBar
         onSearch(data.data)
         setResultsCount(data.data.length)
       } else {
-        alert('Search failed: ' + (data.error || 'Unknown error'))
+        alert(t('searchFailed') + ': ' + (data.error || t('failedToSearch')))
       }
     } catch (error) {
       console.error('Search error:', error)
-      alert('Failed to perform search')
+      alert(t('failedToSearch'))
     } finally {
       setLoading(false)
       onLoading?.(false)
@@ -70,16 +73,16 @@ export default function SearchBar({ categories, onSearch, onLoading }: SearchBar
 
   return (
     <div className={styles.searchContainer}>
-      <div className={styles.searchTitle}>Search Products</div>
+      <div className={styles.searchTitle}>{t('searchTitle')}</div>
 
       <form onSubmit={handleSearch}>
         <div className={styles.formGroup}>
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Search Term</label>
+            <label className={styles.label}>{t('searchTerm')}</label>
             <input
               type="text"
               className={styles.input}
-              placeholder="Search by name or description..."
+              placeholder={t('searchByNamePlaceholder')}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               disabled={loading}
@@ -87,14 +90,14 @@ export default function SearchBar({ categories, onSearch, onLoading }: SearchBar
           </div>
 
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Category</label>
+            <label className={styles.label}>{t('category')}</label>
             <select
               className={styles.select}
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
               disabled={loading}
             >
-              <option value="">All Categories</option>
+              <option value="">{t('allCategories')}</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
@@ -104,7 +107,7 @@ export default function SearchBar({ categories, onSearch, onLoading }: SearchBar
           </div>
 
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Min Price</label>
+            <label className={styles.label}>{t('minPrice')}</label>
             <input
               type="number"
               className={styles.input}
@@ -118,7 +121,7 @@ export default function SearchBar({ categories, onSearch, onLoading }: SearchBar
           </div>
 
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Max Price</label>
+            <label className={styles.label}>{t('maxPrice')}</label>
             <input
               type="number"
               className={styles.input}
@@ -137,7 +140,7 @@ export default function SearchBar({ categories, onSearch, onLoading }: SearchBar
               className={`${styles.button} ${styles.searchBtn} ${loading ? styles.loading : ''}`}
               disabled={loading}
             >
-              {loading ? 'Searching...' : 'Search'}
+              {loading ? t('searching') : t('searchButton')}
             </button>
             <button
               type="button"
@@ -145,7 +148,7 @@ export default function SearchBar({ categories, onSearch, onLoading }: SearchBar
               onClick={handleReset}
               disabled={loading}
             >
-              Reset
+              {t('reset')}
             </button>
           </div>
         </div>
@@ -153,7 +156,7 @@ export default function SearchBar({ categories, onSearch, onLoading }: SearchBar
 
       {resultsCount !== null && (
         <div className={styles.resultsInfo}>
-          Found <strong>{resultsCount}</strong> product{resultsCount !== 1 ? 's' : ''} matching your search
+          {t('foundResults')} <strong>{resultsCount}</strong> {t('productsMatching')}
         </div>
       )}
     </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { resolveImageUrl } from '@/lib/config'
 
 const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'
 
@@ -19,6 +20,8 @@ export async function generateMetadata({
         ? String(product.description).slice(0, 160)
         : 'Product details and pricing'
 
+      const imageUrl = resolveImageUrl(product.image_url)
+
       return {
         title: product.title || 'Product Details',
         description,
@@ -26,7 +29,7 @@ export async function generateMetadata({
           title: product.title || 'Product Details',
           description,
           type: 'product',
-          images: product.image_url ? [{ url: product.image_url }] : [],
+          images: imageUrl ? [{ url: imageUrl }] : [],
         },
       }
     }

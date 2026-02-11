@@ -15,10 +15,19 @@ export const localeNames: Record<Locale, string> = {
 export const defaultLocale: Locale = 'en';
 
 export default getRequestConfig(async ({ locale }) => {
-  // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(locale as Locale)) notFound();
+  // Validate that the incoming `locale` is valid
+  if (!locale || !locales.includes(locale as any)) {
+    notFound();
+  }
+  
+  // Load messages for the current locale
+  const messages = (await import(`../messages/${locale}.json`)).default;
 
   return {
-    messages: (await import(`./messages/${locale}.json`)).default
+    locale,
+    messages
   };
 });
+
+
+

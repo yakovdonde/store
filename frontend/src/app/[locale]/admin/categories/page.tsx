@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { CategoryForm } from '@/components/admin'
 import apiClient from '@/lib/apiClient'
 import styles from './page.module.css'
@@ -16,6 +17,9 @@ interface Category {
 }
 
 export default function CategoriesPage() {
+  const t = useTranslations('adminCategories')
+  const tCommon = useTranslations('common')
+  
   const [categories, setCategories] = useState<Category[]>([])
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<number | null>(null)
@@ -33,7 +37,7 @@ export default function CategoriesPage() {
           setCategories(response.data.data.sort((a: Category, b: Category) => a.order_index - b.order_index))
         }
       } catch (err: any) {
-        setError('Failed to load categories')
+        setError(tCommon('error'))
         console.error(err)
       } finally {
         setLoading(false)
@@ -62,14 +66,14 @@ export default function CategoriesPage() {
       }
       setShowForm(false)
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to save category')
+      setError(err.response?.data?.error || tCommon('error'))
     } finally {
       setSubmitting(false)
     }
   }
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this category?')) return
+    if (!confirm(t('deleteConfirm'))) return
 
     try {
       const response = await apiClient.delete(`/categories/${id}`)
@@ -77,7 +81,7 @@ export default function CategoriesPage() {
         setCategories(categories.filter((c) => c.id !== id))
       }
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to delete category')
+      setError(err.response?.data?.error || tCommon('error'))
     }
   }
 
@@ -105,7 +109,7 @@ export default function CategoriesPage() {
         ;[updated[index], updated[index - 1]] = [updated[index - 1], updated[index]]
         setCategories(updated)
       } catch (err: any) {
-        setError('Failed to reorder categories')
+        setError(tCommon('error'))
       }
     }
   }
@@ -143,7 +147,7 @@ export default function CategoriesPage() {
   if (loading) {
     return (
       <div className={styles.container}>
-        <p>Loading...</p>
+        <p>{tCommon('loading')}</p>
       </div>
     )
   }
@@ -151,7 +155,7 @@ export default function CategoriesPage() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1>Categories</h1>
+        <h1>{t('title')}</h1>
         <button 
           className={styles.addButton} 
           onClick={() => {
@@ -159,7 +163,7 @@ export default function CategoriesPage() {
             setShowForm(!showForm)
           }}
         >
-          + Add Category
+          + {t('addNew')}
         </button>
       </div>
 
@@ -185,7 +189,7 @@ export default function CategoriesPage() {
             }}
             className={styles.cancelBtn}
           >
-            Cancel
+            {tCommon('cancel')}
           </button>
         </div>
       )}
@@ -197,31 +201,31 @@ export default function CategoriesPage() {
               <th>
                 <div className={styles.columnHeader}>
                   <span className={styles.columnIcon}>📋</span>
-                  Name
+                  {t('name')}
                 </div>
               </th>
               <th>
                 <div className={styles.columnHeader}>
                   <span className={styles.columnIcon}>📝</span>
-                  Description
+                  {t('description')}
                 </div>
               </th>
               <th>
                 <div className={styles.columnHeader}>
                   <span className={styles.columnIcon}>🧭</span>
-                  Parent
+                  {t('parent')}
                 </div>
               </th>
               <th>
                 <div className={styles.columnHeader}>
                   <span className={styles.columnIcon}>🔢</span>
-                  Order
+                  {t('order')}
                 </div>
               </th>
               <th>
                 <div className={styles.columnHeader}>
                   <span className={styles.columnIcon}>⚙️</span>
-                  Actions
+                  {t('actions')}
                 </div>
               </th>
             </tr>
@@ -232,7 +236,7 @@ export default function CategoriesPage() {
                 <td colSpan={5}>
                   <div className={styles.emptyState}>
                     <div style={{ fontSize: '3rem' }}>📁</div>
-                    <p>No categories yet. Add your first category!</p>
+                    <p>{t('addNew')}</p>
                   </div>
                 </td>
               </tr>
@@ -268,13 +272,13 @@ export default function CategoriesPage() {
                         className={styles.editBtn}
                         onClick={() => handleEdit(category)}
                       >
-                        ✎ Edit
+                        ✎ {tCommon('edit')}
                       </button>
                       <button
                         className={styles.deleteBtn}
                         onClick={() => handleDelete(category.id)}
                       >
-                        🗑 Delete
+                        🗑 {tCommon('delete')}
                       </button>
                     </div>
                   </td>

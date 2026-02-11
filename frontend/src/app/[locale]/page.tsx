@@ -1,5 +1,7 @@
-import { redirect } from 'next/navigation';
+'use client'
 
-export default function Home({ params: { locale } }: { params: { locale: string } }) {
-  redirect(`/${locale}/storefront`);
+import { StorefrontHome } from './storefront/page'
+
+export default function Home() {
+  return <StorefrontHome />
 }

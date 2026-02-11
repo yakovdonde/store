@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import CurrencySwitcher from './CurrencySwitcher'
 import styles from './Header.module.css'
 
 interface HeaderProps {
@@ -12,7 +13,6 @@ interface HeaderProps {
 }
 
 export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const t = useTranslations()
   const locale = useLocale()
 
@@ -23,32 +23,15 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
           <h1>{t('common.appName')}</h1>
         </Link>
 
-        <nav className={`${styles.nav} ${mobileMenuOpen ? styles.active : ''}`}>
-          <Link href={`/${locale}`} className={styles.navLink}>
-            {t('nav.home')}
-          </Link>
-          <Link href={`/${locale}/storefront`} className={styles.navLink}>
-            {t('nav.storefront')}
-          </Link>
-          <Link href={`/${locale}/admin`} className={styles.navLink}>
-            {t('nav.admin')}
-          </Link>
-        </nav>
-
         <div className={styles.actions}>
           <LanguageSwitcher />
+          <CurrencySwitcher />
           <button
             className={styles.cartButton}
             onClick={onCartClick}
             aria-label={t('nav.cart')}
           >
             🛒 {t('nav.cart')} ({cartItemCount})
-          </button>
-          <button
-            className={styles.mobileMenuToggle}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            ☰
           </button>
         </div>
       </div>

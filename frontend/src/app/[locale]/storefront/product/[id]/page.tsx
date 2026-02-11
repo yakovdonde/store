@@ -5,12 +5,18 @@ import Link from 'next/link'
 import { Header, Footer, CartSidebar } from '@/components/common'
 import { addToCart, getCart, removeFromCart, updateCartItemQuantity, CartItem } from '@/lib/cart'
 import apiClient from '@/lib/apiClient'
+import { resolveImageUrl } from '@/lib/config'
+import { getPriceMap, getProductPriceForCurrency, useCurrency } from '@/lib/currency'
 import styles from './page.module.css'
 
 interface Product {
   id: number
   title: string
   price: number
+  price_usd?: number
+  price_eur?: number
+  price_ils?: number
+  price_azn?: number
   description: string
   image_url?: string
   categoryId?: string
@@ -23,6 +29,7 @@ interface PageProps {
 }
 
 export default function ProductDetailPage({ params }: PageProps) {
+  const { currency, formatAmount } = useCurrency()
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
   const [quantity, setQuantity] = useState(1)
@@ -78,9 +85,10 @@ export default function ProductDetailPage({ params }: PageProps) {
     const cartItem: CartItem = {
       productId: product.id.toString(),
       title: product.title,
-      price: product.price,
+      price: Number(product.price_usd ?? product.price),
+      prices: getPriceMap(product),
       quantity,
-      imageUrl: product.image_url || 'https://via.placeholder.com/250x200?text=Product',
+      imageUrl: resolveImageUrl(product.image_url) || 'https://via.placeholder.com/250x200?text=Product',
     }
     const updated = addToCart(cartItem)
     setCartItems(updated)
@@ -155,7 +163,7 @@ export default function ProductDetailPage({ params }: PageProps) {
         <div className={styles.container}>
           <div className={styles.imageSection}>
             <img 
-              src={product.image_url || 'https://via.placeholder.com/500x400?text=Product'} 
+              src={resolveImageUrl(product.image_url) || 'https://via.placeholder.com/500x400?text=Product'} 
               alt={product.title} 
               className={styles.mainImage} 
             />
@@ -163,7 +171,9 @@ export default function ProductDetailPage({ params }: PageProps) {
 
           <div className={styles.detailsSection}>
             <h1>{product.title}</h1>
-            <p className={styles.price}>${product.price.toFixed(2)}</p>
+            <p className={styles.price}>
+              {formatAmount(getProductPriceForCurrency(product, currency))}
+            </p>
 
             <p className={styles.description}>{product.description}</p>
 

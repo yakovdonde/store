@@ -1,10 +1,12 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { unstable_setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { AuthProvider } from '@/lib/authContext';
 import { AnalyticsTracker } from '@/components/common';
 import { locales } from '@/i18n';
+import { CurrencyProvider } from '@/lib/currency';
 import '../globals.css';
 
 export const metadata: Metadata = {
@@ -43,20 +45,22 @@ export default async function LocaleLayout({
     notFound();
   }
 
+  // Set the locale for this request - required for getMessages() and translations to work
+  unstable_setRequestLocale(locale);
+
   // Providing all messages to the client side is the easiest way to get started
   const messages = await getMessages();
 
-  // Determine text direction based on locale
-  const direction = locale === 'he' ? 'rtl' : 'ltr';
-
   return (
-    <html lang={locale} dir={direction}>
+    <html lang={locale} dir="ltr">
       <body>
         <NextIntlClientProvider messages={messages}>
-          <AuthProvider>
-            <AnalyticsTracker />
-            {children}
-          </AuthProvider>
+          <CurrencyProvider>
+            <AuthProvider>
+              <AnalyticsTracker />
+              {children}
+            </AuthProvider>
+          </CurrencyProvider>
         </NextIntlClientProvider>
       </body>
     </html>

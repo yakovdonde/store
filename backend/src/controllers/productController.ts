@@ -28,19 +28,33 @@ export const getProduct = asyncHandler(async (req: Request, res: Response) => {
 })
 
 export const create = asyncHandler(async (req: Request, res: Response) => {
-  const { title, description, price, category_id, image_url, item_order_index } = req.body
+  const {
+    title,
+    description,
+    price_usd,
+    price_eur,
+    price_ils,
+    price_azn,
+    category_id,
+    image_url,
+    item_order_index,
+  } = req.body
 
-  if (!title || !description || !price || !category_id) {
-    return res
-      .status(400)
-      .json({ success: false, error: 'Title, description, price, and category_id required' })
+  if (!title || !description || price_usd === undefined || price_usd === null || !category_id) {
+    return res.status(400).json({
+      success: false,
+      error: 'Title, description, price_usd, and category_id required',
+    })
   }
 
   const product = await createProduct(
     title,
     description,
-    price,
+    price_usd,
     category_id,
+    price_eur,
+    price_ils,
+    price_azn,
     image_url,
     item_order_index || 0
   )
@@ -50,12 +64,26 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 
 export const update = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params
-  const { title, description, price, category_id, image_url, item_order_index } = req.body
+  const {
+    title,
+    description,
+    price_usd,
+    price_eur,
+    price_ils,
+    price_azn,
+    category_id,
+    image_url,
+    item_order_index,
+  } = req.body
 
   const updated = await updateProduct(Number(id), {
     title,
     description,
-    price,
+    price: price_usd,
+    price_usd,
+    price_eur,
+    price_ils,
+    price_azn,
     category_id,
     image_url,
     item_order_index,

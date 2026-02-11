@@ -23,6 +23,10 @@ export interface Product {
   title: string
   description: string
   price: number
+  price_usd?: number
+  price_eur?: number
+  price_ils?: number
+  price_azn?: number
   image_url?: string
   category_id: number
   item_order_index: number

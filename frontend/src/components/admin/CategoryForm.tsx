@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import styles from './CategoryForm.module.css'
 
 interface Category {
@@ -26,6 +27,8 @@ export default function CategoryForm({
   onSubmit,
   isLoading = false,
 }: CategoryFormProps) {
+  const t = useTranslations('adminCategories')
+  
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -63,7 +66,7 @@ export default function CategoryForm({
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.formGroup}>
-        <label htmlFor="name">Category Name</label>
+        <label htmlFor="name">{t('name')}</label>
         <input
           type="text"
           id="name"
@@ -72,12 +75,12 @@ export default function CategoryForm({
           onChange={handleChange}
           required
           disabled={isLoading}
-          placeholder="e.g., Ritual Objects"
+          placeholder={t('namePlaceholder')}
         />
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description">{t('description')}</label>
         <textarea
           id="description"
           name="description"
@@ -85,12 +88,12 @@ export default function CategoryForm({
           onChange={handleChange}
           rows={3}
           disabled={isLoading}
-          placeholder="Category description..."
+          placeholder={t('descriptionPlaceholder')}
         />
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="parent_id">Parent Category (optional)</label>
+        <label htmlFor="parent_id">{t('parent')}</label>
         <select
           id="parent_id"
           name="parent_id"
@@ -98,7 +101,7 @@ export default function CategoryForm({
           onChange={handleChange}
           disabled={isLoading}
         >
-          <option value="">None (top-level)</option>
+          <option value="">{t('noParent')}</option>
           {categories
             .filter((c) => !category || c.id !== category.id)
             .map((c) => (
@@ -110,7 +113,7 @@ export default function CategoryForm({
       </div>
 
       <button type="submit" className={styles.submitButton} disabled={isLoading}>
-        {isLoading ? 'Saving...' : category ? 'Update Category' : 'Create Category'}
+        {isLoading ? t('saving') : category ? t('updateCategory') : t('createCategory')}
       </button>
     </form>
   )

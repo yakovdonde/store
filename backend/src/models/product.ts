@@ -24,12 +24,28 @@ export const createProduct = async (
   description: string,
   price: number,
   categoryId: number,
+  priceEur?: number,
+  priceIls?: number,
+  priceAzn?: number,
   imageUrl?: string,
   itemOrderIndex: number = 0
 ): Promise<Product> => {
   const result = await query(
-    'INSERT INTO products (title, description, price, category_id, image_url, item_order_index) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-    [title, description, price, categoryId, imageUrl || null, itemOrderIndex]
+    `INSERT INTO products (title, description, price, price_usd, price_eur, price_ils, price_azn, category_id, image_url, item_order_index)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+     RETURNING *`,
+    [
+      title,
+      description,
+      price,
+      price,
+      priceEur ?? null,
+      priceIls ?? null,
+      priceAzn ?? null,
+      categoryId,
+      imageUrl || null,
+      itemOrderIndex,
+    ]
   )
   return result.rows[0]
 }

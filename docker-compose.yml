@@ -59,7 +59,9 @@ services:
       - backend
     volumes:
       - ./frontend/src:/app/src
+      - ./frontend/messages:/app/messages
       - ./frontend/public:/app/public
+      - ./frontend/middleware.ts:/app/middleware.ts
       - ./frontend/next.config.js:/app/next.config.js
       - ./frontend/tsconfig.json:/app/tsconfig.json
 

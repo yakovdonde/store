@@ -1,14 +1,20 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { ProductForm } from '@/components/admin'
 import apiClient from '@/lib/apiClient'
+import { resolveImageUrl } from '@/lib/config'
 import styles from './page.module.css'
 
 interface Product {
   id: number
   title: string
   price: number
+  price_usd?: number
+  price_eur?: number
+  price_ils?: number
+  price_azn?: number
   description: string
   category_id: number
   image_url?: string
@@ -24,6 +30,9 @@ interface Category {
 }
 
 export default function ProductsPage() {
+  const t = useTranslations('adminProducts')
+  const tCommon = useTranslations('common')
+  
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [showForm, setShowForm] = useState(false)
@@ -49,7 +58,7 @@ export default function ProductsPage() {
           setCategories(categoriesRes.data.data)
         }
       } catch (err: any) {
-        setError('Failed to load data')
+        setError(tCommon('error'))
         console.error(err)
       } finally {
         setLoading(false)
@@ -78,14 +87,14 @@ export default function ProductsPage() {
       }
       setShowForm(false)
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to save product')
+      setError(err.response?.data?.error || tCommon('error'))
     } finally {
       setSubmitting(false)
     }
   }
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this product?')) return
+    if (!confirm(t('deleteConfirm'))) return
 
     try {
       const response = await apiClient.delete(`/products/${id}`)
@@ -93,7 +102,7 @@ export default function ProductsPage() {
         setProducts(products.filter((p) => p.id !== id))
       }
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to delete product')
+      setError(err.response?.data?.error || tCommon('error'))
     }
   }
 
@@ -111,7 +120,7 @@ export default function ProductsPage() {
   if (loading) {
     return (
       <div className={styles.container}>
-        <p>Loading...</p>
+        <p>{tCommon('loading')}</p>
       </div>
     )
   }
@@ -119,7 +128,7 @@ export default function ProductsPage() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1>Products</h1>
+        <h1>{t('title')}</h1>
         <button 
           className={styles.addButton} 
           onClick={() => {
@@ -127,7 +136,7 @@ export default function ProductsPage() {
             setShowForm(!showForm)
           }}
         >
-          + Add Product
+          + {t('addNew')}
         </button>
       </div>
 
@@ -156,7 +165,7 @@ export default function ProductsPage() {
               cursor: 'pointer',
             }}
           >
-            Cancel
+            {tCommon('cancel')}
           </button>
         </div>
       )}
@@ -165,37 +174,46 @@ export default function ProductsPage() {
         <table>
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Actions</th>
+              <th>{t('productImage')}</th>
+              <th>{t('name')}</th>
+              <th>{t('price')} (USD)</th>
+              <th>{t('category')}</th>
+              <th>{t('actions')}</th>
             </tr>
           </thead>
           <tbody>
             {products.length === 0 ? (
               <tr>
-                <td colSpan={4} style={{ textAlign: 'center', padding: '2rem' }}>
-                  No products yet. Add your first product!
+                <td colSpan={5} style={{ textAlign: 'center', padding: '2rem' }}>
+                  {t('addNew')}
                 </td>
               </tr>
             ) : (
               products.map((product) => (
                 <tr key={product.id}>
+                  <td>
+                    <img
+                      className={styles.thumb}
+                      src={resolveImageUrl(product.image_url) || 'https://via.placeholder.com/64x64?text=No+Image'}
+                      alt={product.title}
+                      loading="lazy"
+                    />
+                  </td>
                   <td>{product.title}</td>
-                  <td>${parseFloat(product.price).toFixed(2)}</td>
+                  <td>${Number(product.price_usd ?? product.price).toFixed(2)}</td>
                   <td>{getCategoryName(product.category_id)}</td>
                   <td>
                     <button
                       className={styles.editBtn}
                       onClick={() => handleEdit(product)}
                     >
-                      Edit
+                      {tCommon('edit')}
                     </button>
                     <button
                       className={styles.deleteBtn}
                       onClick={() => handleDelete(product.id)}
                     >
-                      Delete
+                      {tCommon('delete')}
                     </button>
                   </td>
                 </tr>

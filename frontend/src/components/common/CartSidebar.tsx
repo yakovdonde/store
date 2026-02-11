@@ -3,6 +3,7 @@
 import React from 'react'
 import styles from './CartSidebar.module.css'
 import { CartItem } from '@/lib/cart'
+import { useCurrency } from '@/lib/currency'
 
 interface CartSidebarProps {
   items: CartItem[]
@@ -19,7 +20,11 @@ export default function CartSidebar({
   onUpdateQuantity,
   onRemoveItem,
 }: CartSidebarProps) {
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const { currency, formatAmount } = useCurrency()
+  const total = items.reduce((sum, item) => {
+    const itemPrice = item.prices?.[currency] ?? item.price
+    return sum + itemPrice * item.quantity
+  }, 0)
 
   return (
     <>
@@ -43,7 +48,9 @@ export default function CartSidebar({
                 )}
                 <div className={styles.details}>
                   <h4>{item.title}</h4>
-                  <p className={styles.price}>${item.price.toFixed(2)}</p>
+                  <p className={styles.price}>
+                    {formatAmount(item.prices?.[currency] ?? item.price)}
+                  </p>
                   <div className={styles.quantity}>
                     <button
                       onClick={() =>
@@ -82,7 +89,7 @@ export default function CartSidebar({
           <div className={styles.footer}>
             <div className={styles.total}>
               <strong>Total:</strong>
-              <strong>${total.toFixed(2)}</strong>
+              <strong>{formatAmount(total)}</strong>
             </div>
             <button className={styles.checkoutButton}>Proceed to Checkout</button>
           </div>
