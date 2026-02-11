@@ -17,11 +17,15 @@ export const createCategory = async (
   name: string,
   description?: string,
   parentId?: number | null,
-  orderIndex: number = 0
+  orderIndex: number = 0,
+  nameEn?: string,
+  nameRu?: string,
+  nameHe?: string,
+  nameAz?: string
 ): Promise<Category> => {
   const result = await query(
-    'INSERT INTO categories (name, description, parent_id, order_index) VALUES ($1, $2, $3, $4) RETURNING *',
-    [name, description || null, parentId || null, orderIndex]
+    'INSERT INTO categories (name, description, parent_id, order_index, name_en, name_ru, name_he, name_az) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+    [name, description || null, parentId || null, orderIndex, nameEn || null, nameRu || null, nameHe || null, nameAz || null]
   )
   return result.rows[0]
 }

@@ -41,6 +41,20 @@
   resize: vertical;
 }
 
+.languageSection {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.languageSection h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
 .submitButton {
   width: 100%;
   padding: 0.75rem;

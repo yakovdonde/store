@@ -11,6 +11,10 @@ export interface User {
 export interface Category {
   id: number
   name: string
+  name_en?: string
+  name_ru?: string
+  name_he?: string
+  name_az?: string
   description?: string
   parent_id?: number | null
   order_index: number

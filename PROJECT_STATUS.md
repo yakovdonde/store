@@ -12,6 +12,7 @@
 | **Frontend Development** | ✅ 100% | 7 pages, 12+ components, responsive design |
 | **Backend Development** | ✅ 100% | 27+ endpoints, full CRUD operations |
 | **Database** | ✅ 100% | 4 tables, migrations, seeding, backups |
+| **Internationalization** | ✅ 100% | 4 languages (EN, RU, HE, AZ), multi-language categories |
 | **Search & Filtering** | ✅ 100% | Advanced search with category/price filters |
 | **Authentication** | ✅ 100% | JWT tokens, bcryptjs, role-based access |
 | **File Uploads** | ✅ 100% | Multer configuration, image validation |
@@ -33,10 +34,12 @@
 - ✅ Product details pages
 - ✅ Shopping cart (client-side)
 - ✅ Responsive design
+- ✅ Multi-language support (English, Russian, Hebrew, Azerbaijani)
 
 ### Admin Management
 - ✅ Product CRUD + reordering
 - ✅ Category management with sorting
+- ✅ Multi-language category names (per language customization)
 - ✅ Store settings & branding
 - ✅ User management system
 - ✅ File upload system
@@ -46,6 +49,8 @@
 - ✅ Clickable phone/email links
 - ✅ Contact information in footer
 - ✅ Store settings integration
+- ✅ Language switcher (EN, RU, HE)
+- ✅ Localized category display
 
 ### Technical
 - ✅ PostgreSQL database
@@ -65,6 +70,7 @@
 - ✅ [DEPLOYMENT.md](./DEPLOYMENT.md) - Complete deployment guide (8,000+ words)
 - ✅ [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) - Pre-launch checklist
 - ✅ [MONITORING_SETUP.md](./MONITORING_SETUP.md) - Monitoring configuration
+- ✅ [INTERNATIONALIZATION.md](./INTERNATIONALIZATION.md) - Multi-language feature guide
 - ✅ [docs/SETUP.md](./docs/SETUP.md) - Local setup guide
 - ✅ [docs/API.md](./docs/API.md) - API reference
 
@@ -138,7 +144,7 @@
 ## 🗄️ Database Tables
 
 1. **users** - Admin accounts
-2. **categories** - Product categories
+2. **categories** - Product categories (with multi-language support: name_en, name_ru, name_he, name_az)
 3. **products** - Store inventory
 4. **store_settings** - Brand configuration
 

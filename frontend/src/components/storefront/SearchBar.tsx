@@ -1,12 +1,17 @@
 'use client'
 
 import { useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { getLocalizedCategoryName } from '@/lib/categoryUtils'
 import styles from './SearchBar.module.css'
 
 interface Category {
   id: number
   name: string
+  name_en?: string
+  name_ru?: string
+  name_he?: string
+  name_az?: string
   parent_id?: number | null
 }
 
@@ -18,6 +23,7 @@ interface SearchBarProps {
 
 export default function SearchBar({ categories, onSearch, onLoading }: SearchBarProps) {
   const t = useTranslations('storefront')
+  const locale = useLocale()
   
   const [query, setQuery] = useState('')
   const [categoryId, setCategoryId] = useState('')
@@ -100,7 +106,7 @@ export default function SearchBar({ categories, onSearch, onLoading }: SearchBar
               <option value="">{t('allCategories')}</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
-                  {cat.name}
+                  {getLocalizedCategoryName(cat, locale)}
                 </option>
               ))}
             </select>

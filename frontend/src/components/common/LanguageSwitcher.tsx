@@ -26,7 +26,7 @@ export function LanguageSwitcher() {
         className={styles.select}
         aria-label="Change language"
       >
-        {locales.map((loc) => (
+        {locales.filter((loc) => loc !== 'az').map((loc) => (
           <option key={loc} value={loc}>
             {localeNames[loc as Locale]}
           </option>

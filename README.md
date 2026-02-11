@@ -12,12 +12,13 @@ A specialized e-commerce and inventory management platform for Judaica stores wi
 - 💬 **WhatsApp integration for direct inquiries**
 - ☎️ **Clickable phone/email contact information**
 - 🛒 Persistent shopping cart (localStorage)
-- 📱 Fully mobile-responsive design
-
+- 📱 Fully mobile-responsive design- 🌍 **Multi-language support** (English, Russian, Hebrew)
+- 📝 **Localized category names** per language
 ### Admin Dashboard  
 - 📊 Dashboard with key metrics & quick stats
 - 👥 **Complete user management system** (owner-only)
 - 🏷️ Category management with reordering (color-coded headers, icons)
+- 🌐 **Multi-language category names** (EN, RU, HE, AZ)
 - 📦 Product management (CRUD + reordering with gradient buttons)
 - ⚙️ Store settings (branding, contact info, WhatsApp)
 - 🔒 Role-based access control (Owner/Editor)
@@ -44,11 +45,12 @@ A specialized e-commerce and inventory management platform for Judaica stores wi
 
 ## 🏗️ Tech Stack
 
-- **Frontend:** Next.js 14.2+, React 18, TypeScript, CSS Modules, Axios
+- **Frontend:** Next.js 14.2+, React 18, TypeScript, CSS Modules, Axios, next-intl (i18n)
 - **Backend:** Node.js 18+, Express 4.18+, TypeScript, PostgreSQL 16
 - **Database:** PostgreSQL 16 with full migrations & seeding
 - **Authentication:** JWT (jsonwebtoken), bcryptjs password hashing
 - **File Uploads:** Multer with image validation
+- **Internationalization:** next-intl with 4 languages (EN, RU, HE, AZ)
 - **Containers:** Docker & Docker Compose (dev & production)
 - **CI/CD:** GitHub Actions with automated testing & deployment
 
@@ -139,6 +141,7 @@ npm run dev          # Start on http://localhost:3000
 - **[DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md)** - Pre-launch verification checklist
 - **[DEPLOYMENT_SUMMARY.md](./DEPLOYMENT_SUMMARY.md)** - Quick deployment reference
 - **[MONITORING_SETUP.md](./MONITORING_SETUP.md)** - Error tracking & alerting configuration
+- **[INTERNATIONALIZATION.md](./INTERNATIONALIZATION.md)** - Multi-language feature guide
 - **[docs/SETUP.md](./docs/SETUP.md)** - Detailed local setup & troubleshooting
 - **[docs/API.md](./docs/API.md)** - Complete API reference & endpoint documentation
 - **[PRD.md](./PRD.md)** - Product requirements & specifications
@@ -243,7 +246,7 @@ curl -H "Authorization: Bearer YOUR_TOKEN" \
 
 ### Tables
 - **users** - Store admins and editors
-- **categories** - Product categories with ordering
+- **categories** - Product categories with ordering and multi-language names (name_en, name_ru, name_he, name_az)
 - **products** - Store items with prices and descriptions
 - **store_settings** - Brand info, contact details
 
@@ -251,6 +254,7 @@ curl -H "Authorization: Bearer YOUR_TOKEN" \
 - Automatic timestamps (created_at, updated_at)
 - Foreign key relationships
 - Order indexes for custom sorting
+- Multi-language support for categories
 - Default data pre-populated
 
 ## 🎯 Development Scripts

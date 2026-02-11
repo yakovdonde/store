@@ -25,6 +25,7 @@
 #### Category Management:
 - **Status:** ✅ Completed
 - Create/Edit/Delete categories.
+- **Multi-language Support:** Set category names in English, Russian, Hebrew, and Azerbaijani.
 - **Global Sorting:** Index-based reordering of categories on the main page.
 - **Sub-categories:** Parent/child category support implemented.
 
@@ -45,6 +46,7 @@
 - **Status:** ✅ Completed
 - View the main page with branding (Banner/Title/Description).
 - Navigate through the 6 core Judaica categories (Ritual Objects, Shabbat, Holiday, Lifecycle, Books, Art).
+- **Multi-language Support:** Browse in English, Russian, or Hebrew with localized category names.
 - Deep-dive into specific product pages with high-res imagery and pricing.
 
 #### The Cart Experience:
@@ -68,7 +70,7 @@
 ### 5.1 Database Schema (Relational)
 
 - **users:** ID, email, password_hash, role (owner/editor), status. ✅ CREATED
-- **categories:** ID, name, description, order_index. ✅ CREATED
+- **categories:** ID, name, name_en, name_ru, name_he, name_az, description, parent_id, order_index. ✅ CREATED
 - **products:** ID, title, description, price, image_url, category_id, item_order_index. ✅ CREATED
 - **store_settings:** ID, site_title, banner_url, top_description, contact_info. ✅ CREATED
 

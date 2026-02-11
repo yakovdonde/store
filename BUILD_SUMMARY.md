@@ -8,6 +8,7 @@ A full-stack e-commerce platform for Judaica stores featuring:
 - **Frontend**: Next.js 14 (React 18) with TypeScript & CSS Modules
 - **Backend**: Node.js 18+/Express with TypeScript  
 - **Database**: PostgreSQL 16 with auto-migrations
+- **Internationalization**: Multi-language support (EN, RU, HE, AZ) with next-intl
 - **Authentication**: JWT with bcryptjs password hashing
 - **File Uploads**: Multer with image validation
 - **Deployment**: Docker Compose + Nginx + GitHub Actions
@@ -94,8 +95,9 @@ store.donde.az/
 
 ### Admin Components
 - ✅ **ProductForm** - Product creation/editing with image upload
-- ✅ **CategoryForm** - Category creation/editing interface
+- ✅ **CategoryForm** - Category creation/editing with multi-language support
 - ✅ **LoginForm** - Authentication form with validation
+- ✅ **LanguageSwitcher** - Language selector (EN, RU, HE)
 
 ### Frontend Features
 - ✅ 📱 Fully responsive mobile-first design
@@ -103,8 +105,8 @@ store.donde.az/
 - ✅ 🎨 Professional styling with CSS Modules & gradients
 - ✅ 🔍 Advanced product search functionality
 - ✅ 💬 WhatsApp integration with pre-filled messages
-- ✅ ☎️ Clickable contact information (tel: & mailto: links)
-- ✅ ♿ Semantic HTML & ARIA labels
+- ✅ ☎️ Clickable contact information (tel: & mailto: links)- ✅ 🌍 Multi-language support (English, Russian, Hebrew)
+- ✅ 📝 Localized category names per language- ✅ ♿ Semantic HTML & ARIA labels
 - ✅ 🚀 Optimized performance with Next.js
 
 ## ✅ Backend Features (100% Complete)
@@ -181,9 +183,10 @@ store.donde.az/
   - Columns: id, email, password_hash, role, status, created_at, updated_at
   - Constraints: UNIQUE email, CHECK role, CHECK status
   
-- ✅ **categories** - Product categories with ordering
-  - Columns: id, name, description, order_index, created_at, updated_at
+- ✅ **categories** - Product categories with multi-language support
+  - Columns: id, name, name_en, name_ru, name_he, name_az, description, parent_id, order_index, created_at, updated_at
   - Constraints: UNIQUE name, order_index for sorting
+  - Features: Localized names for each supported language
   
 - ✅ **products** - Store inventory
   - Columns: id, title, description, price, image_url, category_id, item_order_index, created_at, updated_at

@@ -26,25 +26,38 @@ export const getCategory = asyncHandler(async (req: Request, res: Response) => {
 })
 
 export const create = asyncHandler(async (req: Request, res: Response) => {
-  const { name, description, order_index, parent_id } = req.body
+  const { name, description, order_index, parent_id, name_en, name_ru, name_he, name_az } = req.body
 
   if (!name) {
     return res.status(400).json({ success: false, error: 'Category name required' })
   }
 
-  const category = await createCategory(name, description, parent_id || null, order_index || 0)
+  const category = await createCategory(
+    name,
+    description,
+    parent_id || null,
+    order_index || 0,
+    name_en,
+    name_ru,
+    name_he,
+    name_az
+  )
   res.status(201).json({ success: true, data: category })
 })
 
 export const update = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params
-  const { name, description, order_index, parent_id } = req.body
+  const { name, description, order_index, parent_id, name_en, name_ru, name_he, name_az } = req.body
 
   const updated = await updateCategory(Number(id), {
     name,
     description,
     parent_id,
     order_index,
+    name_en,
+    name_ru,
+    name_he,
+    name_az,
   })
 
   if (!updated) {

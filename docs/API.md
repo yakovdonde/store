@@ -184,7 +184,12 @@ Response:
     {
       "id": 1,
       "name": "Ritual Objects",
+      "name_en": "Ritual Objects",
+      "name_ru": "Ритуальные предметы",
+      "name_he": "חפצי טקס",
+      "name_az": "Ritual Əsərləri",
       "description": "Essential ritual items",
+      "parent_id": null,
       "order_index": 1,
       "created_at": "2026-02-10T...",
       "updated_at": "2026-02-10T..."
@@ -207,10 +212,17 @@ Request:
 ```json
 {
   "name": "New Category",
+  "name_en": "New Category",
+  "name_ru": "Новая категория",
+  "name_he": "קטגוריה חדשה",
+  "name_az": "Yeni Kateqoriya",
   "description": "Category description",
+  "parent_id": null,
   "order_index": 7
 }
 ```
+
+**Note:** All language fields (`name_en`, `name_ru`, `name_he`, `name_az`) are optional. The `name` field is used as the internal identifier.
 
 ### Update Category
 **PUT** `/categories/:id`

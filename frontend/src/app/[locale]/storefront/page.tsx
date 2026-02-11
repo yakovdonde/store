@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { Header, Footer, CartSidebar } from '@/components/common'
 import { CategoryGrid, ProductGrid, Product, SearchBar } from '@/components/storefront'
 import { addToCart, getCart, removeFromCart, updateCartItemQuantity, CartItem } from '@/lib/cart'
+import { getLocalizedCategoryName } from '@/lib/categoryUtils'
 import apiClient from '@/lib/apiClient'
 import { resolveImageUrl } from '@/lib/config'
 import { getPriceMap } from '@/lib/currency'
@@ -48,6 +49,10 @@ export function StorefrontHome() {
       const transformedCategories = categoriesData.map((c: any) => ({
         id: c.id.toString(),
         name: c.name,
+        name_en: c.name_en,
+        name_ru: c.name_ru,
+        name_he: c.name_he,
+        name_az: c.name_az,
         description: c.description,
         parent_id: c.parent_id,
         order_index: c.order_index
@@ -221,7 +226,7 @@ export function StorefrontHome() {
                         className={`${styles.categoryFilterBtn} ${selectedCategoryId === cat.id ? styles.active : ''}`}
                         onClick={() => handleCategoryClick(cat.id)}
                       >
-                        {cat.name}
+                        {getLocalizedCategoryName(cat, locale)}
                       </button>
                     ))}
                   </div>
@@ -230,7 +235,7 @@ export function StorefrontHome() {
                 <section className={styles.section}>
                   <h2>
                     {selectedCategoryId 
-                      ? categories.find(c => c.id === selectedCategoryId)?.name || t('storefront.products')
+                      ? getLocalizedCategoryName(categories.find(c => c.id === selectedCategoryId) || {name: ''}, locale) || t('storefront.products')
                       : t('storefront.products')
                     }
                   </h2>

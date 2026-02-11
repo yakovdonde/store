@@ -2,11 +2,17 @@
 
 import React from 'react'
 import Link from 'next/link'
+import { useLocale } from 'next-intl'
+import { getLocalizedCategoryName, type Category as CategoryType } from '@/lib/categoryUtils'
 import styles from './CategoryGrid.module.css'
 
 export interface Category {
   id: string
   name: string
+  name_en?: string
+  name_ru?: string
+  name_he?: string
+  name_az?: string
   description?: string
   parent_id?: number | null
   order_index: number
@@ -17,6 +23,8 @@ interface CategoryGridProps {
 }
 
 export default function CategoryGrid({ categories }: CategoryGridProps) {
+  const locale = useLocale()
+  
   const icons: { [key: string]: string } = {
     'Ritual Objects': '📿',
     'Shabbat Essentials': '🕯️',
@@ -38,19 +46,22 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
 
   return (
     <div className={styles.grid}>
-      {categories.map((category) => (
-        <Link
-          key={category.id}
-          href={`/storefront/category/${category.id}`}
-          className={styles.categoryCard}
-        >
-          <div className={styles.icon}>
-            {icons[category.name] || '📦'}
-          </div>
-          <h3>{category.name}</h3>
-          {category.description && <p>{category.description}</p>}
-        </Link>
-      ))}
+      {categories.map((category) => {
+        const displayName = getLocalizedCategoryName(category as any, locale)
+        return (
+          <Link
+            key={category.id}
+            href={`/storefront/category/${category.id}`}
+            className={styles.categoryCard}
+          >
+            <div className={styles.icon}>
+              {icons[category.name] || '📦'}
+            </div>
+            <h3>{displayName}</h3>
+            {category.description && <p>{category.description}</p>}
+          </Link>
+        )
+      })}
     </div>
   )
 }
