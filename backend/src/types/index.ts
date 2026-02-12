@@ -61,6 +61,8 @@ export interface StoreSettings {
   lang_label_ru?: string
   lang_label_he?: string
   banner_url?: string
+  banner_background_color?: string
+  banner_background_image?: string
   top_description?: string
   address?: string
   phone?: string

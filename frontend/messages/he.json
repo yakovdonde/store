@@ -216,6 +216,12 @@
     "bannerDescriptionRussian": "תיאור באנר - רוסית",
     "bannerDescriptionPlaceholder": "תיאור החנות שלך לבאנר",
     "bannerDescriptionHint": "מופיע מתחת לכותרת הבאנר (עד 500 תווים)",
+    "bannerStyling": "עיצוב באנר",
+    "bannerStylingDescription": "התאם אישית את רקע הבאנר עם צבע או תמונה. תמונה תעקוף את הצבע אם שניהם מוגדרים.",
+    "bannerBackgroundColor": "צבע רקע באנר",
+    "bannerBackgroundColorHint": "בחר צבע רקע עבור קטע הבאנר",
+    "bannerBackgroundImage": "תמונת רקע באנר",
+    "bannerBackgroundImageHint": "הזן כתובת URL של תמונת רקע עבור הבאנר (יעקוף את צבע הרקע)",
     
     "logoUrl": "כתובת לוגו",
     "logoUrlHint": "הזן את כתובת URL של תמונת הלוגו של החנות שלך",

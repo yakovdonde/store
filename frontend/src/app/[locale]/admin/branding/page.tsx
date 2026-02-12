@@ -23,6 +23,8 @@ interface BrandingSettings {
   banner_description_az?: string
   banner_description_he?: string
   banner_description_ru?: string
+  banner_background_color?: string
+  banner_background_image?: string
   logo_url?: string
   tagline?: string
   favicon_url?: string
@@ -52,6 +54,8 @@ export default function BrandingPage() {
     banner_description_az: '',
     banner_description_he: '',
     banner_description_ru: '',
+    banner_background_color: '',
+    banner_background_image: '',
     logo_url: '',
     tagline: '',
     favicon_url: '',
@@ -93,6 +97,8 @@ export default function BrandingPage() {
               banner_description_az: setting.banner_description_az || '',
               banner_description_he: setting.banner_description_he || '',
               banner_description_ru: setting.banner_description_ru || '',
+              banner_background_color: setting.banner_background_color || '',
+              banner_background_image: setting.banner_background_image || '',
               logo_url: setting.logo_url || '',
               tagline: setting.tagline || '',
               favicon_url: setting.favicon_url || '',
@@ -453,6 +459,69 @@ export default function BrandingPage() {
               />
               <small>{t('bannerDescriptionHint')}</small>
             </div>
+          </div>
+        </div>
+
+        <div className={styles.formSection}>
+          <h3 className={styles.sectionTitle}>{t('bannerStyling')}</h3>
+          <p className={styles.sectionDescription}>{t('bannerStylingDescription')}</p>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="banner_background_color">{t('bannerBackgroundColor')}</label>
+            <div className={styles.colorPickerWrapper}>
+              <div className={styles.colorInputGroup}>
+                <div className={styles.colorPickerInput}>
+                  <input
+                    type="color"
+                    id="banner_background_color_picker"
+                    name="banner_background_color_picker"
+                    value={formData.banner_background_color || '#f5f5f5'}
+                    onChange={(e) => {
+                      setFormData((prev) => ({ ...prev, banner_background_color: e.target.value }))
+                    }}
+                    disabled={isSaving}
+                    title={t('bannerBackgroundColorHint')}
+                  />
+                </div>
+                <input
+                  type="text"
+                  id="banner_background_color"
+                  name="banner_background_color"
+                  value={formData.banner_background_color}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                  placeholder="#f5f5f5"
+                  maxLength={7}
+                  className={styles.hexInput}
+                />
+              </div>
+              {formData.banner_background_color && /^#[0-9A-F]{6}$/i.test(formData.banner_background_color) && (
+                <div 
+                  className={styles.colorPreview} 
+                  style={{ backgroundColor: formData.banner_background_color }}
+                ></div>
+              )}
+            </div>
+            <small>{t('bannerBackgroundColorHint')}</small>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="banner_background_image">{t('bannerBackgroundImage')}</label>
+            <input
+              type="url"
+              id="banner_background_image"
+              name="banner_background_image"
+              value={formData.banner_background_image}
+              onChange={handleChange}
+              disabled={isSaving}
+              placeholder="https://example.com/banner-bg.jpg"
+            />
+            <small>{t('bannerBackgroundImageHint')}</small>
+            {formData.banner_background_image && (
+              <div className={styles.preview}>
+                <img src={formData.banner_background_image} alt="Banner Background Preview" />
+              </div>
+            )}
           </div>
         </div>
 

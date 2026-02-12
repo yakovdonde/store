@@ -27,6 +27,8 @@ export interface StoreSettings {
   lang_label_he?: string
   top_description?: string
   banner_url?: string
+  banner_background_color?: string
+  banner_background_image?: string
   email?: string
   phone?: string
   whatsapp?: string
@@ -166,6 +168,8 @@ export function useStoreSettings() {
     storeWhatsapp: settings?.whatsapp || '',
     storeAddress: settings?.address || '',
     bannerUrl: settings?.banner_url || '',
+    bannerBackgroundColor: settings?.banner_background_color || '',
+    bannerBackgroundImage: settings?.banner_background_image || '',
     logoUrl: settings?.logo_url || '',
     tagline: settings?.tagline || '',
     faviconUrl: settings?.favicon_url || '',
