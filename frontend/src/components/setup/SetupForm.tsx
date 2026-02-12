@@ -5,9 +5,10 @@ import styles from './SetupForm.module.css'
 
 interface SetupFormProps {
   onComplete?: (config: any) => void
+  isSubmitting?: boolean
 }
 
-export default function SetupForm({ onComplete }: SetupFormProps) {
+export default function SetupForm({ onComplete, isSubmitting = false }: SetupFormProps) {
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     storeName: '',
@@ -498,12 +499,12 @@ export default function SetupForm({ onComplete }: SetupFormProps) {
             )}
 
             {step < 6 ? (
-              <button type="button" onClick={nextStep} className={styles.primaryBtn}>
+              <button type="button" onClick={nextStep} className={styles.primaryBtn} disabled={isSubmitting}>
                 Next →
               </button>
             ) : (
-              <button type="submit" className={styles.submitBtn}>
-                ✓ Complete Setup
+              <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+                {isSubmitting ? '⏳ Processing...' : '✓ Complete Setup'}
               </button>
             )}
           </div>
