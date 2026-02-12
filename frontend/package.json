@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "test": "jest"
+    "test": "jest",
+    "setup": "node ../scripts/setup-wizard.js"
   },
   "dependencies": {
     "next": "^14.0.0",
