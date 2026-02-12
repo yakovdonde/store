@@ -150,7 +150,7 @@ export function StorefrontHome() {
       <main className={styles.main}>
         <section className={styles.hero}>
           <div className={styles.heroContent}>
-            <h1>{bannerTitle || 'Welcome to Our Store'}</h1>
+            {bannerTitle && <h1>{bannerTitle}</h1>}
             <p>{storeDescription || 'Please configure your store in the admin panel'}</p>
           </div>
         </section>

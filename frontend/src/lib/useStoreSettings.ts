@@ -123,13 +123,13 @@ export function useStoreSettings() {
     const suffix = getLocaleFieldSuffix(locale)
     const multilingualField = `banner_title_${suffix}` as keyof StoreSettings
     
-    // Try locale-specific banner title first
+    // Return locale-specific banner title or empty string if not set
     if (settings[multilingualField]) {
       return settings[multilingualField] as string
     }
     
-    // Fall back to store name if no banner title set
-    return getStoreName()
+    // Return empty string if no banner title set
+    return ''
   }
 
   return {
