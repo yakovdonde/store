@@ -41,6 +41,10 @@ export interface Product {
 export interface StoreSettings {
   id: number
   site_title: string
+  site_title_en?: string
+  site_title_az?: string
+  site_title_he?: string
+  site_title_ru?: string
   banner_url?: string
   top_description?: string
   address?: string

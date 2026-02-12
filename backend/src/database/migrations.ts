@@ -125,6 +125,27 @@ export async function runMigrations() {
       ADD COLUMN IF NOT EXISTS primary_color VARCHAR(7)
     `)
 
+    // Add multilingual site titles
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS site_title_en VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS site_title_az VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS site_title_he VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS site_title_ru VARCHAR(255)
+    `)
+
     // No default categories or settings - store starts empty
     console.log('✓ Store will start empty, no default data inserted')
 

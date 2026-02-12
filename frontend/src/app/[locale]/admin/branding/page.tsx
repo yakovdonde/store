@@ -7,6 +7,10 @@ import styles from './page.module.css'
 
 interface BrandingSettings {
   id: number
+  site_title_en?: string
+  site_title_az?: string
+  site_title_he?: string
+  site_title_ru?: string
   logo_url?: string
   tagline?: string
   favicon_url?: string
@@ -20,6 +24,10 @@ export default function BrandingPage() {
   const tCommon = useTranslations('common')
   const [branding, setBranding] = useState<BrandingSettings | null>(null)
   const [formData, setFormData] = useState({
+    site_title_en: '',
+    site_title_az: '',
+    site_title_he: '',
+    site_title_ru: '',
     logo_url: '',
     tagline: '',
     favicon_url: '',
@@ -43,6 +51,10 @@ export default function BrandingPage() {
           if (setting) {
             setBranding(setting)
             setFormData({
+              site_title_en: setting.site_title_en || '',
+              site_title_az: setting.site_title_az || '',
+              site_title_he: setting.site_title_he || '',
+              site_title_ru: setting.site_title_ru || '',
               logo_url: setting.logo_url || '',
               tagline: setting.tagline || '',
               favicon_url: setting.favicon_url || '',
@@ -109,6 +121,73 @@ export default function BrandingPage() {
       {error && <div className={styles.errorMessage}>{error}</div>}
 
       <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.formSection}>
+          <h3 className={styles.sectionTitle}>{t('siteTitles')}</h3>
+          <p className={styles.sectionDescription}>{t('siteTitlesDescription')}</p>
+
+          <div className={styles.languagesGrid}>
+            <div className={styles.formGroup}>
+              <label htmlFor="site_title_en">{t('titleEnglish')}</label>
+              <input
+                type="text"
+                id="site_title_en"
+                name="site_title_en"
+                value={formData.site_title_en}
+                onChange={handleChange}
+                disabled={isSaving}
+                placeholder={t('titlePlaceholder')}
+                maxLength={255}
+              />
+              <small>{t('titleHint')}</small>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="site_title_az">{t('titleAzerbaijani')}</label>
+              <input
+                type="text"
+                id="site_title_az"
+                name="site_title_az"
+                value={formData.site_title_az}
+                onChange={handleChange}
+                disabled={isSaving}
+                placeholder={t('titlePlaceholder')}
+                maxLength={255}
+              />
+              <small>{t('titleHint')}</small>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="site_title_he">{t('titleHebrew')}</label>
+              <input
+                type="text"
+                id="site_title_he"
+                name="site_title_he"
+                value={formData.site_title_he}
+                onChange={handleChange}
+                disabled={isSaving}
+                placeholder={t('titlePlaceholder')}
+                maxLength={255}
+              />
+              <small>{t('titleHint')}</small>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="site_title_ru">{t('titleRussian')}</label>
+              <input
+                type="text"
+                id="site_title_ru"
+                name="site_title_ru"
+                value={formData.site_title_ru}
+                onChange={handleChange}
+                disabled={isSaving}
+                placeholder={t('titlePlaceholder')}
+                maxLength={255}
+              />
+              <small>{t('titleHint')}</small>
+            </div>
+          </div>
+        </div>
+
         <div className={styles.formSection}>
           <div className={styles.formGroup}>
             <label htmlFor="logo_url">{t('logoUrl')}</label>
