@@ -3,6 +3,36 @@ import { asyncHandler } from '@/middleware/errorHandler'
 import { updateSettings, getSettings } from '@/models/settings'
 import { query } from '@/config/database'
 
+export const checkSetupStatus = asyncHandler(async (req: Request, res: Response) => {
+  console.log('Checking setup completion status')
+  
+  try {
+    const settings = await getSettings()
+    
+    // Setup is complete if setup_config exists or if site_title has been customized
+    const isSetupComplete = !!(
+      settings?.setup_config || 
+      (settings?.site_title && settings.site_title !== 'Judaica Store')
+    )
+    
+    console.log('Setup complete:', isSetupComplete)
+    
+    res.json({
+      success: true,
+      data: {
+        isSetupComplete,
+      },
+    })
+  } catch (error) {
+    console.error('Error checking setup status:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to check setup status',
+      error: error instanceof Error ? error.message : 'Unknown error',
+    })
+  }
+})
+
 export const getSetupConfig = asyncHandler(async (req: Request, res: Response) => {
   console.log('Getting setup configuration')
   
