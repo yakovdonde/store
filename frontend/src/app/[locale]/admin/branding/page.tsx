@@ -160,20 +160,36 @@ export default function BrandingPage() {
 
           <div className={styles.formGroup}>
             <label htmlFor="primary_color">{t('primaryColor')}</label>
-            <div className={styles.colorInputGroup}>
-              <input
-                type="text"
-                id="primary_color"
-                name="primary_color"
-                value={formData.primary_color}
-                onChange={handleChange}
-                disabled={isSaving}
-                placeholder="#FF5733"
-                maxLength={7}
-              />
+            <div className={styles.colorPickerWrapper}>
+              <div className={styles.colorInputGroup}>
+                <div className={styles.colorPickerInput}>
+                  <input
+                    type="color"
+                    id="primary_color_picker"
+                    name="primary_color_picker"
+                    value={formData.primary_color || '#FF5733'}
+                    onChange={(e) => {
+                      setFormData((prev) => ({ ...prev, primary_color: e.target.value }))
+                    }}
+                    disabled={isSaving}
+                    title={t('primaryColorHint')}
+                  />
+                </div>
+                <input
+                  type="text"
+                  id="primary_color"
+                  name="primary_color"
+                  value={formData.primary_color}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                  placeholder="#FF5733"
+                  maxLength={7}
+                  className={styles.hexInput}
+                />
+              </div>
               {formData.primary_color && /^#[0-9A-F]{6}$/i.test(formData.primary_color) && (
                 <div
-                  className={styles.colorPreview}
+                  className={styles.colorPreviewLarge}
                   style={{ backgroundColor: formData.primary_color }}
                   title={formData.primary_color}
                 />
