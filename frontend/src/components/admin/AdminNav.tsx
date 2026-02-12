@@ -3,12 +3,14 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useAuth } from '@/lib/authContext'
 import styles from './AdminNav.module.css'
 
 export default function AdminNav() {
   const { logout, user } = useAuth()
   const router = useRouter()
+  const t = useTranslations('admin')
 
   const handleLogout = () => {
     logout()
@@ -18,30 +20,33 @@ export default function AdminNav() {
   return (
     <nav className={styles.nav}>
       <Link href="/admin" className={styles.navLink}>
-        📊 Dashboard
+        📊 {t('dashboard')}
       </Link>
       <Link href="/admin/products" className={styles.navLink}>
-        📦 Products
+        📦 {t('products')}
       </Link>
       <Link href="/admin/categories" className={styles.navLink}>
-        🏷️ Categories
+        🏷️ {t('categories')}
+      </Link>
+      <Link href="/admin/branding" className={styles.navLink}>
+        🎨 {t('branding')}
       </Link>
       <Link href="/admin/settings" className={styles.navLink}>
-        ⚙️ Settings
+        ⚙️ {t('settings')}
       </Link>
       {user?.role === 'owner' && (
         <Link href="/admin/users" className={styles.navLink}>
-          👥 Users
+          👥 {t('users')}
         </Link>
       )}
       <Link href="/" className={styles.navLink}>
-        🏠 Back to Store
+        🏠 {t('backToStore')}
       </Link>
       <div className={styles.divider}></div>
       <div className={styles.userSection}>
         {user && <span className={styles.userEmail}>{user.email}</span>}
         <button onClick={handleLogout} className={styles.logoutBtn}>
-          🚪 Logout
+          🚪 {t('logout')}
         </button>
       </div>
     </nav>

@@ -29,35 +29,35 @@ export default function AdminDashboard() {
         <div className={styles.statCard}>
           <h3>{t('products')}</h3>
           <p className={styles.number}>{stats.totalProducts}</p>
-          <span className={styles.label}>Active items</span>
+          <span className={styles.label}>{t('activeItems')}</span>
         </div>
 
         <div className={styles.statCard}>
           <h3>{t('categories')}</h3>
           <p className={styles.number}>{stats.totalCategories}</p>
-          <span className={styles.label}>Product categories</span>
+          <span className={styles.label}>{t('productCategories')}</span>
         </div>
 
         <div className={styles.statCard}>
           <h3>{t('orders')}</h3>
           <p className={styles.number}>{stats.totalOrders}</p>
-          <span className={styles.label}>This month</span>
+          <span className={styles.label}>{t('thisMonth')}</span>
         </div>
 
         <div className={styles.statCard}>
-          <h3>Revenue</h3>
+          <h3>{t('revenue')}</h3>
           <p className={styles.number}>${stats.revenue.toFixed(2)}</p>
-          <span className={styles.label}>This month</span>
+          <span className={styles.label}>{t('thisMonth')}</span>
         </div>
       </div>
 
       <div className={styles.quickActions}>
-        <h2>Quick Actions</h2>
+        <h2>{t('quickActions')}</h2>
         <div className={styles.actionsGrid}>
-          <button className={styles.actionButton}>Add Product</button>
-          <button className={styles.actionButton}>Add Category</button>
-          <button className={styles.actionButton}>View Orders</button>
-          <button className={styles.actionButton}>Settings</button>
+          <button className={styles.actionButton}>{t('addProduct')}</button>
+          <button className={styles.actionButton}>{t('addCategory')}</button>
+          <button className={styles.actionButton}>{t('viewOrders')}</button>
+          <button className={styles.actionButton}>{t('settings')}</button>
         </div>
       </div>
     </div>

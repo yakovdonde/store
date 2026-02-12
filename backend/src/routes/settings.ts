@@ -10,5 +10,6 @@ router.get('/', settingsController.getStoreSettings)
 // Admin routes
 router.post('/', authenticate, authorize(['owner']), settingsController.createStoreSettings)
 router.put('/', authenticate, authorize(['owner']), settingsController.updateStoreSettings)
+router.put('/:id', authenticate, authorize(['owner']), settingsController.updateStoreSettings)
 
 export default router

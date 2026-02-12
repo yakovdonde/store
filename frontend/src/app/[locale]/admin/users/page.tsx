@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { useAuth } from '@/lib/authContext'
 import { AdminNav } from '@/components/admin'
 import apiClient from '@/lib/apiClient'
@@ -22,6 +23,8 @@ interface FormData {
 
 export default function UsersPage() {
   const { user: currentUser } = useAuth()
+  const t = useTranslations('adminUsers')
+  const tCommon = useTranslations('common')
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -36,7 +39,7 @@ export default function UsersPage() {
 
   useEffect(() => {
     if (!currentUser || currentUser.role !== 'owner') {
-      setError('Only owners can manage users')
+      setError(t('onlyOwnersAccess'))
       return
     }
     fetchUsers()
@@ -50,11 +53,11 @@ export default function UsersPage() {
       if (response.data.success) {
         setUsers(response.data.data)
       } else {
-        setError(response.data.error || 'Failed to fetch users')
+        setError(response.data.error || t('failedToFetch'))
       }
     } catch (err: any) {
       console.error('Error fetching users:', err)
-      setError(err.response?.data?.error || 'Failed to fetch users')
+      setError(err.response?.data?.error || t('failedToFetch'))
     } finally {
       setLoading(false)
     }
@@ -97,14 +100,14 @@ export default function UsersPage() {
           role: formData.role,
         })
         if (response.data.success) {
-          setSuccess('User role updated successfully')
+          setSuccess(t('userUpdated'))
           setUsers(users.map((u) => (u.id === editingUser.id ? response.data.data : u)))
           handleCloseModal()
         }
       } else {
         // Create new user
         if (!formData.email || !formData.password) {
-          setError('Email and password are required')
+          setError(t('emailPasswordRequired'))
           return
         }
         const response = await apiClient.post('/users', {
@@ -113,14 +116,14 @@ export default function UsersPage() {
           role: formData.role,
         })
         if (response.data.success) {
-          setSuccess('User created successfully')
+          setSuccess(t('userCreated'))
           setUsers([response.data.data, ...users])
           handleCloseModal()
         }
       }
     } catch (err: any) {
       console.error('Error:', err)
-      setError(err.response?.data?.error || 'Operation failed')
+      setError(err.response?.data?.error || t('operationFailed'))
     }
   }
 
@@ -131,17 +134,17 @@ export default function UsersPage() {
         status: newStatus,
       })
       if (response.data.success) {
-        setSuccess(`User ${newStatus === 'active' ? 'activated' : 'deactivated'} successfully`)
+        setSuccess(newStatus === 'active' ? t('userActivated') : t('userDeactivated'))
         setUsers(users.map((u) => (u.id === userId ? response.data.data : u)))
       }
     } catch (err: any) {
       console.error('Error:', err)
-      setError(err.response?.data?.error || 'Failed to update user status')
+      setError(err.response?.data?.error || t('failedToUpdateStatus'))
     }
   }
 
   const handleDeleteUser = async (userId: number) => {
-    if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+    if (!confirm(t('deleteConfirm'))) {
       return
     }
 
@@ -149,12 +152,12 @@ export default function UsersPage() {
       setError('')
       const response = await apiClient.delete(`/users/${userId}`)
       if (response.data.success) {
-        setSuccess('User deleted successfully')
+        setSuccess(t('userDeleted'))
         setUsers(users.filter((u) => u.id !== userId))
       }
     } catch (err: any) {
       console.error('Error:', err)
-      setError(err.response?.data?.error || 'Failed to delete user')
+      setError(err.response?.data?.error || t('failedToDelete'))
     }
   }
 
@@ -163,7 +166,7 @@ export default function UsersPage() {
       <>
         <AdminNav />
         <div className={styles.container}>
-          <div className={styles.errorMessage}>Only owners can access user management</div>
+          <div className={styles.errorMessage}>{t('onlyOwnersAccess')}</div>
         </div>
       </>
     )
@@ -174,9 +177,9 @@ export default function UsersPage() {
       <AdminNav />
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1>User Management</h1>
+          <h1>{t('userManagement')}</h1>
           <button className={styles.addButton} onClick={() => handleOpenModal()}>
-            + Add User
+            + {t('addUser')}
           </button>
         </div>
 
@@ -184,22 +187,22 @@ export default function UsersPage() {
         {success && <div className={styles.successMessage}>{success}</div>}
 
         {loading ? (
-          <div className={styles.loadingMessage}>Loading users...</div>
+          <div className={styles.loadingMessage}>{t('loading')}</div>
         ) : users.length === 0 ? (
           <div className={styles.emptyState}>
-            <p>No users found</p>
-            <p>Click "Add User" to create new team members</p>
+            <p>{t('noUsers')}</p>
+            <p>{t('clickAddUser')}</p>
           </div>
         ) : (
           <div className={styles.tableContainer}>
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Status</th>
-                  <th>Created</th>
-                  <th>Actions</th>
+                  <th>{t('email')}</th>
+                  <th>{t('role')}</th>
+                  <th>{t('status')}</th>
+                  <th>{t('createdAt')}</th>
+                  <th>{t('actions')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -208,7 +211,7 @@ export default function UsersPage() {
                     <td className={styles.emailCell}>{user.email}</td>
                     <td>
                       <span className={`${styles.roleCell} ${styles[`role${user.role.charAt(0).toUpperCase() + user.role.slice(1)}`]}`}>
-                        {user.role}
+                        {t(user.role)}
                       </span>
                     </td>
                     <td>
@@ -217,7 +220,7 @@ export default function UsersPage() {
                           user.status === 'active' ? styles.statusActive : styles.statusInactive
                         }`}
                       >
-                        {user.status}
+                        {t(user.status)}
                       </span>
                     </td>
                     <td>{new Date(user.created_at).toLocaleDateString()}</td>
@@ -226,27 +229,27 @@ export default function UsersPage() {
                         <button
                           className={styles.editButton}
                           onClick={() => handleOpenModal(user)}
-                          title="Edit user role"
+                          title={t('editUser')}
                         >
-                          Edit
+                          {tCommon('edit')}
                         </button>
                         <button
                           className={`${styles.button} ${user.status === 'active' ? styles.deleteButton : styles.editButton}`}
                           onClick={() =>
                             handleUpdateStatus(user.id, user.status === 'active' ? 'inactive' : 'active')
                           }
-                          title={user.status === 'active' ? 'Deactivate user' : 'Activate user'}
+                          title={user.status === 'active' ? t('deactivate') : t('activate')}
                         >
-                          {user.status === 'active' ? 'Deactivate' : 'Activate'}
+                          {user.status === 'active' ? t('deactivate') : t('activate')}
                         </button>
                         {users.filter((u) => u.role === 'owner' && u.status === 'active').length > 1 ||
                         user.role === 'editor' ? (
                           <button
                             className={styles.deleteButton}
                             onClick={() => handleDeleteUser(user.id)}
-                            title="Delete user"
+                            title={tCommon('delete')}
                           >
-                            Delete
+                            {tCommon('delete')}
                           </button>
                         ) : null}
                       </div>
@@ -261,12 +264,12 @@ export default function UsersPage() {
         {/* Modal */}
         <div className={`${styles.modal} ${showModal ? styles.open : ''}`}>
           <div className={styles.modalContent}>
-            <div className={styles.modalHeader}>{editingUser ? 'Edit User Role' : 'Add New User'}</div>
+            <div className={styles.modalHeader}>{editingUser ? t('modalEditTitle') : t('modalCreateTitle')}</div>
 
             <form onSubmit={handleSubmit}>
               <div className={styles.formGroup}>
                 <label className={styles.label} htmlFor="email">
-                  Email
+                  {t('email')}
                 </label>
                 <input
                   type="email"
@@ -284,7 +287,7 @@ export default function UsersPage() {
               {!editingUser && (
                 <div className={styles.formGroup}>
                   <label className={styles.label} htmlFor="password">
-                    Password
+                    {t('password')}
                   </label>
                   <input
                     type="password"
@@ -301,7 +304,7 @@ export default function UsersPage() {
 
               <div className={styles.formGroup}>
                 <label className={styles.label} htmlFor="role">
-                  Role
+                  {t('role')}
                 </label>
                 <select
                   id="role"
@@ -310,17 +313,17 @@ export default function UsersPage() {
                   value={formData.role}
                   onChange={handleInputChange}
                 >
-                  <option value="editor">Editor (Manage products & categories)</option>
-                  <option value="owner">Owner (Full control)</option>
+                  <option value="editor">{t('editor')} (Manage products & categories)</option>
+                  <option value="owner">{t('owner')} (Full control)</option>
                 </select>
               </div>
 
               <div className={styles.modalButtons}>
                 <button type="button" className={styles.cancelButton} onClick={handleCloseModal}>
-                  Cancel
+                  {tCommon('cancel')}
                 </button>
                 <button type="submit" className={styles.saveButton}>
-                  {editingUser ? 'Update Role' : 'Create User'}
+                  {editingUser ? t('changeRole') : t('addUser')}
                 </button>
               </div>
             </form>

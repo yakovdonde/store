@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useAuth } from '@/lib/authContext'
 import styles from './LoginForm.module.css'
 
@@ -12,6 +13,7 @@ export function LoginForm() {
   const [loading, setLoading] = useState(false)
   const { login } = useAuth()
   const router = useRouter()
+  const t = useTranslations('auth')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -22,7 +24,7 @@ export function LoginForm() {
       await login(email, password)
       router.push('/admin')
     } catch (err: any) {
-      setError(err.message || 'Login failed')
+      setError(err.message || t('loginFailed'))
     } finally {
       setLoading(false)
     }
@@ -32,14 +34,14 @@ export function LoginForm() {
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.formGroup}>
         <label htmlFor="email" className={styles.label}>
-          Email Address
+          {t('emailAddress')}
         </label>
         <input
           type="email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="admin@example.com"
+          placeholder={t('emailPlaceholder')}
           required
           className={styles.input}
           disabled={loading}
@@ -48,14 +50,14 @@ export function LoginForm() {
 
       <div className={styles.formGroup}>
         <label htmlFor="password" className={styles.label}>
-          Password
+          {t('password')}
         </label>
         <input
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="••••••••"
+          placeholder={t('passwordPlaceholder')}
           required
           className={styles.input}
           disabled={loading}
@@ -69,11 +71,11 @@ export function LoginForm() {
         className={styles.submitBtn}
         disabled={loading}
       >
-        {loading ? 'Logging in...' : 'Login'}
+        {loading ? t('loggingIn') : t('loginButton')}
       </button>
 
       <p className={styles.hint}>
-        Demo: Use your credentials or create a new account at /admin
+        {t('demoHint')}
       </p>
     </form>
   )

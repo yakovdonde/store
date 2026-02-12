@@ -6,7 +6,7 @@ import { Header, Footer, CartSidebar } from '@/components/common'
 import { CategoryGrid, ProductGrid, Product, SearchBar } from '@/components/storefront'
 import { addToCart, getCart, removeFromCart, updateCartItemQuantity, CartItem } from '@/lib/cart'
 import { getLocalizedCategoryName } from '@/lib/categoryUtils'
-import { useStoreText } from '@/lib/storeUtils'
+import { useStoreSettings } from '@/lib/useStoreSettings'
 import apiClient from '@/lib/apiClient'
 import { resolveImageUrl } from '@/lib/config'
 import { getPriceMap } from '@/lib/currency'
@@ -15,7 +15,7 @@ import styles from './page.module.css'
 export function StorefrontHome() {
   const t = useTranslations()
   const locale = useLocale()
-  const storeText = useStoreText(locale)
+  const { storeName, storeDescription, storeEmail, storePhone, storeWhatsapp, storeAddress, loading: settingsLoading } = useStoreSettings()
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
   const [categories, setCategories] = useState<any[]>([])
@@ -24,13 +24,6 @@ export function StorefrontHome() {
   const [isSearching, setIsSearching] = useState(false)
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
-
-  const [storeInfo] = useState({
-    address: '123 Jewish Way, New York, NY 10001',
-    phone: '(555) 123-4567',
-    email: 'info@judaicastore.com',
-    whatsapp: '+1 (555) 123-4567',
-  })
 
   useEffect(() => {
     setCartItems(getCart())
@@ -157,8 +150,8 @@ export function StorefrontHome() {
       <main className={styles.main}>
         <section className={styles.hero}>
           <div className={styles.heroContent}>
-            <h1>{storeText.heroTitle}</h1>
-            <p>{storeText.heroSubtitle}</p>
+            <h1>{storeName || 'Welcome to Our Store'}</h1>
+            <p>{storeDescription || 'Please configure your store in the admin panel'}</p>
           </div>
         </section>
 
@@ -259,7 +252,14 @@ export function StorefrontHome() {
         )}
       </main>
 
-      <Footer storeInfo={storeInfo} />
+      <Footer
+        storeInfo={{
+          address: storeAddress,
+          phone: storePhone,
+          email: storeEmail,
+          whatsapp: storeWhatsapp,
+        }}
+      />
     </>
   )
 }

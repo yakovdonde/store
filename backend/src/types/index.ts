@@ -48,6 +48,10 @@ export interface StoreSettings {
   email?: string
   whatsapp?: string
   setup_config?: string
+  logo_url?: string
+  tagline?: string
+  favicon_url?: string
+  primary_color?: string
   created_at: Date
   updated_at: Date
 }

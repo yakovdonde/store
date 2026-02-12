@@ -13,11 +13,18 @@ interface FooterProps {
 }
 
 export default function Footer({ storeInfo }: FooterProps) {
+  const hasContactInfo = storeInfo?.address || storeInfo?.phone || storeInfo?.email || storeInfo?.whatsapp
+  
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.section}>
           <h3>Contact Us</h3>
+          {!hasContactInfo && (
+            <p style={{ color: '#999', fontSize: '0.9rem' }}>
+              Contact information not configured
+            </p>
+          )}
           {storeInfo?.address && <p>📍 {storeInfo.address}</p>}
           {storeInfo?.phone && (
             <p>
@@ -82,7 +89,7 @@ export default function Footer({ storeInfo }: FooterProps) {
       </div>
 
       <div className={styles.copyright}>
-        <p>&copy; 2026 Judaica Store. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} All rights reserved.</p>
       </div>
     </footer>
   )

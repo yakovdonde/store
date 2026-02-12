@@ -104,6 +104,27 @@ export async function runMigrations() {
       ADD COLUMN IF NOT EXISTS setup_config JSONB
     `)
 
+    // Add branding columns
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS logo_url VARCHAR(500)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS tagline VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS favicon_url VARCHAR(500)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS primary_color VARCHAR(7)
+    `)
+
     // No default categories or settings - store starts empty
     console.log('✓ Store will start empty, no default data inserted')
 
