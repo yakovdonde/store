@@ -40,7 +40,7 @@
   line-height: 1.4;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: #1a1a1a;
+  color: #2c1810;
 }
 
 .description {
@@ -60,12 +60,12 @@
 .price {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #8b2635;
   letter-spacing: -0.02em;
 }
 
 .addButton {
-  background-color: #1a1a1a;
+  background-color: #8b2635;
   color: white;
   border: none;
   padding: 0.625rem 1.125rem;
@@ -78,7 +78,7 @@
 }
 
 .addButton:hover {
-  background-color: #404040;
+  background-color: #6b2d1f;
 }
 
 @media (max-width: 768px) {

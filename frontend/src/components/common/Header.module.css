@@ -1,6 +1,6 @@
 .header {
   background-color: #ffffff;
-  color: #1a1a1a;
+  color: #2c1810;
   padding: 1.25rem 0;
   position: sticky;
   top: 0;
@@ -27,7 +27,7 @@
   padding: 0.5rem 2rem 0.5rem 0.75rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #1a1a1a;
+  color: #2c1810;
   background-color: #f5f5f5;
   border: 1px solid #d4d4d4;
   border-radius: 6px;
@@ -68,7 +68,7 @@
 }
 
 .logo {
-  color: #1a1a1a;
+  color: #2c1810;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -89,7 +89,7 @@
 }
 
 .navLink:hover {
-  color: #1a1a1a;
+  color: #8b2635;
 }
 
 .actions {
@@ -99,7 +99,7 @@
 }
 
 .cartButton {
-  background-color: #1a1a1a;
+  background-color: #8b2635;
   color: white;
   border: none;
   padding: 0.625rem 1.125rem;
@@ -111,7 +111,7 @@
 }
 
 .cartButton:hover {
-  background-color: #404040;
+  background-color: #6b2d1f;
 }
 
 .mobileMenuToggle {

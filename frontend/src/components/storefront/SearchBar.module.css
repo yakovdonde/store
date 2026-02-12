@@ -10,7 +10,7 @@
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 1.25rem;
-  color: #1a1a1a;
+  color: #2c1810;
   letter-spacing: -0.01em;
 }
 
@@ -82,13 +82,13 @@
 }
 
 .searchBtn {
-  background: #1a1a1a;
+  background: #8b2635;
   color: white;
   flex: 1;
 }
 
 .searchBtn:hover {
-  background: #404040;
+  background: #6b2d1f;
 }
 
 .resetBtn {
@@ -100,7 +100,7 @@
 .resetBtn:hover {
   background: #fafafa;
   border-color: #a3a3a3;
-  color: #1a1a1a;
+  color: #8b2635;
 }
 
 .loading {

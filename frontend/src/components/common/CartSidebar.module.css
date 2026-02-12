@@ -52,7 +52,7 @@
 }
 
 .closeButton:hover {
-  color: #1a1a1a;
+  color: #8b2635;
 }
 
 .items {
@@ -92,11 +92,11 @@
   font-size: 0.9375rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: #1a1a1a;
+  color: #2c1810;
 }
 
 .price {
-  color: #1a1a1a;
+  color: #8b2635;
   font-weight: 700;
   margin: 0.25rem 0;
   font-size: 1rem;
@@ -149,7 +149,7 @@
 .removeButton:hover {
   background-color: #e5e5e5;
   border-color: #a3a3a3;
-  color: #1a1a1a;
+  color: #8b2635;
 }
 
 .footer {
@@ -164,13 +164,13 @@
   margin-bottom: 1rem;
   font-size: 1.125rem;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #2c1810;
 }
 
 .checkoutButton {
   width: 100%;
   padding: 0.875rem;
-  background-color: #1a1a1a;
+  background-color: #8b2635;
   color: white;
   border: none;
   border-radius: 6px;
@@ -181,7 +181,7 @@
 }
 
 .checkoutButton:hover {
-  background-color: #404040;
+  background-color: #6b2d1f;
 }
 
 @media (max-width: 768px) {

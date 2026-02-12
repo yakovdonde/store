@@ -5,7 +5,7 @@
 }
 
 .hero {
-  background-color: #1a1a1a;
+  background: linear-gradient(135deg, #1a2847 0%, #2c1810 100%);
   color: white;
   padding: 5rem 2.5rem;
   border-radius: 0;
@@ -37,7 +37,7 @@
 .section h2 {
   font-size: 1.875rem;
   margin-bottom: 1.75rem;
-  color: #1a1a1a;
+  color: #2c1810;
   font-weight: 700;
   letter-spacing: -0.02em;
   padding-bottom: 0;
@@ -67,18 +67,18 @@
 .categoryFilterBtn:hover {
   background-color: #fafafa;
   border-color: #a3a3a3;
-  color: #1a1a1a;
+  color: #8b2635;
 }
 
 .categoryFilterBtn.active {
-  background-color: #1a1a1a;
+  background-color: #8b2635;
   color: white;
-  border-color: #1a1a1a;
+  border-color: #8b2635;
 }
 
 .categoryFilterBtn.active:hover {
-  background-color: #404040;
-  border-color: #404040;
+  background-color: #6b2d1f;
+  border-color: #6b2d1f;
 }
 
 @media (max-width: 768px) {

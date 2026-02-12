@@ -14,7 +14,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #1a1a1a;
+  color: #2c1810;
   font-size: 0.9375rem;
 }
 
@@ -54,7 +54,7 @@
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.0625rem;
-  color: #1a1a1a;
+  color: #2c1810;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
@@ -62,7 +62,7 @@
 .submitButton {
   width: 100%;
   padding: 0.75rem;
-  background-color: #1a1a1a;
+  background-color: #8b2635;
   color: white;
   border: none;
   border-radius: 6px;
@@ -73,7 +73,7 @@
 }
 
 .submitButton:hover:not(:disabled) {
-  background-color: #404040;
+  background-color: #6b2d1f;
 }
 
 .submitButton:disabled {
