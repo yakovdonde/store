@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useLocale } from 'next-intl'
 import { Header, Footer, CartSidebar } from '@/components/common'
 import { addToCart, getCart, removeFromCart, updateCartItemQuantity, CartItem } from '@/lib/cart'
 import apiClient from '@/lib/apiClient'
@@ -29,6 +30,7 @@ interface PageProps {
 }
 
 export default function ProductDetailPage({ params }: PageProps) {
+  const locale = useLocale()
   const { currency, formatAmount } = useCurrency()
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
@@ -156,7 +158,7 @@ export default function ProductDetailPage({ params }: PageProps) {
       />
 
       <main className={styles.main}>
-        <Link href="/storefront" className={styles.backLink}>
+        <Link href={`/${locale}/storefront`} className={styles.backLink}>
           ← Back to Store
         </Link>
 
