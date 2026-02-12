@@ -47,6 +47,7 @@ export interface StoreSettings {
   phone?: string
   email?: string
   whatsapp?: string
+  setup_config?: string
   created_at: Date
   updated_at: Date
 }
