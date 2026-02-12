@@ -89,7 +89,13 @@ export default function BrandingPage() {
     setMessage('')
 
     try {
-      const response = await apiClient.put('/settings/1', formData)
+      // Include fallback site_title (use English if available, otherwise first available)
+      const dataToSave = {
+        ...formData,
+        site_title: formData.site_title_en || formData.site_title_az || formData.site_title_he || formData.site_title_ru || 'Store',
+      }
+      
+      const response = await apiClient.put('/settings/1', dataToSave)
 
       if (response.data.success) {
         setBranding(response.data.data)

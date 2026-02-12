@@ -11,25 +11,84 @@ import { CurrencyProvider } from '@/lib/currency';
 import { activeStoreConfig } from '@/config/storeConfig';
 import '../globals.css';
 
-export const metadata: Metadata = {
-  title: {
-    default: activeStoreConfig.storeName,
-    template: `%s | ${activeStoreConfig.storeName}`,
-  },
-  description: activeStoreConfig.description.en,
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
-  openGraph: {
-    title: activeStoreConfig.storeName,
-    description: activeStoreConfig.description.en,
-    type: 'website',
-    url: '/',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: activeStoreConfig.storeName,
-    description: activeStoreConfig.description.en,
-  },
-};
+export async function generateMetadata({
+  params: { locale }
+}: {
+  params: { locale: string }
+}): Promise<Metadata> {
+  let storeName = activeStoreConfig.storeName;
+  let description = activeStoreConfig.description.en;
+  let faviconUrl = '';
+
+  try {
+    // Use internal backend URL for server-side rendering (works inside Docker)
+    const apiBase = process.env.NEXT_BACKEND_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+    const response = await fetch(`${apiBase}/settings`, {
+      next: { revalidate: 0 }, // Don't cache to get latest settings immediately
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success && data.data) {
+        const settings = data.data;
+        
+        // Get locale-specific store name
+        const localeMap: Record<string, string> = {
+          'en': 'en',
+          'az': 'az',
+          'he': 'he',
+          'ru': 'ru',
+        };
+        const localeKey = localeMap[locale] || 'en';
+        const multilingualField = `site_title_${localeKey}` as keyof typeof settings;
+        
+        if (settings[multilingualField]) {
+          storeName = settings[multilingualField] as string;
+        } else if (settings.site_title) {
+          storeName = settings.site_title;
+        }
+        
+        if (settings.top_description) {
+          description = settings.top_description;
+        }
+        
+        if (settings.favicon_url) {
+          faviconUrl = settings.favicon_url;
+        }
+      }
+    }
+  } catch (error) {
+    // Silently fall back to default config if API call fails
+  }
+
+  const metadata: Metadata = {
+    title: {
+      default: storeName,
+      template: `%s | ${storeName}`,
+    },
+    description,
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
+    openGraph: {
+      title: storeName,
+      description,
+      type: 'website',
+      url: '/',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: storeName,
+      description,
+    },
+  };
+
+  if (faviconUrl) {
+    metadata.icons = {
+      icon: faviconUrl,
+    };
+  }
+
+  return metadata;
+}
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
