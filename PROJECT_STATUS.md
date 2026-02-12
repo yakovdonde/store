@@ -292,7 +292,7 @@ Run one command to deploy to production:
 - **12+** React components
 - **4** database tables
 - **7** pages (frontend)
-- **6** default categories
+- **0** default categories (empty store initialization)
 - **3** automation scripts
 - **1** CI/CD workflow
 - **100%** feature completion

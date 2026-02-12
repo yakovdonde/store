@@ -4,49 +4,75 @@
 
 This guide walks you through setting up and launching your own branded online store using the Donde Store Constructor platform.
 
-## Quick Start: Two Setup Methods
+## 🚀 Quick Start
 
-### Method 1: Web-Based Setup Wizard (Easiest)
+### Step 1: Start Your Application
 
-Perfect for vendors who prefer a visual interface.
+```bash
+docker-compose up -d
+```
 
-1. **Start your application:**
-   ```bash
-   docker-compose up -d
-   ```
+**What Happens:**
+- PostgreSQL database is created
+- Database migrations run (creates empty tables)
+- Admin user is automatically created
+- Frontend and backend start
 
-2. **Open the setup wizard:**
-   Visit `http://localhost:3000/setup` in your browser
+### Step 2: Access Admin Panel
 
-3. **Follow the 6-step wizard:**
-   - Step 1: Store Information (name, contact, address)
-   - Step 2: Color Scheme (customize your brand colors)
-   - Step 3: Currencies & Languages
-   - Step 4: Product Categories
-   - Step 5: Store Features
-   - Step 6: Review & Complete
+1. **Visit:** http://localhost:3000/admin
+2. **Login with default credentials:**
+   - Email: `admin@store.local`
+   - Password: `admin123`
 
-4. **Your store is ready!**
-   All settings are automatically saved and applied.
+⚠️ **Important:** Change this password immediately!
 
-### Method 2: CLI Setup Wizard (For Developers)
+### Step 3: Configure Your Store
 
-Use the command-line setup tool for scripted installations.
+Your store starts **completely empty**. Configure it through the admin panel:
 
-1. **Install dependencies:**
-   ```bash
-   cd frontend
-   npm install
-   ```
+#### 3.1 Store Settings (Required First)
 
-2. **Run the setup wizard:**
-   ```bash
-   node ../scripts/setup-wizard.js
-   ```
-   Or add to package.json:
-   ```bash
-   npm run setup
-   ```
+1. Navigate to **Admin Panel > Settings**
+2. Fill in your store information:
+   - Store Title
+   - Store Description
+   - Banner Image URL
+   - Contact Information (Address, Phone, Email, WhatsApp)
+3. Click **Save Settings**
+
+#### 3.2 Create Categories
+
+1. Navigate to **Admin Panel > Categories**
+2. Click **Add Category**
+3. Fill in category information:
+   - Name in all languages (English, Russian, Hebrew, Azerbaijani)
+   - Description
+   - Icon/emoji (optional)
+4. Click **Save**
+5. Repeat for all categories you need
+
+#### 3.3 Add Products
+
+1. Navigate to **Admin Panel > Products**
+2. Click **Add Product**
+3. Fill in product details:
+   - Title & Description
+   - Select Category
+   - Upload product image
+   - Set prices for each currency (USD, EUR, ILS, AZN)
+4. Click **Save**
+5. Repeat for all products
+
+### Step 4: View Your Storefront
+
+Visit http://localhost:3000 to see your configured store!
+
+---
+
+## 📝 Detailed Configuration
+
+### Admin Panel Navigation
 
 3. **Answer the interactive prompts:**
    - Store name and description
@@ -296,20 +322,23 @@ SMTP_PASS=...
 
 ## Troubleshooting
 
-### Setup wizard doesn't load
+### Cannot access admin panel
 - Ensure frontend is running: `docker-compose ps`
-- Check browser console for errors
-- Verify port 3000 is not blocked
+- Verify URL: http://localhost:3000/admin
+- Check port 3000 is not blocked
+- Try incognito/private browsing mode
 
-### Configuration not saved
-- Check admin panel shows your values
-- Verify database connection
-- Check browser DevTools Network tab
+### Settings not saving
+- Check you're logged in as admin
+- Verify database connection is working
+- Check browser DevTools Network tab for errors
+- Check backend logs: `docker-compose logs backend`
 
-### Colors not applying
-- Clear browser cache (Ctrl+Shift+Delete)
-- Hard refresh page (Ctrl+Shift+R)
-- Check hex color format (#RRGGBB)
+### Store appears empty
+- This is normal for a new installation
+- Login to admin panel and configure settings
+- Add categories before adding products
+- See [EMPTY_STORE_INITIALIZATION.md](./EMPTY_STORE_INITIALIZATION.md)
 
 ### Categories missing
 - Re-save configuration in admin

@@ -197,16 +197,20 @@ store.donde.az/
 
 ### Database Features
 - ✅ Auto-migration system (runs on startup)
-- ✅ Default data seeding (6 categories, admin user)
+- ✅ Database migrations with empty store initialization (admin user only)
+- ✅ Automatic schema setup on first run
+- ✅ PostgreSQL connection pooling
+- ✅ Database seeding script (optional, for development only)
 - ✅ Foreign key relationships with cascading deletes
 - ✅ Index optimization for frequent queries
 - ✅ ACID transaction support
 - ✅ PostgreSQL 16 full compatibility
 
 ### Default Seeded Data
-- ✅ 6 Categories (Ritual Objects, Shabbat, Holidays, Lifecycle, Books, Art)
-- ✅ Admin user (admin@store.local / admin123)
-- ✅ Store settings with default contact info
+- ✅ Admin user only (admin@store.local / admin123)
+- ✅ Store starts completely empty - no categories, products, or settings
+- ✅ Configuration done through admin panel
+- ✅ Optional seed script available for development/demo purposes
 
 ## ✅ Production & Deployment (100% Complete)
 
@@ -308,7 +312,7 @@ store.donde.az/
 - **Reusable Components:** 12+
 - **CSS Modules:** 10+
 - **Database Tables:** 4
-- **Default Categories:** 6
+- **Default Categories:** 0 (empty store)
 - **API Routes:** 7 route files
 - **Controllers:** 6 main controllers
 - **Models:** 4 data models

@@ -1,5 +1,19 @@
 import pool from '../config/database'
 
+/**
+ * DATABASE SEEDING - FOR DEVELOPMENT/DEMO PURPOSES ONLY
+ * 
+ * This file is NOT part of the initial store setup process.
+ * When a store goes online for the first time, it starts completely empty.
+ * 
+ * This seed script is only used to:
+ * - Populate test data during development
+ * - Create demo stores with sample products
+ * 
+ * To run manually: npm run seed (in backend directory)
+ * This will NOT run automatically during normal application startup.
+ */
+
 const seedProducts = async () => {
   console.log('🌱 Seeding database with products...')
 

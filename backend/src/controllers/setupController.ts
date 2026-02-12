@@ -9,10 +9,11 @@ export const checkSetupStatus = asyncHandler(async (req: Request, res: Response)
   try {
     const settings = await getSettings()
     
-    // Setup is complete if setup_config exists or if site_title has been customized
+    // Setup is complete if setup_config exists or if site_title has been set
+    // If settings is null (empty store), setup is not complete
     const isSetupComplete = !!(
       settings?.setup_config || 
-      (settings?.site_title && settings.site_title !== 'Judaica Store')
+      settings?.site_title
     )
     
     console.log('Setup complete:', isSetupComplete)

@@ -52,13 +52,14 @@ Follow the [Store Constructor Guide](./STORE_CONSTRUCTOR_GUIDE.md) to add:
 
 ### Storefront
 - 🏠 Beautiful responsive home page with featured products
-- 📂 Browse products by 6 default categories
+- 📂 Browse products by custom categories
 - 🔍 **Product search with category & price filtering**
 - 📦 Detailed product pages with specifications & contact options
 - 💬 **WhatsApp integration for direct inquiries**
 - ☎️ **Clickable phone/email contact information**
 - 🛒 Persistent shopping cart (localStorage)
-- 📱 Fully mobile-responsive design- 🌍 **Multi-language support** (English, Russian, Hebrew)
+- 📱 Fully mobile-responsive design
+- 🌍 **Multi-language support** (English, Russian, Hebrew, Azerbaijani)
 - 📝 **Localized category names** per language
 ### Admin Dashboard  
 - 📊 Dashboard with key metrics & quick stats
@@ -77,7 +78,7 @@ Follow the [Store Constructor Guide](./STORE_CONSTRUCTOR_GUIDE.md) to add:
 - 📁 File upload support with Multer (5MB limit, image validation)
 - 🔍 Advanced search endpoint with category/price filters
 - 👤 User management endpoints (CRUD, role assignment, status control)
-- 🗄️ PostgreSQL database with auto-migrations & seeded default data
+- 🗄️ PostgreSQL database with auto-migrations (starts completely empty)
 - 📚 Comprehensive API documentation
 
 ### Production Ready

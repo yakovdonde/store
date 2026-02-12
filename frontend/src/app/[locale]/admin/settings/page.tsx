@@ -40,18 +40,23 @@ export default function SettingsPage() {
       try {
         setLoading(true)
         const response = await apiClient.get('/settings')
-        if (response.data.success && response.data.data.length > 0) {
-          const setting = response.data.data[0]
-          setSettings(setting)
-          setFormData({
-            site_title: setting.site_title || '',
-            banner_url: setting.banner_url || '',
-            top_description: setting.top_description || '',
-            address: setting.address || '',
-            phone: setting.phone || '',
-            email: setting.email || '',
-            whatsapp: setting.whatsapp || '',
-          })
+        if (response.data.success) {
+          const setting = response.data.data
+          
+          // Handle both null (empty store) and existing settings
+          if (setting) {
+            setSettings(setting)
+            setFormData({
+              site_title: setting.site_title || '',
+              banner_url: setting.banner_url || '',
+              top_description: setting.top_description || '',
+              address: setting.address || '',
+              phone: setting.phone || '',
+              email: setting.email || '',
+              whatsapp: setting.whatsapp || '',
+            })
+          }
+          // If setting is null, keep empty formData - user will create new settings
         }
       } catch (err: any) {
         setError('Failed to load settings')
@@ -78,13 +83,19 @@ export default function SettingsPage() {
     setMessage('')
 
     try {
+      let response
       if (settings) {
-        const response = await apiClient.put(`/settings/${settings.id}`, formData)
-        if (response.data.success) {
-          setSettings(response.data.data)
-          setMessage('Settings saved successfully!')
-          setTimeout(() => setMessage(''), 3000)
-        }
+        // Update existing settings
+        response = await apiClient.put(`/settings/${settings.id}`, formData)
+      } else {
+        // Create new settings (for empty stores)
+        response = await apiClient.post('/settings', formData)
+      }
+      
+      if (response.data.success) {
+        setSettings(response.data.data)
+        setMessage('Settings saved successfully!')
+        setTimeout(() => setMessage(''), 3000)
       }
     } catch (err: any) {
       setError(err.response?.data?.error || 'Failed to save settings')
@@ -105,6 +116,12 @@ export default function SettingsPage() {
   return (
     <div className={styles.container}>
       <h1>Store Settings</h1>
+      
+      {!settings && (
+        <div style={{ color: '#2980b9', padding: '1rem', marginBottom: '1rem', backgroundColor: '#d6eaf8', borderRadius: '4px' }}>
+          ℹ️ Your store has no settings yet. Fill out the form below to configure your store.
+        </div>
+      )}
 
       {message && <div style={{ color: '#27ae60', padding: '1rem', marginBottom: '1rem', backgroundColor: '#d5f4e6', borderRadius: '4px' }}>{message}</div>}
       {error && <div style={{ color: '#c0392b', padding: '1rem', marginBottom: '1rem', backgroundColor: '#fadbd8', borderRadius: '4px' }}>{error}</div>}

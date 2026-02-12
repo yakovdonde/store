@@ -1,10 +1,27 @@
 'use client'
 
-import SetupForm from '@/components/setup/SetupForm'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 
 export default function SetupPage() {
+  const router = useRouter()
+
+  useEffect(() => {
+    // Redirect to admin panel - setup wizard is disabled
+    router.push('/en/admin/settings')
+  }, [router])
+
+  return (
+    <div style={{ padding: '2rem', textAlign: 'center' }}>
+      <h1>Redirecting to Admin Panel...</h1>
+      <p>The setup wizard has been disabled. Please configure your store from the admin panel.</p>
+    </div>
+  )
+}
+
+/* DISABLED - Setup wizard functionality moved to admin panel
+
+function SetupPageOld() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -53,25 +70,6 @@ export default function SetupPage() {
     }
   }
 
-  return (
-    <div>
-      {error && (
-        <div style={{
-          backgroundColor: '#fee',
-          border: '1px solid #fcc',
-          color: '#c33',
-          padding: '16px',
-          marginBottom: '16px',
-          borderRadius: '4px',
-          marginLeft: '20px',
-          marginRight: '20px',
-          marginTop: '20px'
-        }}>
-          <strong>Error:</strong> {error}
-        </div>
-      )}
-      <SetupForm onComplete={handleSetupComplete} isSubmitting={isSubmitting} />
-    </div>
-  )
 }
 
+*/

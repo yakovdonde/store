@@ -91,44 +91,21 @@ export async function runMigrations() {
         phone VARCHAR(20),
         email VARCHAR(255),
         whatsapp VARCHAR(20),
+        setup_config JSONB,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `)
     console.log('✓ store_settings table created')
-
-    // Insert default categories if they don't exist
-    const defaultCategories = [
-      { name: 'Ritual Objects', order_index: 1 },
-      { name: 'Shabbat Essentials', order_index: 2 },
-      { name: 'Holiday-Specific', order_index: 3 },
-      { name: 'Lifecycle & Simcha', order_index: 4 },
-      { name: 'Books & Media', order_index: 5 },
-      { name: 'Art & Home Decor', order_index: 6 },
-    ]
-
-    for (const cat of defaultCategories) {
-      await query(`
-        INSERT INTO categories (name, order_index)
-        VALUES ($1, $2)
-        ON CONFLICT (name) DO NOTHING
-      `, [cat.name, cat.order_index])
-    }
-    console.log('✓ default categories inserted')
-
-    // Insert default store settings
+    
+    // Add setup_config column if it doesn't exist (for existing databases)
     await query(`
-      INSERT INTO store_settings (site_title, top_description, address, phone, email)
-      VALUES (
-        'Judaica Store',
-        'Your premier source for authentic Judaica items',
-        '123 Jewish Way, New York, NY 10001',
-        '(555) 123-4567',
-        'info@judaicastore.com'
-      )
-      ON CONFLICT DO NOTHING
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS setup_config JSONB
     `)
-    console.log('✓ default settings inserted')
+
+    // No default categories or settings - store starts empty
+    console.log('✓ Store will start empty, no default data inserted')
 
     console.log('✅ Database migrations completed!')
   } catch (error) {

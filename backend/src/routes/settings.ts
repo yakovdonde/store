@@ -7,7 +7,8 @@ const router = Router()
 // Public route
 router.get('/', settingsController.getStoreSettings)
 
-// Admin route
+// Admin routes
+router.post('/', authenticate, authorize(['owner']), settingsController.createStoreSettings)
 router.put('/', authenticate, authorize(['owner']), settingsController.updateStoreSettings)
 
 export default router

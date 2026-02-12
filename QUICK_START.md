@@ -13,6 +13,15 @@ docker-compose up
 # Login: admin@store.local / admin123
 ```
 
+**⚠️ Important:** Your store starts **completely empty**. After starting:
+1. Visit http://localhost:3000/admin
+2. Login with credentials above
+3. Go to **Settings** to configure your store
+4. Add **Categories** for organizing products
+5. Add **Products** to populate your store
+
+See [EMPTY_STORE_INITIALIZATION.md](./EMPTY_STORE_INITIALIZATION.md) for details.
+
 ---
 
 ## 🚀 Fast Setup (Copy & Paste)

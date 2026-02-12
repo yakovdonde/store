@@ -7,6 +7,31 @@ export const getStoreSettings = asyncHandler(async (req: Request, res: Response)
   res.json({ success: true, data: settings })
 })
 
+export const createStoreSettings = asyncHandler(async (req: Request, res: Response) => {
+  const {
+    site_title,
+    banner_url,
+    top_description,
+    address,
+    phone,
+    email,
+    whatsapp,
+  } = req.body
+
+  // updateSettings handles both insert and update
+  const created = await updateSettings({
+    site_title,
+    banner_url,
+    top_description,
+    address,
+    phone,
+    email,
+    whatsapp,
+  })
+
+  res.json({ success: true, data: created })
+})
+
 export const updateStoreSettings = asyncHandler(async (req: Request, res: Response) => {
   const {
     site_title,
