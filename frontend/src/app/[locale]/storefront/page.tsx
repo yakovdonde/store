@@ -6,6 +6,7 @@ import { Header, Footer, CartSidebar } from '@/components/common'
 import { CategoryGrid, ProductGrid, Product, SearchBar } from '@/components/storefront'
 import { addToCart, getCart, removeFromCart, updateCartItemQuantity, CartItem } from '@/lib/cart'
 import { getLocalizedCategoryName } from '@/lib/categoryUtils'
+import { useStoreText } from '@/lib/storeUtils'
 import apiClient from '@/lib/apiClient'
 import { resolveImageUrl } from '@/lib/config'
 import { getPriceMap } from '@/lib/currency'
@@ -14,6 +15,7 @@ import styles from './page.module.css'
 export function StorefrontHome() {
   const t = useTranslations()
   const locale = useLocale()
+  const storeText = useStoreText(locale)
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
   const [categories, setCategories] = useState<any[]>([])
@@ -155,8 +157,8 @@ export function StorefrontHome() {
       <main className={styles.main}>
         <section className={styles.hero}>
           <div className={styles.heroContent}>
-            <h1>{t('common.appName')}</h1>
-            <p>{t('storefront.description')}</p>
+            <h1>{storeText.heroTitle}</h1>
+            <p>{storeText.heroSubtitle}</p>
           </div>
         </section>
 

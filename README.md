@@ -1,8 +1,54 @@
-# 🕎 Judaica Store Platform
+# 🏪 Multi-Store E-commerce Constructor
 
-A specialized e-commerce and inventory management platform for Judaica stores with full-featured admin dashboard, storefront, and API. **Production-ready with comprehensive deployment documentation.**
+A **configurable multi-store platform** that can power different types of e-commerce stores from a single codebase. Currently supports Judaica stores and car parts stores, with easy configuration to add more store types.
 
-## ✨ Completed Features ✅
+## 🎯 What Makes This Special
+
+**This is not just a store - it's a store constructor!** 
+
+Switch between completely different store types (Judaica, car parts, electronics, fashion, etc.) by changing **one environment variable**. Each store type has:
+
+- ✨ Custom branding & colors
+- 🌍 Multi-language support (EN, HE, RU, AZ)
+- 📦 Pre-configured categories
+- 💱 Custom currency options
+- 🎨 Unique visual identity
+
+**See the full guide:** [STORE_CONSTRUCTOR_GUIDE.md](./STORE_CONSTRUCTOR_GUIDE.md)
+
+### Quick Example
+
+```bash
+# Switch to Judaica store
+NEXT_PUBLIC_STORE_TYPE=judaica
+
+# Switch to Car Parts store  
+NEXT_PUBLIC_STORE_TYPE=car-parts
+
+# Add your own store type in config!
+```
+
+## 📦 Included Store Types
+
+### 1. Judaica Store (Default)
+- Religious books, ritual items, mezuzahs, jewelry
+- Chassidic-inspired colors (burgundy & navy)
+- Perfect for Jewish gift shops
+
+### 2. Car Parts Store
+- Engine parts, brakes, suspension, lighting, body parts
+- Automotive colors (red & blue)
+- Ready for auto parts retailers
+
+### 3. Create Your Own Store
+Follow the [Store Constructor Guide](./STORE_CONSTRUCTOR_GUIDE.md) to add:
+- Electronics stores
+- Fashion boutiques
+- Sports equipment
+- Home goods
+- ...and more!
+
+## ✨ Platform Features
 
 ### Storefront
 - 🏠 Beautiful responsive home page with featured products

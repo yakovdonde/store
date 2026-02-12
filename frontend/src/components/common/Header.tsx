@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
+import { useStoreText } from '@/lib/storeUtils'
 import styles from './Header.module.css'
 
 interface HeaderProps {
@@ -15,12 +16,13 @@ interface HeaderProps {
 export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) {
   const t = useTranslations()
   const locale = useLocale()
+  const storeText = useStoreText(locale)
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         <Link href={`/${locale}`} className={styles.logo}>
-          <h1>{t('common.appName')}</h1>
+          <h1>{storeText.storeName}</h1>
         </Link>
 
         <div className={styles.actions}>

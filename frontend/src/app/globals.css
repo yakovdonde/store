@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* Default colors - will be overridden by DynamicStyles */
+  --color-primary: #8b2635;
+  --color-primary-hover: #6b2d1f;
+  --color-secondary: #1a2847;
+  --color-text: #2c1810;
+  --color-footer-bg: #1a2847;
+  --color-footer-border: #2a3f5f;
+}
+
 html {
   color-scheme: light;
 }
@@ -15,7 +25,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
-  color: #2c1810;
+  color: var(--color-text);
   line-height: 1.6;
 }
 

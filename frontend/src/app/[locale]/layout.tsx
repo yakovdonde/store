@@ -5,27 +5,29 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { AuthProvider } from '@/lib/authContext';
 import { AnalyticsTracker } from '@/components/common';
+import DynamicStyles from '@/components/common/DynamicStyles';
 import { locales } from '@/i18n';
 import { CurrencyProvider } from '@/lib/currency';
+import { activeStoreConfig } from '@/config/storeConfig';
 import '../globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Judaica Store',
-    template: '%s | Judaica Store',
+    default: activeStoreConfig.storeName,
+    template: `%s | ${activeStoreConfig.storeName}`,
   },
-  description: 'Your premier source for Judaica items, ritual objects, and gifts',
+  description: activeStoreConfig.description.en,
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
   openGraph: {
-    title: 'Judaica Store',
-    description: 'Your premier source for Judaica items, ritual objects, and gifts',
+    title: activeStoreConfig.storeName,
+    description: activeStoreConfig.description.en,
     type: 'website',
     url: '/',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Judaica Store',
-    description: 'Your premier source for Judaica items, ritual objects, and gifts',
+    title: activeStoreConfig.storeName,
+    description: activeStoreConfig.description.en,
   },
 };
 
@@ -57,6 +59,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <CurrencyProvider>
             <AuthProvider>
+              <DynamicStyles />
               <AnalyticsTracker />
               {children}
             </AuthProvider>
