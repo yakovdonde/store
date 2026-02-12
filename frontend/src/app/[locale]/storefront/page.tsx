@@ -15,7 +15,7 @@ import styles from './page.module.css'
 export function StorefrontHome() {
   const t = useTranslations()
   const locale = useLocale()
-  const { storeName, storeDescription, storeEmail, storePhone, storeWhatsapp, storeAddress, loading: settingsLoading } = useStoreSettings()
+  const { headerTitle: storeHeaderTitle, bannerTitle, storeDescription, storeEmail, storePhone, storeWhatsapp, storeAddress, loading: settingsLoading } = useStoreSettings()
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
   const [categories, setCategories] = useState<any[]>([])
@@ -150,7 +150,7 @@ export function StorefrontHome() {
       <main className={styles.main}>
         <section className={styles.hero}>
           <div className={styles.heroContent}>
-            <h1>{storeName || 'Welcome to Our Store'}</h1>
+            <h1>{bannerTitle || 'Welcome to Our Store'}</h1>
             <p>{storeDescription || 'Please configure your store in the admin panel'}</p>
           </div>
         </section>

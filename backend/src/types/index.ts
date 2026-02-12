@@ -45,6 +45,17 @@ export interface StoreSettings {
   site_title_az?: string
   site_title_he?: string
   site_title_ru?: string
+  header_title_en?: string
+  header_title_az?: string
+  header_title_he?: string
+  header_title_ru?: string
+  banner_title_en?: string
+  banner_title_az?: string
+  banner_title_he?: string
+  banner_title_ru?: string
+  lang_label_en?: string
+  lang_label_ru?: string
+  lang_label_he?: string
   banner_url?: string
   top_description?: string
   address?: string

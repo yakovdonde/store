@@ -146,6 +146,64 @@ export async function runMigrations() {
       ADD COLUMN IF NOT EXISTS site_title_ru VARCHAR(255)
     `)
 
+    // Add language label customization columns
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS lang_label_en VARCHAR(100)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS lang_label_ru VARCHAR(100)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS lang_label_he VARCHAR(100)
+    `)
+
+    // Add header title columns (top-left display)
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS header_title_en VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS header_title_az VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS header_title_he VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS header_title_ru VARCHAR(255)
+    `)
+
+    // Add banner title columns (hero banner center display)
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_title_en VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_title_az VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_title_he VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_title_ru VARCHAR(255)
+    `)
+
     // No default categories or settings - store starts empty
     console.log('✓ Store will start empty, no default data inserted')
 

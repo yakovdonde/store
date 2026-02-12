@@ -10,6 +10,17 @@ export interface StoreSettings {
   site_title_az?: string
   site_title_he?: string
   site_title_ru?: string
+  header_title_en?: string
+  header_title_az?: string
+  header_title_he?: string
+  header_title_ru?: string
+  banner_title_en?: string
+  banner_title_az?: string
+  banner_title_he?: string
+  banner_title_ru?: string
+  lang_label_en?: string
+  lang_label_ru?: string
+  lang_label_he?: string
   top_description?: string
   banner_url?: string
   email?: string
@@ -89,11 +100,45 @@ export function useStoreSettings() {
     return ''
   }
 
+  // Get locale-specific header title (top-left display)
+  const getHeaderTitle = (): string => {
+    if (!settings) return ''
+    
+    const suffix = getLocaleFieldSuffix(locale)
+    const multilingualField = `header_title_${suffix}` as keyof StoreSettings
+    
+    // Try locale-specific header title first
+    if (settings[multilingualField]) {
+      return settings[multilingualField] as string
+    }
+    
+    // Fall back to store name if no header title set
+    return getStoreName()
+  }
+
+  // Get locale-specific banner title (hero banner center display)
+  const getBannerTitle = (): string => {
+    if (!settings) return ''
+    
+    const suffix = getLocaleFieldSuffix(locale)
+    const multilingualField = `banner_title_${suffix}` as keyof StoreSettings
+    
+    // Try locale-specific banner title first
+    if (settings[multilingualField]) {
+      return settings[multilingualField] as string
+    }
+    
+    // Fall back to store name if no banner title set
+    return getStoreName()
+  }
+
   return {
     settings,
     loading,
     // Return actual values or empty strings (no defaults)
     storeName: getStoreName(),
+    headerTitle: getHeaderTitle(),
+    bannerTitle: getBannerTitle(),
     storeDescription: settings?.top_description || '',
     storeEmail: settings?.email || '',
     storePhone: settings?.phone || '',

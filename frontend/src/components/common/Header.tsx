@@ -16,13 +16,13 @@ interface HeaderProps {
 export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) {
   const t = useTranslations()
   const locale = useLocale()
-  const { storeName } = useStoreSettings()
+  const { headerTitle } = useStoreSettings()
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         <Link href={`/${locale}`} className={styles.logo}>
-          <h1>{storeName || 'Store'}</h1>
+          <h1>{headerTitle || 'Store'}</h1>
         </Link>
 
         <div className={styles.actions}>

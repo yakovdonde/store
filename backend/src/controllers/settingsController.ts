@@ -14,6 +14,14 @@ export const createStoreSettings = asyncHandler(async (req: Request, res: Respon
     site_title_az,
     site_title_he,
     site_title_ru,
+    header_title_en,
+    header_title_az,
+    header_title_he,
+    header_title_ru,
+    banner_title_en,
+    banner_title_az,
+    banner_title_he,
+    banner_title_ru,
     banner_url,
     top_description,
     address,
@@ -24,6 +32,9 @@ export const createStoreSettings = asyncHandler(async (req: Request, res: Respon
     tagline,
     favicon_url,
     primary_color,
+    lang_label_en,
+    lang_label_ru,
+    lang_label_he,
   } = req.body
 
   // updateSettings handles both insert and update
@@ -33,6 +44,14 @@ export const createStoreSettings = asyncHandler(async (req: Request, res: Respon
     site_title_az,
     site_title_he,
     site_title_ru,
+    header_title_en,
+    header_title_az,
+    header_title_he,
+    header_title_ru,
+    banner_title_en,
+    banner_title_az,
+    banner_title_he,
+    banner_title_ru,
     banner_url,
     top_description,
     address,
@@ -43,6 +62,9 @@ export const createStoreSettings = asyncHandler(async (req: Request, res: Respon
     tagline,
     favicon_url,
     primary_color,
+    lang_label_en,
+    lang_label_ru,
+    lang_label_he,
   })
 
   res.json({ success: true, data: created })
@@ -55,6 +77,14 @@ export const updateStoreSettings = asyncHandler(async (req: Request, res: Respon
     site_title_az,
     site_title_he,
     site_title_ru,
+    header_title_en,
+    header_title_az,
+    header_title_he,
+    header_title_ru,
+    banner_title_en,
+    banner_title_az,
+    banner_title_he,
+    banner_title_ru,
     banner_url,
     top_description,
     address,
@@ -65,6 +95,9 @@ export const updateStoreSettings = asyncHandler(async (req: Request, res: Respon
     tagline,
     favicon_url,
     primary_color,
+    lang_label_en,
+    lang_label_ru,
+    lang_label_he,
   } = req.body
 
   const updated = await updateSettings({
@@ -73,6 +106,14 @@ export const updateStoreSettings = asyncHandler(async (req: Request, res: Respon
     site_title_az,
     site_title_he,
     site_title_ru,
+    header_title_en,
+    header_title_az,
+    header_title_he,
+    header_title_ru,
+    banner_title_en,
+    banner_title_az,
+    banner_title_he,
+    banner_title_ru,
     banner_url,
     top_description,
     address,
@@ -83,6 +124,9 @@ export const updateStoreSettings = asyncHandler(async (req: Request, res: Respon
     tagline,
     favicon_url,
     primary_color,
+    lang_label_en,
+    lang_label_ru,
+    lang_label_he,
   })
 
   res.json({ success: true, data: updated })
