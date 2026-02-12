@@ -4,6 +4,15 @@ import { getSettings, updateSettings } from '@/models/settings'
 
 export const getStoreSettings = asyncHandler(async (req: Request, res: Response) => {
   const settings = await getSettings()
+  
+  // Prevent caching to ensure fresh settings
+  res.set({
+    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0',
+    'Surrogate-Control': 'no-store'
+  })
+  
   res.json({ success: true, data: settings })
 })
 

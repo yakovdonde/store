@@ -68,6 +68,9 @@ export default function BrandingPage() {
   const [error, setError] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [modalType, setModalType] = useState<'success' | 'error'>('success')
+  const [uploadingLogo, setUploadingLogo] = useState(false)
+  const [uploadingFavicon, setUploadingFavicon] = useState(false)
+  const [uploadingBannerBg, setUploadingBannerBg] = useState(false)
 
   // Fetch branding settings on mount
   useEffect(() => {
@@ -122,6 +125,96 @@ export default function BrandingPage() {
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploadingLogo(true)
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('image', file)
+
+      const response = await apiClient.post('/upload/upload', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      if (response.data.success) {
+        const imageUrl = response.data.data.imageUrl
+        setFormData((prev) => ({
+          ...prev,
+          logo_url: imageUrl,
+        }))
+      }
+    } catch (error) {
+      console.error('Logo upload failed:', error)
+      setError(t('logoUploadFailed'))
+    } finally {
+      setUploadingLogo(false)
+    }
+  }
+
+  const handleFaviconUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploadingFavicon(true)
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('image', file)
+
+      const response = await apiClient.post('/upload/upload', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      if (response.data.success) {
+        const imageUrl = response.data.data.imageUrl
+        setFormData((prev) => ({
+          ...prev,
+          favicon_url: imageUrl,
+        }))
+      }
+    } catch (error) {
+      console.error('Favicon upload failed:', error)
+      setError(t('faviconUploadFailed'))
+    } finally {
+      setUploadingFavicon(false)
+    }
+  }
+
+  const handleBannerBgUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploadingBannerBg(true)
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('image', file)
+
+      const response = await apiClient.post('/upload/upload', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      if (response.data.success) {
+        const imageUrl = response.data.data.imageUrl
+        setFormData((prev: any) => ({
+          ...prev,
+          banner_background_image: imageUrl,
+        }))
+      }
+    } catch (error) {
+      console.error('Banner background upload failed:', error)
+      setError(t('bannerBgUploadFailed'))
+    } finally {
+      setUploadingBannerBg(false)
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -507,15 +600,38 @@ export default function BrandingPage() {
 
           <div className={styles.formGroup}>
             <label htmlFor="banner_background_image">{t('bannerBackgroundImage')}</label>
-            <input
-              type="url"
-              id="banner_background_image"
-              name="banner_background_image"
-              value={formData.banner_background_image}
-              onChange={handleChange}
-              disabled={isSaving}
-              placeholder="https://example.com/banner-bg.jpg"
-            />
+            <div style={{ marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                <div style={{ flex: 1 }}>
+                  <input
+                    type="file"
+                    id="banner_bg_upload"
+                    accept="image/*"
+                    onChange={handleBannerBgUpload}
+                    disabled={uploadingBannerBg || isSaving}
+                    style={{ marginBottom: '0.5rem' }}
+                  />
+                  {uploadingBannerBg && <p style={{ fontSize: '0.9rem', color: '#3498db', margin: '0.5rem 0' }}>{tCommon('uploading')}</p>}
+                </div>
+              </div>
+              <small style={{ display: 'block', color: '#60a5fa', marginBottom: '0.75rem' }}>
+                {t('bannerBgResolution')}
+              </small>
+              <div style={{ marginTop: '0.5rem', paddingTop: '0.75rem', borderTop: '1px solid #e5e7eb' }}>
+                <label htmlFor="banner_background_image" style={{ fontSize: '0.9rem', color: '#6b7280', display: 'block', marginBottom: '0.5rem' }}>
+                  {t('orEnterUrl')}
+                </label>
+                <input
+                  type="url"
+                  id="banner_background_image"
+                  name="banner_background_image"
+                  value={formData.banner_background_image}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                  placeholder="https://example.com/banner-bg.jpg"
+                />
+              </div>
+            </div>
             <small>{t('bannerBackgroundImageHint')}</small>
             {formData.banner_background_image && (
               <div className={styles.preview}>
@@ -528,15 +644,38 @@ export default function BrandingPage() {
         <div className={styles.formSection}>
           <div className={styles.formGroup}>
             <label htmlFor="logo_url">{t('logoUrl')}</label>
-            <input
-              type="url"
-              id="logo_url"
-              name="logo_url"
-              value={formData.logo_url}
-              onChange={handleChange}
-              disabled={isSaving}
-              placeholder="https://example.com/logo.png"
-            />
+            <div style={{ marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                <div style={{ flex: 1 }}>
+                  <input
+                    type="file"
+                    id="logo_upload"
+                    accept="image/*"
+                    onChange={handleLogoUpload}
+                    disabled={uploadingLogo || isSaving}
+                    style={{ marginBottom: '0.5rem' }}
+                  />
+                  {uploadingLogo && <p style={{ fontSize: '0.9rem', color: '#3498db', margin: '0.5rem 0' }}>{tCommon('uploading')}</p>}
+                </div>
+              </div>
+              <small style={{ display: 'block', color: '#60a5fa', marginBottom: '0.75rem' }}>
+                {t('logoResolution')}
+              </small>
+              <div style={{ marginTop: '0.5rem', paddingTop: '0.75rem', borderTop: '1px solid #e5e7eb' }}>
+                <label htmlFor="logo_url" style={{ fontSize: '0.9rem', color: '#6b7280', display: 'block', marginBottom: '0.5rem' }}>
+                  {t('orEnterUrl')}
+                </label>
+                <input
+                  type="url"
+                  id="logo_url"
+                  name="logo_url"
+                  value={formData.logo_url}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                  placeholder="https://example.com/logo.png"
+                />
+              </div>
+            </div>
             <small>{t('logoUrlHint')}</small>
             {formData.logo_url && (
               <div className={styles.preview}>
@@ -562,16 +701,44 @@ export default function BrandingPage() {
 
           <div className={styles.formGroup}>
             <label htmlFor="favicon_url">{t('faviconUrl')}</label>
-            <input
-              type="url"
-              id="favicon_url"
-              name="favicon_url"
-              value={formData.favicon_url}
-              onChange={handleChange}
-              disabled={isSaving}
-              placeholder="https://example.com/favicon.ico"
-            />
+            <div style={{ marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                <div style={{ flex: 1 }}>
+                  <input
+                    type="file"
+                    id="favicon_upload"
+                    accept="image/*"
+                    onChange={handleFaviconUpload}
+                    disabled={uploadingFavicon || isSaving}
+                    style={{ marginBottom: '0.5rem' }}
+                  />
+                  {uploadingFavicon && <p style={{ fontSize: '0.9rem', color: '#3498db', margin: '0.5rem 0' }}>{tCommon('uploading')}</p>}
+                </div>
+              </div>
+              <small style={{ display: 'block', color: '#60a5fa', marginBottom: '0.75rem' }}>
+                {t('faviconResolution')}
+              </small>
+              <div style={{ marginTop: '0.5rem', paddingTop: '0.75rem', borderTop: '1px solid #e5e7eb' }}>
+                <label htmlFor="favicon_url" style={{ fontSize: '0.9rem', color: '#6b7280', display: 'block', marginBottom: '0.5rem' }}>
+                  {t('orEnterUrl')}
+                </label>
+                <input
+                  type="url"
+                  id="favicon_url"
+                  name="favicon_url"
+                  value={formData.favicon_url}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                  placeholder="https://example.com/favicon.ico"
+                />
+              </div>
+            </div>
             <small>{t('faviconUrlHint')}</small>
+            {formData.favicon_url && (
+              <div className={styles.preview}>
+                <img src={formData.favicon_url} alt="Favicon Preview" style={{ width: '32px', height: '32px' }} />
+              </div>
+            )}
           </div>
 
           <div className={styles.formGroup}>

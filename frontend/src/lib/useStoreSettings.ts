@@ -50,13 +50,21 @@ export function useStoreSettings() {
   const locale = useLocale()
   const [settings, setSettings] = useState<StoreSettings | null>(null)
   const [loading, setLoading] = useState(true)
+  const [refetchTrigger, setRefetchTrigger] = useState(0)
 
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch('/api/settings', {
+        // Add cache-busting to ensure fresh data
+        const timestamp = new Date().getTime()
+        const response = await fetch(`/api/settings?_t=${timestamp}`, {
           method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+          },
         })
 
         if (response.ok) {
@@ -73,7 +81,7 @@ export function useStoreSettings() {
     }
 
     fetchSettings()
-  }, [])
+  }, [refetchTrigger])
 
   // Map locale to field suffix
   const getLocaleFieldSuffix = (locale: string): string => {
@@ -154,9 +162,16 @@ export function useStoreSettings() {
     return ''
   }
 
+  // Function to manually refetch settings
+  const refetch = () => {
+    setLoading(true)
+    setRefetchTrigger((prev: number) => prev + 1)
+  }
+
   return {
     settings,
     loading,
+    refetch,
     // Return actual values or empty strings (no defaults)
     storeName: getStoreName(),
     headerTitle: getHeaderTitle(),
