@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useTranslations } from 'next-intl'
 import styles from './SetupForm.module.css'
 
 interface SetupFormProps {
@@ -9,7 +8,6 @@ interface SetupFormProps {
 }
 
 export default function SetupForm({ onComplete }: SetupFormProps) {
-  const t = useTranslations()
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     storeName: '',

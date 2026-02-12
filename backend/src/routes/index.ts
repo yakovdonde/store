@@ -6,6 +6,7 @@ import settingsRoutes from './settings'
 import uploadRoutes from './upload'
 import userRoutes from './users'
 import analyticsRoutes from './analytics'
+import setupRoutes from './setup'
 
 const router = Router()
 
@@ -16,6 +17,7 @@ router.use('/settings', settingsRoutes)
 router.use('/upload', uploadRoutes)
 router.use('/users', userRoutes)
 router.use('/analytics', analyticsRoutes)
+router.use('/admin/setup', setupRoutes)
 
 // Health check
 router.get('/health', (req, res) => {
