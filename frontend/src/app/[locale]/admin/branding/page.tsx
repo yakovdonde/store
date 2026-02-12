@@ -19,9 +19,6 @@ interface BrandingSettings {
   banner_title_az?: string
   banner_title_he?: string
   banner_title_ru?: string
-  lang_label_en?: string
-  lang_label_ru?: string
-  lang_label_he?: string
   logo_url?: string
   tagline?: string
   favicon_url?: string
@@ -47,9 +44,6 @@ export default function BrandingPage() {
     banner_title_az: '',
     banner_title_he: '',
     banner_title_ru: '',
-    lang_label_en: '',
-    lang_label_ru: '',
-    lang_label_he: '',
     logo_url: '',
     tagline: '',
     favicon_url: '',
@@ -87,9 +81,6 @@ export default function BrandingPage() {
               banner_title_az: setting.banner_title_az || '',
               banner_title_he: setting.banner_title_he || '',
               banner_title_ru: setting.banner_title_ru || '',
-              lang_label_en: setting.lang_label_en || '',
-              lang_label_ru: setting.lang_label_ru || '',
-              lang_label_he: setting.lang_label_he || '',
               logo_url: setting.logo_url || '',
               tagline: setting.tagline || '',
               favicon_url: setting.favicon_url || '',
@@ -248,58 +239,6 @@ export default function BrandingPage() {
                 maxLength={255}
               />
               <small>{t('titleHint')}</small>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.formSection}>
-          <h3 className={styles.sectionTitle}>{t('languageLabels')}</h3>
-          <p className={styles.sectionDescription}>{t('languageLabelsDescription')}</p>
-
-          <div className={styles.languagesGrid}>
-            <div className={styles.formGroup}>
-              <label htmlFor="lang_label_en">{t('languageLabelEnglish')}</label>
-              <input
-                type="text"
-                id="lang_label_en"
-                name="lang_label_en"
-                value={formData.lang_label_en}
-                onChange={handleChange}
-                disabled={isSaving}
-                placeholder="e.g., Eng, English"
-                maxLength={50}
-              />
-              <small>{t('languageLabelHint')}</small>
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="lang_label_ru">{t('languageLabelRussian')}</label>
-              <input
-                type="text"
-                id="lang_label_ru"
-                name="lang_label_ru"
-                value={formData.lang_label_ru}
-                onChange={handleChange}
-                disabled={isSaving}
-                placeholder="e.g., Рус, Русский"
-                maxLength={50}
-              />
-              <small>{t('languageLabelHint')}</small>
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="lang_label_he">{t('languageLabelHebrew')}</label>
-              <input
-                type="text"
-                id="lang_label_he"
-                name="lang_label_he"
-                value={formData.lang_label_he}
-                onChange={handleChange}
-                disabled={isSaving}
-                placeholder="e.g., עב, עברית"
-                maxLength={50}
-              />
-              <small>{t('languageLabelHint')}</small>
             </div>
           </div>
         </div>
