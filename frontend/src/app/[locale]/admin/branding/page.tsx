@@ -38,6 +38,8 @@ export default function BrandingPage() {
   const [isSaving, setIsSaving] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  const [modalType, setModalType] = useState<'success' | 'error'>('success')
 
   // Fetch branding settings on mount
   useEffect(() => {
@@ -92,10 +94,16 @@ export default function BrandingPage() {
       if (response.data.success) {
         setBranding(response.data.data)
         setMessage(t('brandingSaved'))
-        setTimeout(() => setMessage(''), 3000)
+        setModalType('success')
+        setShowModal(true)
+        setTimeout(() => setShowModal(false), 3000)
       }
     } catch (err: any) {
-      setError(err.response?.data?.error || t('failedToSave'))
+      const errorMsg = err.response?.data?.error || t('failedToSave')
+      setError(errorMsg)
+      setMessage(errorMsg)
+      setModalType('error')
+      setShowModal(true)
     } finally {
       setIsSaving(false)
     }
@@ -115,10 +123,27 @@ export default function BrandingPage() {
       <h1>{t('title')}</h1>
       <p className={styles.description}>{t('description')}</p>
 
-      {message && (
-        <div className={styles.successMessage}>{message}</div>
+      {showModal && (
+        <div className={styles.modalOverlay}>
+          <div className={`${styles.modal} ${styles[`modal${modalType === 'success' ? 'Success' : 'Error'}`]}`}>
+            <div className={styles.modalContent}>
+              <div className={styles.modalIcon}>
+                {modalType === 'success' ? '✓' : '✕'}
+              </div>
+              <h2 className={styles.modalTitle}>
+                {modalType === 'success' ? tCommon('success') : tCommon('error')}
+              </h2>
+              <p className={styles.modalMessage}>{message}</p>
+              <button
+                onClick={() => setShowModal(false)}
+                className={styles.modalButton}
+              >
+                {tCommon('cancel')}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
-      {error && <div className={styles.errorMessage}>{error}</div>}
 
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formSection}>
