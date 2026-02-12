@@ -3,7 +3,8 @@ import * as setupController from '@/controllers/setupController'
 
 const router = Router()
 
-// Public setup route (no authentication required for initial setup)
+// Public setup routes
+router.get('/', setupController.getSetupConfig)
 router.post('/', setupController.completeSetup)
 
 export default router

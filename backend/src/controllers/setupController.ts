@@ -1,7 +1,29 @@
 import { Request, Response } from 'express'
 import { asyncHandler } from '@/middleware/errorHandler'
-import { updateSettings } from '@/models/settings'
+import { updateSettings, getSettings } from '@/models/settings'
 import { query } from '@/config/database'
+
+export const getSetupConfig = asyncHandler(async (req: Request, res: Response) => {
+  console.log('Getting setup configuration')
+  
+  try {
+    const settings = await getSettings()
+    console.log('Retrieved settings:', settings)
+    
+    // Return setup config if it exists, otherwise return basic settings
+    res.json({
+      success: true,
+      data: settings,
+    })
+  } catch (error) {
+    console.error('Error retrieving setup config:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to retrieve setup configuration',
+      error: error instanceof Error ? error.message : 'Unknown error',
+    })
+  }
+})
 
 export const completeSetup = asyncHandler(async (req: Request, res: Response) => {
   console.log('Setup endpoint hit with body:', JSON.stringify(req.body, null, 2))
