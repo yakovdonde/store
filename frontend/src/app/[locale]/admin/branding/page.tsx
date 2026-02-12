@@ -19,6 +19,10 @@ interface BrandingSettings {
   banner_title_az?: string
   banner_title_he?: string
   banner_title_ru?: string
+  banner_description_en?: string
+  banner_description_az?: string
+  banner_description_he?: string
+  banner_description_ru?: string
   logo_url?: string
   tagline?: string
   favicon_url?: string
@@ -44,6 +48,10 @@ export default function BrandingPage() {
     banner_title_az: '',
     banner_title_he: '',
     banner_title_ru: '',
+    banner_description_en: '',
+    banner_description_az: '',
+    banner_description_he: '',
+    banner_description_ru: '',
     logo_url: '',
     tagline: '',
     favicon_url: '',
@@ -81,6 +89,10 @@ export default function BrandingPage() {
               banner_title_az: setting.banner_title_az || '',
               banner_title_he: setting.banner_title_he || '',
               banner_title_ru: setting.banner_title_ru || '',
+              banner_description_en: setting.banner_description_en || '',
+              banner_description_az: setting.banner_description_az || '',
+              banner_description_he: setting.banner_description_he || '',
+              banner_description_ru: setting.banner_description_ru || '',
               logo_url: setting.logo_url || '',
               tagline: setting.tagline || '',
               favicon_url: setting.favicon_url || '',
@@ -373,6 +385,73 @@ export default function BrandingPage() {
                 maxLength={255}
               />
               <small>{t('bannerTitleHint')}</small>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.formSection}>
+          <h3 className={styles.sectionTitle}>{t('bannerDescriptions')}</h3>
+          <p className={styles.sectionDescription}>{t('bannerDescriptionsDescription')}</p>
+
+          <div className={styles.languagesGrid}>
+            <div className={styles.formGroup}>
+              <label htmlFor="banner_description_en">{t('bannerDescriptionEnglish')}</label>
+              <textarea
+                id="banner_description_en"
+                name="banner_description_en"
+                value={formData.banner_description_en}
+                onChange={handleChange}
+                disabled={isSaving}
+                placeholder={t('bannerDescriptionPlaceholder')}
+                rows={3}
+                maxLength={500}
+              />
+              <small>{t('bannerDescriptionHint')}</small>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="banner_description_az">{t('bannerDescriptionAzerbaijani')}</label>
+              <textarea
+                id="banner_description_az"
+                name="banner_description_az"
+                value={formData.banner_description_az}
+                onChange={handleChange}
+                disabled={isSaving}
+                placeholder={t('bannerDescriptionPlaceholder')}
+                rows={3}
+                maxLength={500}
+              />
+              <small>{t('bannerDescriptionHint')}</small>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="banner_description_he">{t('bannerDescriptionHebrew')}</label>
+              <textarea
+                id="banner_description_he"
+                name="banner_description_he"
+                value={formData.banner_description_he}
+                onChange={handleChange}
+                disabled={isSaving}
+                placeholder={t('bannerDescriptionPlaceholder')}
+                rows={3}
+                maxLength={500}
+              />
+              <small>{t('bannerDescriptionHint')}</small>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="banner_description_ru">{t('bannerDescriptionRussian')}</label>
+              <textarea
+                id="banner_description_ru"
+                name="banner_description_ru"
+                value={formData.banner_description_ru}
+                onChange={handleChange}
+                disabled={isSaving}
+                placeholder={t('bannerDescriptionPlaceholder')}
+                rows={3}
+                maxLength={500}
+              />
+              <small>{t('bannerDescriptionHint')}</small>
             </div>
           </div>
         </div>

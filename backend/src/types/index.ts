@@ -53,6 +53,10 @@ export interface StoreSettings {
   banner_title_az?: string
   banner_title_he?: string
   banner_title_ru?: string
+  banner_description_en?: string
+  banner_description_az?: string
+  banner_description_he?: string
+  banner_description_ru?: string
   lang_label_en?: string
   lang_label_ru?: string
   lang_label_he?: string

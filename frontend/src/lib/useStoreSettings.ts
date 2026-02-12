@@ -18,6 +18,10 @@ export interface StoreSettings {
   banner_title_az?: string
   banner_title_he?: string
   banner_title_ru?: string
+  banner_description_en?: string
+  banner_description_az?: string
+  banner_description_he?: string
+  banner_description_ru?: string
   lang_label_en?: string
   lang_label_ru?: string
   lang_label_he?: string
@@ -132,6 +136,22 @@ export function useStoreSettings() {
     return ''
   }
 
+  // Get locale-specific banner description (hero banner description)
+  const getBannerDescription = (): string => {
+    if (!settings) return ''
+    
+    const suffix = getLocaleFieldSuffix(locale)
+    const multilingualField = `banner_description_${suffix}` as keyof StoreSettings
+    
+    // Return locale-specific banner description or empty string if not set
+    if (settings[multilingualField]) {
+      return settings[multilingualField] as string
+    }
+    
+    // Return empty string if no banner description set
+    return ''
+  }
+
   return {
     settings,
     loading,
@@ -139,6 +159,7 @@ export function useStoreSettings() {
     storeName: getStoreName(),
     headerTitle: getHeaderTitle(),
     bannerTitle: getBannerTitle(),
+    bannerDescription: getBannerDescription(),
     storeDescription: settings?.top_description || '',
     storeEmail: settings?.email || '',
     storePhone: settings?.phone || '',

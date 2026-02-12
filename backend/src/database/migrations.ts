@@ -204,6 +204,27 @@ export async function runMigrations() {
       ADD COLUMN IF NOT EXISTS banner_title_ru VARCHAR(255)
     `)
 
+    // Add banner description columns (hero banner description)
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_description_en TEXT
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_description_az TEXT
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_description_he TEXT
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_description_ru TEXT
+    `)
+
     // No default categories or settings - store starts empty
     console.log('✓ Store will start empty, no default data inserted')
 
