@@ -9,6 +9,7 @@ import DynamicStyles from '@/components/common/DynamicStyles';
 import { locales } from '@/i18n';
 import { CurrencyProvider } from '@/lib/currency';
 import { activeStoreConfig } from '@/config/storeConfig';
+import { resolveImageUrl } from '@/lib/config';
 import '../globals.css';
 
 export async function generateMetadata({
@@ -83,7 +84,7 @@ export async function generateMetadata({
 
   if (faviconUrl) {
     metadata.icons = {
-      icon: faviconUrl,
+      icon: resolveImageUrl(faviconUrl),
     };
   }
 

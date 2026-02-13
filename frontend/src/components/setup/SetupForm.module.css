@@ -79,7 +79,7 @@
 .formGroup textarea:focus,
 .formGroup select:focus {
   outline: none;
-  border-color: #8b2635;
+  border-color: var(--color-primary, #8b2635);
   background-color: #fff;
   box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1);
 }
@@ -334,13 +334,13 @@
 }
 
 .primaryBtn {
-  background: #8b2635;
+  background: var(--color-primary, #8b2635);
   color: white;
   grid-column: 2;
 }
 
 .primaryBtn:hover {
-  background: #6b2d1f;
+  background: var(--color-primary-hover, #6b2d1f);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(139, 38, 53, 0.2);
 }

@@ -42,7 +42,7 @@
   font-size: 0.9375rem;
   font-weight: 500;
   color: white;
-  background-color: #8b2635;
+  background-color: var(--color-primary, #8b2635);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -51,7 +51,7 @@
 }
 
 .submitBtn:hover:not(:disabled) {
-  background-color: #6b2d1f;
+  background-color: var(--color-primary-hover, #6b2d1f);
 }
 
 .submitBtn:disabled {

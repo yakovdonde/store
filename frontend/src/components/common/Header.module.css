@@ -97,7 +97,7 @@
 }
 
 .navLink:hover {
-  color: #8b2635;
+  color: var(--color-primary, #8b2635);
 }
 
 .actions {
@@ -107,7 +107,7 @@
 }
 
 .cartButton {
-  background-color: #8b2635;
+  background-color: var(--color-primary, #8b2635);
   color: white;
   border: none;
   padding: 0.625rem 1.125rem;
@@ -119,7 +119,7 @@
 }
 
 .cartButton:hover {
-  background-color: #6b2d1f;
+  background-color: var(--color-primary-hover, #6b2d1f);
 }
 
 .mobileMenuToggle {

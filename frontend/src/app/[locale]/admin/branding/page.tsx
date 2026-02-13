@@ -116,8 +116,10 @@ export default function BrandingPage() {
   const [bannerBgUploadProgress, setBannerBgUploadProgress] = useState(0)
   const [bannerBgSource, setBannerBgSource] = useState<'upload' | 'url'>('upload')
   const [logoSource, setLogoSource] = useState<'upload' | 'url'>('upload')
+  const [faviconSource, setFaviconSource] = useState<'upload' | 'url'>('upload')
   const bannerBgPreviewUrl = resolveImageUrl(formData.banner_background_image)
   const logoPreviewUrl = resolveImageUrl(formData.logo_url)
+  const faviconPreviewUrl = resolveImageUrl(formData.favicon_url)
 
   // Fetch branding settings on mount
   useEffect(() => {
@@ -133,6 +135,9 @@ export default function BrandingPage() {
               ? 'url'
               : 'upload'
             const initialLogoSource = /^https?:\/\//i.test(setting.logo_url || '')
+              ? 'url'
+              : 'upload'
+            const initialFaviconSource = /^https?:\/\//i.test(setting.favicon_url || '')
               ? 'url'
               : 'upload'
 
@@ -173,6 +178,7 @@ export default function BrandingPage() {
             })
             setBannerBgSource(initialBannerBgSource)
             setLogoSource(initialLogoSource)
+            setFaviconSource(initialFaviconSource)
           }
         }
       } catch (err: any) {
@@ -225,6 +231,7 @@ export default function BrandingPage() {
   }
 
   const handleFaviconUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (faviconSource !== 'upload') return
     const file = e.target.files?.[0]
     if (!file) return
 
@@ -308,6 +315,14 @@ export default function BrandingPage() {
     }))
   }
 
+  const handleFaviconSourceChange = (source: 'upload' | 'url') => {
+    setFaviconSource(source)
+    setFormData((prev) => ({
+      ...prev,
+      favicon_url: '',
+    }))
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSaving(true)
@@ -334,6 +349,11 @@ export default function BrandingPage() {
         setModalType('success')
         setShowModal(true)
         setTimeout(() => setShowModal(false), 3000)
+        
+        // Trigger dynamic styles update
+        window.dispatchEvent(new CustomEvent('brandingUpdated', { 
+          detail: { primary_color: response.data.data.primary_color }
+        }))
       }
     } catch (err: any) {
       const errorMsg = err.response?.data?.error || t('failedToSave')
@@ -1105,41 +1125,86 @@ export default function BrandingPage() {
           <div className={styles.formGroup}>
             <label htmlFor="favicon_url">{t('faviconUrl')}</label>
             <div style={{ marginBottom: '1rem' }}>
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
-                <div style={{ flex: 1 }}>
-                  <input
-                    type="file"
-                    id="favicon_upload"
-                    accept="image/*"
-                    onChange={handleFaviconUpload}
-                    disabled={uploadingFavicon || isSaving}
-                    style={{ marginBottom: '0.5rem' }}
-                  />
-                  {uploadingFavicon && <p style={{ fontSize: '0.9rem', color: '#3498db', margin: '0.5rem 0' }}>{tCommon('uploading')}</p>}
+              <div style={{ marginBottom: '0.75rem' }}>
+                <span style={{ display: 'block', fontSize: '0.9rem', color: '#374151', marginBottom: '0.5rem' }}>
+                  {t('faviconSourceLabel')}
+                </span>
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <input
+                      type="radio"
+                      name="favicon_source"
+                      value="upload"
+                      checked={faviconSource === 'upload'}
+                      onChange={() => handleFaviconSourceChange('upload')}
+                      disabled={isSaving}
+                    />
+                    {t('faviconSourceUpload')}
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <input
+                      type="radio"
+                      name="favicon_source"
+                      value="url"
+                      checked={faviconSource === 'url'}
+                      onChange={() => handleFaviconSourceChange('url')}
+                      disabled={isSaving}
+                    />
+                    {t('faviconSourceUrl')}
+                  </label>
                 </div>
+                <small style={{ display: 'block', color: '#6b7280', marginTop: '0.4rem' }}>
+                  {t('faviconSourceHint')}
+                </small>
               </div>
-              <small style={{ display: 'block', color: '#60a5fa', marginBottom: '0.75rem' }}>
-                {t('faviconResolution')}
-              </small>
-              <div style={{ marginTop: '0.5rem', paddingTop: '0.75rem', borderTop: '1px solid #e5e7eb' }}>
-                <label htmlFor="favicon_url" style={{ fontSize: '0.9rem', color: '#6b7280', display: 'block', marginBottom: '0.5rem' }}>
-                  {t('orEnterUrl')}
-                </label>
-                <input
-                  type="url"
-                  id="favicon_url"
-                  name="favicon_url"
-                  value={formData.favicon_url}
-                  onChange={handleChange}
-                  disabled={isSaving}
-                  placeholder="https://example.com/favicon.ico"
-                />
-              </div>
+
+              {faviconSource === 'upload' && (
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                  <div style={{ flex: 1 }}>
+                    <input
+                      type="file"
+                      id="favicon_upload"
+                      accept="image/*"
+                      onChange={handleFaviconUpload}
+                      disabled={uploadingFavicon || isSaving}
+                      style={{ marginBottom: '0.5rem' }}
+                    />
+                    {uploadingFavicon && (
+                      <p style={{ fontSize: '0.9rem', color: '#3498db', margin: '0.5rem 0' }}>
+                        {tCommon('uploading')}
+                      </p>
+                    )}
+                    <small style={{ display: 'block', color: '#60a5fa', marginBottom: '0.75rem' }}>
+                      {t('faviconResolution')}
+                    </small>
+                  </div>
+                </div>
+              )}
+
+              {faviconSource === 'url' && (
+                <div style={{ marginTop: '0.5rem' }}>
+                  <label
+                    htmlFor="favicon_url"
+                    style={{ fontSize: '0.9rem', color: '#6b7280', display: 'block', marginBottom: '0.5rem' }}
+                  >
+                    {t('faviconSourceUrl')}
+                  </label>
+                  <input
+                    type="url"
+                    id="favicon_url"
+                    name="favicon_url"
+                    value={formData.favicon_url}
+                    onChange={handleChange}
+                    disabled={isSaving}
+                    placeholder="https://example.com/favicon.ico"
+                  />
+                </div>
+              )}
             </div>
             <small>{t('faviconUrlHint')}</small>
-            {formData.favicon_url && (
+            {faviconPreviewUrl && (
               <div className={styles.preview}>
-                <img src={formData.favicon_url} alt="Favicon Preview" style={{ width: '32px', height: '32px' }} />
+                <img src={faviconPreviewUrl} alt="Favicon Preview" style={{ width: '32px', height: '32px' }} />
               </div>
             )}
           </div>

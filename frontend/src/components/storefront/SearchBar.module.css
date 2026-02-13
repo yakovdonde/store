@@ -82,13 +82,13 @@
 }
 
 .searchBtn {
-  background: #8b2635;
+  background: var(--color-primary, #8b2635);
   color: white;
   flex: 1;
 }
 
 .searchBtn:hover {
-  background: #6b2d1f;
+  background: var(--color-primary-hover, #6b2d1f);
 }
 
 .resetBtn {
@@ -100,7 +100,7 @@
 .resetBtn:hover {
   background: #fafafa;
   border-color: #a3a3a3;
-  color: #8b2635;
+  color: var(--color-primary, #8b2635);
 }
 
 .loading {

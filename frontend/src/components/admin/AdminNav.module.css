@@ -28,8 +28,8 @@
 
 .navLink:hover {
   background-color: #faf5f3;
-  border-left-color: #8b2635;
-  color: #8b2635;
+  border-left-color: var(--color-primary, #8b2635);
+  color: var(--color-primary, #8b2635);
 }
 
 .divider {

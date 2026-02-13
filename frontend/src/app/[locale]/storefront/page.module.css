@@ -76,18 +76,18 @@
 .categoryFilterBtn:hover {
   background-color: #fafafa;
   border-color: #a3a3a3;
-  color: #8b2635;
+  color: var(--color-primary, #8b2635);
 }
 
 .categoryFilterBtn.active {
-  background-color: #8b2635;
+  background-color: var(--color-primary, #8b2635);
   color: white;
-  border-color: #8b2635;
+  border-color: var(--color-primary, #8b2635);
 }
 
 .categoryFilterBtn.active:hover {
-  background-color: #6b2d1f;
-  border-color: #6b2d1f;
+  background-color: var(--color-primary-hover, #6b2d1f);
+  border-color: var(--color-primary-hover, #6b2d1f);
 }
 
 @media (max-width: 768px) {
