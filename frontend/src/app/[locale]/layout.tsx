@@ -69,6 +69,9 @@ export async function generateMetadata({
     },
     description,
     metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
+    icons: {
+      icon: faviconUrl ? resolveImageUrl(faviconUrl) : '/favicon.svg',
+    },
     openGraph: {
       title: storeName,
       description,
@@ -81,12 +84,6 @@ export async function generateMetadata({
       description,
     },
   };
-
-  if (faviconUrl) {
-    metadata.icons = {
-      icon: resolveImageUrl(faviconUrl),
-    };
-  }
 
   return metadata;
 }

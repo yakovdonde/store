@@ -1,34 +1,26 @@
-import { NextRequest, NextResponse } from 'next/server';
+import createMiddleware from 'next-intl/middleware';
 import { locales, defaultLocale } from '@/i18n';
 
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+export default createMiddleware({
+  // A list of all locales that are supported
+  locales,
 
-  // Check if the pathname already starts with a supported locale
-  const pathnameHasLocale = locales.some(locale => 
-    pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  );
-
-  if (pathnameHasLocale) {
-    // Pathname already has a locale, let it through
-    return NextResponse.next();
-  }
-
-  // If it's the root path, redirect to the default locale
-  if (pathname === '/') {
-    return NextResponse.redirect(
-      new URL(`/${defaultLocale}`, request.url)
-    );
-  }
-
-  // For any other path without a locale, redirect to the path with the default locale
-  return NextResponse.redirect(
-    new URL(`/${defaultLocale}${pathname}`, request.url)
-  );
-}
+  // Used when no locale matches
+  defaultLocale,
+  
+  // Always use prefix for the default locale as well
+  localePrefix: 'always'
+});
 
 export const config = {
   // Match all paths except static assets and Next.js internals
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|public).*)']
+  matcher: [
+    // Match all pathnames except for
+    // - … if they start with `/api`, `/_next` or `/_vercel`
+    // - … the ones containing a dot (e.g. `favicon.ico`)
+    '/((?!api|_next|_vercel|.*\\..*).*)',
+    // However, match all pathnames within `/api`, except for Next.js internals
+    '/(api|trpc)(.*)'
+  ]
 };
 

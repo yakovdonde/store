@@ -323,6 +323,33 @@ export default function BrandingPage() {
     }))
   }
 
+  const handleDeleteBannerBg = () => {
+    if (window.confirm(t('confirmDeleteBannerBg'))) {
+      setFormData((prev) => ({
+        ...prev,
+        banner_background_image: '',
+      }))
+    }
+  }
+
+  const handleDeleteLogo = () => {
+    if (window.confirm(t('confirmDeleteLogo'))) {
+      setFormData((prev) => ({
+        ...prev,
+        logo_url: '',
+      }))
+    }
+  }
+
+  const handleDeleteFavicon = () => {
+    if (window.confirm(t('confirmDeleteFavicon'))) {
+      setFormData((prev) => ({
+        ...prev,
+        favicon_url: '',
+      }))
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSaving(true)
@@ -1014,6 +1041,24 @@ export default function BrandingPage() {
             {bannerBgPreviewUrl && (
               <div className={styles.preview}>
                 <img src={bannerBgPreviewUrl} alt="Banner Background Preview" />
+                <button
+                  type="button"
+                  onClick={handleDeleteBannerBg}
+                  className={styles.deleteButton}
+                  disabled={isSaving}
+                  style={{
+                    marginTop: '0.5rem',
+                    padding: '0.5rem 1rem',
+                    backgroundColor: '#ef4444',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  {t('deleteBannerBg')}
+                </button>
               </div>
             )}
           </div>
@@ -1103,6 +1148,24 @@ export default function BrandingPage() {
             {logoPreviewUrl && (
               <div className={styles.preview}>
                 <img src={logoPreviewUrl} alt="Logo Preview" />
+                <button
+                  type="button"
+                  onClick={handleDeleteLogo}
+                  className={styles.deleteButton}
+                  disabled={isSaving}
+                  style={{
+                    marginTop: '0.5rem',
+                    padding: '0.5rem 1rem',
+                    backgroundColor: '#ef4444',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  {t('deleteLogo')}
+                </button>
               </div>
             )}
           </div>
@@ -1205,6 +1268,24 @@ export default function BrandingPage() {
             {faviconPreviewUrl && (
               <div className={styles.preview}>
                 <img src={faviconPreviewUrl} alt="Favicon Preview" style={{ width: '32px', height: '32px' }} />
+                <button
+                  type="button"
+                  onClick={handleDeleteFavicon}
+                  className={styles.deleteButton}
+                  disabled={isSaving}
+                  style={{
+                    marginTop: '0.5rem',
+                    padding: '0.5rem 1rem',
+                    backgroundColor: '#ef4444',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  {t('deleteFavicon')}
+                </button>
               </div>
             )}
           </div>

@@ -8,35 +8,55 @@
   /* Default background - can be overridden by inline styles */
   background-color: #1a2847;
   color: white;
-  padding: 5rem 2.5rem;
+  padding: 1.5rem 2.5rem;
   border-radius: 0;
   margin: 0 0 3.5rem 0;
   text-align: center;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
 }
 
 .heroContent {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-rows: repeat(3, minmax(0, 1fr));
-  min-height: 240px;
+  min-height: 80px;
+  max-height: 100%;
   width: 100%;
   gap: 0.75rem;
+  overflow: hidden;
 }
 
 .heroTitle {
-  font-size: 2.75rem;
-  margin-bottom: 1rem;
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
 }
 
 .heroDescription {
-  font-size: 1.125rem;
+  font-size: 0.95rem;
   margin: 0;
   color: #d4d4d4;
   font-weight: 400;
   max-width: 600px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
 }
 
 .section {
@@ -92,17 +112,18 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding: 2rem 1rem;
+    padding: 1rem;
     margin: 1rem 0;
+    height: 150px;
   }
 
   .heroContent {
-    min-height: 180px;
+    min-height: 60px;
     gap: 0.5rem;
   }
 
   .heroTitle {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
   }
 
   .heroDescription {

@@ -274,7 +274,13 @@
     "saveBranding": "Save Branding",
     "brandingSaved": "Branding updated successfully!",
     "failedToLoad": "Failed to load branding settings",
-    "failedToSave": "Failed to save branding settings"
+    "failedToSave": "Failed to save branding settings",
+    "deleteBannerBg": "Delete Banner Background",
+    "deleteLogo": "Delete Logo",
+    "deleteFavicon": "Delete Favicon",
+    "confirmDeleteBannerBg": "Are you sure you want to delete the banner background image?",
+    "confirmDeleteLogo": "Are you sure you want to delete the logo?",
+    "confirmDeleteFavicon": "Are you sure you want to delete the favicon?"
   },
   "adminSettings": {
     "title": "Store Settings",

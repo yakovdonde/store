@@ -274,7 +274,13 @@
     "saveBranding": "Brendinqi Saxla",
     "brandingSaved": "Brendinq uğurla yeniləndi!",
     "failedToLoad": "Brendinq tənzimləmələri yüklənə bilmədi",
-    "failedToSave": "Brendinq tənzimləmələri saxlanıla bilmədi"
+    "failedToSave": "Brendinq tənzimləmələri saxlanıla bilmədi",
+    "deleteBannerBg": "Banner Fonunu Sil",
+    "deleteLogo": "Loqonu Sil",
+    "deleteFavicon": "Favikonu Sil",
+    "confirmDeleteBannerBg": "Banner fon şəklini silmək istədiyinizdən əminsiniz?",
+    "confirmDeleteLogo": "Loqonu silmək istədiyinizdən əminsiniz?",
+    "confirmDeleteFavicon": "Favikonu silmək istədiyinizdən əminsiniz?"
   },
   "adminSettings": {
     "title": "Mağaza Tənzimləmələri",

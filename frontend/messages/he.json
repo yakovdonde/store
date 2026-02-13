@@ -274,7 +274,13 @@
     "saveBranding": "שמור ברנדינג",
     "brandingSaved": "הברנדינג עודכן בהצלחה!",
     "failedToLoad": "נכשל בטעינת הגדרות ברנדינג",
-    "failedToSave": "נכשל בשמירת הגדרות ברנדינג"
+    "failedToSave": "נכשל בשמירת הגדרות ברנדינג",
+    "deleteBannerBg": "מחק רקע באנר",
+    "deleteLogo": "מחק לוגו",
+    "deleteFavicon": "מחק סמל אתר",
+    "confirmDeleteBannerBg": "האם אתה בטוח שברצונך למחוק את תמונת רקע הבאנר?",
+    "confirmDeleteLogo": "האם אתה בטוח שברצונך למחוק את הלוגו?",
+    "confirmDeleteFavicon": "האם אתה בטוח שברצונך למחוק את סמל האתר?"
   },
   "adminSettings": {
     "title": "הגדרות חנות",
