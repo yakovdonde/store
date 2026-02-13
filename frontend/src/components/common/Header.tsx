@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
 import { useStoreSettings } from '@/lib/useStoreSettings'
+import { resolveImageUrl } from '@/lib/config'
 import styles from './Header.module.css'
 
 interface HeaderProps {
@@ -16,13 +17,19 @@ interface HeaderProps {
 export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) {
   const t = useTranslations()
   const locale = useLocale()
-  const { headerTitle } = useStoreSettings()
+  const { headerTitle, storeName, logoUrl } = useStoreSettings()
+  const resolvedLogoUrl = resolveImageUrl(logoUrl)
+  const logoAlt = headerTitle || storeName || 'Store'
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         <Link href={`/${locale}`} className={styles.logo}>
-          <h1>{headerTitle || 'Store'}</h1>
+          {resolvedLogoUrl ? (
+            <img src={resolvedLogoUrl} alt={logoAlt} className={styles.logoImage} />
+          ) : (
+            <h1>{logoAlt}</h1>
+          )}
         </Link>
 
         <div className={styles.actions}>

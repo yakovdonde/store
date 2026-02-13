@@ -29,6 +29,16 @@ export interface StoreSettings {
   banner_url?: string
   banner_background_color?: string
   banner_background_image?: string
+  banner_title_font_family?: string
+  banner_title_font_size?: number
+  banner_title_color?: string
+  banner_title_align?: string
+  banner_title_vertical_align?: string
+  banner_description_font_family?: string
+  banner_description_font_size?: number
+  banner_description_color?: string
+  banner_description_align?: string
+  banner_description_vertical_align?: string
   email?: string
   phone?: string
   whatsapp?: string
@@ -185,6 +195,16 @@ export function useStoreSettings() {
     bannerUrl: settings?.banner_url || '',
     bannerBackgroundColor: settings?.banner_background_color || '',
     bannerBackgroundImage: settings?.banner_background_image || '',
+    bannerTitleFontFamily: settings?.banner_title_font_family || '',
+    bannerTitleFontSize: settings?.banner_title_font_size || 0,
+    bannerTitleColor: settings?.banner_title_color || '',
+    bannerTitleAlign: settings?.banner_title_align || '',
+    bannerTitleVerticalAlign: settings?.banner_title_vertical_align || '',
+    bannerDescriptionFontFamily: settings?.banner_description_font_family || '',
+    bannerDescriptionFontSize: settings?.banner_description_font_size || 0,
+    bannerDescriptionColor: settings?.banner_description_color || '',
+    bannerDescriptionAlign: settings?.banner_description_align || '',
+    bannerDescriptionVerticalAlign: settings?.banner_description_vertical_align || '',
     logoUrl: settings?.logo_url || '',
     tagline: settings?.tagline || '',
     faviconUrl: settings?.favicon_url || '',

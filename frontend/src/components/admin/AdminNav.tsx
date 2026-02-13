@@ -3,43 +3,45 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { useAuth } from '@/lib/authContext'
 import styles from './AdminNav.module.css'
 
 export default function AdminNav() {
   const { logout, user } = useAuth()
   const router = useRouter()
+  const locale = useLocale()
   const t = useTranslations('admin')
+  const adminBasePath = `/${locale}/admin`
 
   const handleLogout = () => {
     logout()
-    router.push('/login')
+    router.push(`/${locale}/login`)
   }
 
   return (
     <nav className={styles.nav}>
-      <Link href="/admin" className={styles.navLink}>
+      <Link href={adminBasePath} className={styles.navLink}>
         📊 {t('dashboard')}
       </Link>
-      <Link href="/admin/products" className={styles.navLink}>
+      <Link href={`${adminBasePath}/products`} className={styles.navLink}>
         📦 {t('products')}
       </Link>
-      <Link href="/admin/categories" className={styles.navLink}>
+      <Link href={`${adminBasePath}/categories`} className={styles.navLink}>
         🏷️ {t('categories')}
       </Link>
-      <Link href="/admin/branding" className={styles.navLink}>
+      <Link href={`${adminBasePath}/branding`} className={styles.navLink}>
         🎨 {t('branding')}
       </Link>
-      <Link href="/admin/settings" className={styles.navLink}>
+      <Link href={`${adminBasePath}/settings`} className={styles.navLink}>
         ⚙️ {t('settings')}
       </Link>
       {user?.role === 'owner' && (
-        <Link href="/admin/users" className={styles.navLink}>
+        <Link href={`${adminBasePath}/users`} className={styles.navLink}>
           👥 {t('users')}
         </Link>
       )}
-      <Link href="/" className={styles.navLink}>
+      <Link href={`/${locale}`} className={styles.navLink}>
         🏠 {t('backToStore')}
       </Link>
       <div className={styles.divider}></div>

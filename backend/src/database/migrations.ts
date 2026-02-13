@@ -236,6 +236,57 @@ export async function runMigrations() {
       ADD COLUMN IF NOT EXISTS banner_background_image VARCHAR(500)
     `)
 
+    // Add banner typography styling columns
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_title_font_family VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_title_font_size INTEGER
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_title_color VARCHAR(20)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_title_align VARCHAR(20)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_title_vertical_align VARCHAR(20)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_description_font_family VARCHAR(255)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_description_font_size INTEGER
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_description_color VARCHAR(20)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_description_align VARCHAR(20)
+    `)
+
+    await query(`
+      ALTER TABLE store_settings
+      ADD COLUMN IF NOT EXISTS banner_description_vertical_align VARCHAR(20)
+    `)
+
     // No default categories or settings - store starts empty
     console.log('✓ Store will start empty, no default data inserted')
 

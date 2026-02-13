@@ -15,7 +15,30 @@ import styles from './page.module.css'
 export function StorefrontHome() {
   const t = useTranslations()
   const locale = useLocale()
-  const { headerTitle: storeHeaderTitle, bannerTitle, bannerDescription, bannerBackgroundColor, bannerBackgroundImage, storeDescription, storeEmail, storePhone, storeWhatsapp, storeAddress, loading: settingsLoading } = useStoreSettings()
+  const {
+    headerTitle: storeHeaderTitle,
+    bannerTitle,
+    bannerDescription,
+    bannerBackgroundColor,
+    bannerBackgroundImage,
+    bannerTitleFontFamily,
+    bannerTitleFontSize,
+    bannerTitleColor,
+    bannerTitleAlign,
+    bannerTitleVerticalAlign,
+    bannerDescriptionFontFamily,
+    bannerDescriptionFontSize,
+    bannerDescriptionColor,
+    bannerDescriptionAlign,
+    bannerDescriptionVerticalAlign,
+    storeDescription,
+    storeEmail,
+    storePhone,
+    storeWhatsapp,
+    storeAddress,
+    loading: settingsLoading,
+  } = useStoreSettings()
+  const resolvedBannerBgImage = resolveImageUrl(bannerBackgroundImage)
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
   const [categories, setCategories] = useState<any[]>([])
@@ -131,6 +154,40 @@ export function StorefrontHome() {
     ? featuredProducts.filter(p => p.categoryId === selectedCategoryId)
     : featuredProducts
 
+  const mapHorizontalAlign = (align?: string) => {
+    if (align === 'left') return { textAlign: 'left', gridColumn: 1 }
+    if (align === 'right') return { textAlign: 'right', gridColumn: 3 }
+    return { textAlign: 'center', gridColumn: 2 }
+  }
+
+  const mapVerticalAlign = (align?: string) => {
+    if (align === 'top') return 1
+    if (align === 'bottom') return 3
+    return 2
+  }
+
+  const titleAlign = mapHorizontalAlign(bannerTitleAlign)
+  const descriptionAlign = mapHorizontalAlign(bannerDescriptionAlign)
+
+  const titleStyle: React.CSSProperties = {
+    fontFamily: bannerTitleFontFamily || undefined,
+    fontSize: bannerTitleFontSize ? `${bannerTitleFontSize}px` : undefined,
+    color: bannerTitleColor || undefined,
+    textAlign: titleAlign.textAlign,
+    gridColumn: titleAlign.gridColumn,
+    gridRow: mapVerticalAlign(bannerTitleVerticalAlign),
+  }
+
+  const descriptionStyle: React.CSSProperties = {
+    fontFamily: bannerDescriptionFontFamily || undefined,
+    fontSize: bannerDescriptionFontSize ? `${bannerDescriptionFontSize}px` : undefined,
+    color: bannerDescriptionColor || undefined,
+    textAlign: descriptionAlign.textAlign,
+    gridColumn: descriptionAlign.gridColumn,
+    gridRow: mapVerticalAlign(bannerDescriptionVerticalAlign),
+    margin: descriptionAlign.textAlign === 'center' ? '0 auto' : '0',
+  }
+
   const handleViewDetails = (productId: string) => {
     window.location.href = `/${locale}/storefront/product/${productId}`
   }
@@ -152,8 +209,8 @@ export function StorefrontHome() {
           className={styles.hero}
           style={{
             ...(bannerBackgroundColor && { backgroundColor: bannerBackgroundColor }),
-            ...(bannerBackgroundImage && { 
-              backgroundImage: `url(${bannerBackgroundImage})`,
+            ...(resolvedBannerBgImage && { 
+              backgroundImage: `url(${resolvedBannerBgImage})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'
@@ -161,8 +218,16 @@ export function StorefrontHome() {
           }}
         >
           <div className={styles.heroContent}>
-            {bannerTitle && <h1>{bannerTitle}</h1>}
-            {bannerDescription && <p>{bannerDescription}</p>}
+            {bannerTitle && (
+              <h1 className={styles.heroTitle} style={titleStyle}>
+                {bannerTitle}
+              </h1>
+            )}
+            {bannerDescription && (
+              <p className={styles.heroDescription} style={descriptionStyle}>
+                {bannerDescription}
+              </p>
+            )}
           </div>
         </section>
 

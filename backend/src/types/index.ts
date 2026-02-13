@@ -63,6 +63,16 @@ export interface StoreSettings {
   banner_url?: string
   banner_background_color?: string
   banner_background_image?: string
+  banner_title_font_family?: string
+  banner_title_font_size?: number
+  banner_title_color?: string
+  banner_title_align?: string
+  banner_title_vertical_align?: string
+  banner_description_font_family?: string
+  banner_description_font_size?: number
+  banner_description_color?: string
+  banner_description_align?: string
+  banner_description_vertical_align?: string
   top_description?: string
   address?: string
   phone?: string

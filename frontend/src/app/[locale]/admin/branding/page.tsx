@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import apiClient from '@/lib/apiClient'
+import { resolveImageUrl } from '@/lib/config'
 import styles from './page.module.css'
 
 interface BrandingSettings {
@@ -25,6 +26,16 @@ interface BrandingSettings {
   banner_description_ru?: string
   banner_background_color?: string
   banner_background_image?: string
+  banner_title_font_family?: string
+  banner_title_font_size?: number
+  banner_title_color?: string
+  banner_title_align?: string
+  banner_title_vertical_align?: string
+  banner_description_font_family?: string
+  banner_description_font_size?: number
+  banner_description_color?: string
+  banner_description_align?: string
+  banner_description_vertical_align?: string
   logo_url?: string
   tagline?: string
   favicon_url?: string
@@ -32,6 +43,27 @@ interface BrandingSettings {
   created_at: string
   updated_at: string
 }
+
+const fontOptions = [
+  { label: 'Classic Serif', value: 'Georgia, "Times New Roman", serif' },
+  { label: 'Modern Serif', value: '"Palatino Linotype", Palatino, serif' },
+  { label: 'Clean Sans', value: '"Segoe UI", Tahoma, Arial, sans-serif' },
+  { label: 'Neutral Sans', value: 'Arial, "Helvetica Neue", Helvetica, sans-serif' },
+  { label: 'Elegant Sans', value: '"Trebuchet MS", "Lucida Sans Unicode", sans-serif' },
+  { label: 'Mono Accent', value: '"Courier New", Courier, monospace' },
+]
+
+const alignOptions = [
+  { label: 'Left', value: 'left' },
+  { label: 'Center', value: 'center' },
+  { label: 'Right', value: 'right' },
+]
+
+const verticalAlignOptions = [
+  { label: 'Top', value: 'top' },
+  { label: 'Center', value: 'center' },
+  { label: 'Bottom', value: 'bottom' },
+]
 
 export default function BrandingPage() {
   const t = useTranslations('adminBranding')
@@ -56,6 +88,16 @@ export default function BrandingPage() {
     banner_description_ru: '',
     banner_background_color: '',
     banner_background_image: '',
+    banner_title_font_family: '',
+    banner_title_font_size: '',
+    banner_title_color: '',
+    banner_title_align: 'center',
+    banner_title_vertical_align: 'center',
+    banner_description_font_family: '',
+    banner_description_font_size: '',
+    banner_description_color: '',
+    banner_description_align: 'center',
+    banner_description_vertical_align: 'center',
     logo_url: '',
     tagline: '',
     favicon_url: '',
@@ -71,6 +113,11 @@ export default function BrandingPage() {
   const [uploadingLogo, setUploadingLogo] = useState(false)
   const [uploadingFavicon, setUploadingFavicon] = useState(false)
   const [uploadingBannerBg, setUploadingBannerBg] = useState(false)
+  const [bannerBgUploadProgress, setBannerBgUploadProgress] = useState(0)
+  const [bannerBgSource, setBannerBgSource] = useState<'upload' | 'url'>('upload')
+  const [logoSource, setLogoSource] = useState<'upload' | 'url'>('upload')
+  const bannerBgPreviewUrl = resolveImageUrl(formData.banner_background_image)
+  const logoPreviewUrl = resolveImageUrl(formData.logo_url)
 
   // Fetch branding settings on mount
   useEffect(() => {
@@ -82,6 +129,13 @@ export default function BrandingPage() {
           const setting = response.data.data
 
           if (setting) {
+            const initialBannerBgSource = /^https?:\/\//i.test(setting.banner_background_image || '')
+              ? 'url'
+              : 'upload'
+            const initialLogoSource = /^https?:\/\//i.test(setting.logo_url || '')
+              ? 'url'
+              : 'upload'
+
             setBranding(setting)
             setFormData({
               site_title_en: setting.site_title_en || '',
@@ -102,11 +156,23 @@ export default function BrandingPage() {
               banner_description_ru: setting.banner_description_ru || '',
               banner_background_color: setting.banner_background_color || '',
               banner_background_image: setting.banner_background_image || '',
+              banner_title_font_family: setting.banner_title_font_family || '',
+              banner_title_font_size: setting.banner_title_font_size ? String(setting.banner_title_font_size) : '',
+              banner_title_color: setting.banner_title_color || '',
+              banner_title_align: setting.banner_title_align || 'center',
+              banner_title_vertical_align: setting.banner_title_vertical_align || 'center',
+              banner_description_font_family: setting.banner_description_font_family || '',
+              banner_description_font_size: setting.banner_description_font_size ? String(setting.banner_description_font_size) : '',
+              banner_description_color: setting.banner_description_color || '',
+              banner_description_align: setting.banner_description_align || 'center',
+              banner_description_vertical_align: setting.banner_description_vertical_align || 'center',
               logo_url: setting.logo_url || '',
               tagline: setting.tagline || '',
               favicon_url: setting.favicon_url || '',
               primary_color: setting.primary_color || '',
             })
+            setBannerBgSource(initialBannerBgSource)
+            setLogoSource(initialLogoSource)
           }
         }
       } catch (err: any) {
@@ -121,13 +187,14 @@ export default function BrandingPage() {
   }, [])
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
   const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (logoSource !== 'upload') return
     const file = e.target.files?.[0]
     if (!file) return
 
@@ -188,10 +255,12 @@ export default function BrandingPage() {
   }
 
   const handleBannerBgUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (bannerBgSource !== 'upload') return
     const file = e.target.files?.[0]
     if (!file) return
 
     setUploadingBannerBg(true)
+    setBannerBgUploadProgress(0)
     try {
       const formDataToSend = new FormData()
       formDataToSend.append('image', file)
@@ -199,6 +268,11 @@ export default function BrandingPage() {
       const response = await apiClient.post('/upload/upload', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
+        },
+        onUploadProgress: (event) => {
+          if (!event.total) return
+          const percent = Math.round((event.loaded * 100) / event.total)
+          setBannerBgUploadProgress(percent)
         },
       })
 
@@ -214,7 +288,24 @@ export default function BrandingPage() {
       setError(t('bannerBgUploadFailed'))
     } finally {
       setUploadingBannerBg(false)
+      setBannerBgUploadProgress(0)
     }
+  }
+
+  const handleBannerBgSourceChange = (source: 'upload' | 'url') => {
+    setBannerBgSource(source)
+    setFormData((prev) => ({
+      ...prev,
+      banner_background_image: '',
+    }))
+  }
+
+  const handleLogoSourceChange = (source: 'upload' | 'url') => {
+    setLogoSource(source)
+    setFormData((prev) => ({
+      ...prev,
+      logo_url: '',
+    }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -224,9 +315,14 @@ export default function BrandingPage() {
     setMessage('')
 
     try {
+      const parsedBannerTitleFontSize = Number.parseInt(formData.banner_title_font_size, 10)
+      const parsedBannerDescriptionFontSize = Number.parseInt(formData.banner_description_font_size, 10)
+
       // Include fallback site_title (use English if available, otherwise first available)
       const dataToSave = {
         ...formData,
+        banner_title_font_size: Number.isFinite(parsedBannerTitleFontSize) ? parsedBannerTitleFontSize : null,
+        banner_description_font_size: Number.isFinite(parsedBannerDescriptionFontSize) ? parsedBannerDescriptionFontSize : null,
         site_title: formData.site_title_en || formData.site_title_az || formData.site_title_he || formData.site_title_ru || 'Store',
       }
       
@@ -556,6 +652,217 @@ export default function BrandingPage() {
         </div>
 
         <div className={styles.formSection}>
+          <h3 className={styles.sectionTitle}>{t('bannerTextStyles')}</h3>
+          <p className={styles.sectionDescription}>{t('bannerTextStylesDescription')}</p>
+
+          <div className={styles.styleGrid}>
+            <div className={styles.styleCard}>
+              <div className={styles.styleCardTitle}>{t('bannerTitleStyle')}</div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="banner_title_font_family">{t('bannerFontFamily')}</label>
+                <select
+                  id="banner_title_font_family"
+                  name="banner_title_font_family"
+                  value={formData.banner_title_font_family}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                >
+                  <option value="">{t('bannerFontFamilyDefault')}</option>
+                  {fontOptions.map((font) => (
+                    <option key={font.value} value={font.value}>
+                      {font.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="banner_title_font_size">{t('bannerFontSize')}</label>
+                <input
+                  type="number"
+                  id="banner_title_font_size"
+                  name="banner_title_font_size"
+                  value={formData.banner_title_font_size}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                  placeholder={t('bannerFontSizePlaceholder')}
+                  min={12}
+                  max={120}
+                />
+                <small>{t('bannerFontSizeHint')}</small>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="banner_title_color">{t('bannerTextColor')}</label>
+                <div className={styles.colorInputGroup}>
+                  <div className={styles.colorPickerInput}>
+                    <input
+                      type="color"
+                      id="banner_title_color_picker"
+                      name="banner_title_color_picker"
+                      value={formData.banner_title_color || '#ffffff'}
+                      onChange={(e) => {
+                        setFormData((prev) => ({ ...prev, banner_title_color: e.target.value }))
+                      }}
+                      disabled={isSaving}
+                      title={t('bannerTextColor')}
+                    />
+                  </div>
+                  <input
+                    type="text"
+                    id="banner_title_color"
+                    name="banner_title_color"
+                    value={formData.banner_title_color}
+                    onChange={handleChange}
+                    disabled={isSaving}
+                    placeholder="#ffffff"
+                    maxLength={7}
+                    className={styles.hexInput}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="banner_title_align">{t('bannerTextAlign')}</label>
+                <select
+                  id="banner_title_align"
+                  name="banner_title_align"
+                  value={formData.banner_title_align}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                >
+                  {alignOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {t(`align${option.label}`)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="banner_title_vertical_align">{t('bannerTextVerticalAlign')}</label>
+                <select
+                  id="banner_title_vertical_align"
+                  name="banner_title_vertical_align"
+                  value={formData.banner_title_vertical_align}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                >
+                  {verticalAlignOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {t(`align${option.label}`)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className={styles.styleCard}>
+              <div className={styles.styleCardTitle}>{t('bannerDescriptionStyle')}</div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="banner_description_font_family">{t('bannerFontFamily')}</label>
+                <select
+                  id="banner_description_font_family"
+                  name="banner_description_font_family"
+                  value={formData.banner_description_font_family}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                >
+                  <option value="">{t('bannerFontFamilyDefault')}</option>
+                  {fontOptions.map((font) => (
+                    <option key={font.value} value={font.value}>
+                      {font.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="banner_description_font_size">{t('bannerFontSize')}</label>
+                <input
+                  type="number"
+                  id="banner_description_font_size"
+                  name="banner_description_font_size"
+                  value={formData.banner_description_font_size}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                  placeholder={t('bannerFontSizePlaceholder')}
+                  min={10}
+                  max={80}
+                />
+                <small>{t('bannerFontSizeHint')}</small>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="banner_description_color">{t('bannerTextColor')}</label>
+                <div className={styles.colorInputGroup}>
+                  <div className={styles.colorPickerInput}>
+                    <input
+                      type="color"
+                      id="banner_description_color_picker"
+                      name="banner_description_color_picker"
+                      value={formData.banner_description_color || '#d4d4d4'}
+                      onChange={(e) => {
+                        setFormData((prev) => ({ ...prev, banner_description_color: e.target.value }))
+                      }}
+                      disabled={isSaving}
+                      title={t('bannerTextColor')}
+                    />
+                  </div>
+                  <input
+                    type="text"
+                    id="banner_description_color"
+                    name="banner_description_color"
+                    value={formData.banner_description_color}
+                    onChange={handleChange}
+                    disabled={isSaving}
+                    placeholder="#d4d4d4"
+                    maxLength={7}
+                    className={styles.hexInput}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="banner_description_align">{t('bannerTextAlign')}</label>
+                <select
+                  id="banner_description_align"
+                  name="banner_description_align"
+                  value={formData.banner_description_align}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                >
+                  {alignOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {t(`align${option.label}`)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="banner_description_vertical_align">{t('bannerTextVerticalAlign')}</label>
+                <select
+                  id="banner_description_vertical_align"
+                  name="banner_description_vertical_align"
+                  value={formData.banner_description_vertical_align}
+                  onChange={handleChange}
+                  disabled={isSaving}
+                >
+                  {verticalAlignOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {t(`align${option.label}`)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.formSection}>
           <h3 className={styles.sectionTitle}>{t('bannerStyling')}</h3>
           <p className={styles.sectionDescription}>{t('bannerStylingDescription')}</p>
 
@@ -601,41 +908,92 @@ export default function BrandingPage() {
           <div className={styles.formGroup}>
             <label htmlFor="banner_background_image">{t('bannerBackgroundImage')}</label>
             <div style={{ marginBottom: '1rem' }}>
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
-                <div style={{ flex: 1 }}>
-                  <input
-                    type="file"
-                    id="banner_bg_upload"
-                    accept="image/*"
-                    onChange={handleBannerBgUpload}
-                    disabled={uploadingBannerBg || isSaving}
-                    style={{ marginBottom: '0.5rem' }}
-                  />
-                  {uploadingBannerBg && <p style={{ fontSize: '0.9rem', color: '#3498db', margin: '0.5rem 0' }}>{tCommon('uploading')}</p>}
+              <div style={{ marginBottom: '0.75rem' }}>
+                <span style={{ display: 'block', fontSize: '0.9rem', color: '#374151', marginBottom: '0.5rem' }}>
+                  {t('bannerBgSourceLabel')}
+                </span>
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <input
+                      type="radio"
+                      name="banner_bg_source"
+                      value="upload"
+                      checked={bannerBgSource === 'upload'}
+                      onChange={() => handleBannerBgSourceChange('upload')}
+                      disabled={isSaving}
+                    />
+                    {t('bannerBgSourceUpload')}
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <input
+                      type="radio"
+                      name="banner_bg_source"
+                      value="url"
+                      checked={bannerBgSource === 'url'}
+                      onChange={() => handleBannerBgSourceChange('url')}
+                      disabled={isSaving}
+                    />
+                    {t('bannerBgSourceUrl')}
+                  </label>
                 </div>
+                <small style={{ display: 'block', color: '#6b7280', marginTop: '0.4rem' }}>
+                  {t('bannerBgSourceHint')}
+                </small>
               </div>
-              <small style={{ display: 'block', color: '#60a5fa', marginBottom: '0.75rem' }}>
-                {t('bannerBgResolution')}
-              </small>
-              <div style={{ marginTop: '0.5rem', paddingTop: '0.75rem', borderTop: '1px solid #e5e7eb' }}>
-                <label htmlFor="banner_background_image" style={{ fontSize: '0.9rem', color: '#6b7280', display: 'block', marginBottom: '0.5rem' }}>
-                  {t('orEnterUrl')}
-                </label>
-                <input
-                  type="url"
-                  id="banner_background_image"
-                  name="banner_background_image"
-                  value={formData.banner_background_image}
-                  onChange={handleChange}
-                  disabled={isSaving}
-                  placeholder="https://example.com/banner-bg.jpg"
-                />
-              </div>
+
+              {bannerBgSource === 'upload' && (
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                  <div style={{ flex: 1 }}>
+                    <input
+                      type="file"
+                      id="banner_bg_upload"
+                      accept="image/*"
+                      onChange={handleBannerBgUpload}
+                      disabled={uploadingBannerBg || isSaving}
+                      style={{ marginBottom: '0.5rem' }}
+                    />
+                    {uploadingBannerBg && <p style={{ fontSize: '0.9rem', color: '#3498db', margin: '0.5rem 0' }}>{tCommon('uploading')}</p>}
+                    {uploadingBannerBg && (
+                      <div className={styles.uploadProgressWrap}>
+                        <div className={styles.uploadProgress}>
+                          <div
+                            className={styles.uploadProgressBar}
+                            style={{ width: `${bannerBgUploadProgress}%` }}
+                          />
+                        </div>
+                        <span className={styles.uploadProgressText}>
+                          {t('uploadProgress')} {bannerBgUploadProgress}%
+                        </span>
+                      </div>
+                    )}
+                    <small style={{ display: 'block', color: '#60a5fa', marginBottom: '0.75rem' }}>
+                      {t('bannerBgResolution')}
+                    </small>
+                  </div>
+                </div>
+              )}
+
+              {bannerBgSource === 'url' && (
+                <div style={{ marginTop: '0.5rem' }}>
+                  <label htmlFor="banner_background_image" style={{ fontSize: '0.9rem', color: '#6b7280', display: 'block', marginBottom: '0.5rem' }}>
+                    {t('bannerBgSourceUrl')}
+                  </label>
+                  <input
+                    type="url"
+                    id="banner_background_image"
+                    name="banner_background_image"
+                    value={formData.banner_background_image}
+                    onChange={handleChange}
+                    disabled={isSaving}
+                    placeholder="https://example.com/banner-bg.jpg"
+                  />
+                </div>
+              )}
             </div>
             <small>{t('bannerBackgroundImageHint')}</small>
-            {formData.banner_background_image && (
+            {bannerBgPreviewUrl && (
               <div className={styles.preview}>
-                <img src={formData.banner_background_image} alt="Banner Background Preview" />
+                <img src={bannerBgPreviewUrl} alt="Banner Background Preview" />
               </div>
             )}
           </div>
@@ -645,41 +1003,86 @@ export default function BrandingPage() {
           <div className={styles.formGroup}>
             <label htmlFor="logo_url">{t('logoUrl')}</label>
             <div style={{ marginBottom: '1rem' }}>
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
-                <div style={{ flex: 1 }}>
-                  <input
-                    type="file"
-                    id="logo_upload"
-                    accept="image/*"
-                    onChange={handleLogoUpload}
-                    disabled={uploadingLogo || isSaving}
-                    style={{ marginBottom: '0.5rem' }}
-                  />
-                  {uploadingLogo && <p style={{ fontSize: '0.9rem', color: '#3498db', margin: '0.5rem 0' }}>{tCommon('uploading')}</p>}
+              <div style={{ marginBottom: '0.75rem' }}>
+                <span style={{ display: 'block', fontSize: '0.9rem', color: '#374151', marginBottom: '0.5rem' }}>
+                  {t('logoSourceLabel')}
+                </span>
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <input
+                      type="radio"
+                      name="logo_source"
+                      value="upload"
+                      checked={logoSource === 'upload'}
+                      onChange={() => handleLogoSourceChange('upload')}
+                      disabled={isSaving}
+                    />
+                    {t('logoSourceUpload')}
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <input
+                      type="radio"
+                      name="logo_source"
+                      value="url"
+                      checked={logoSource === 'url'}
+                      onChange={() => handleLogoSourceChange('url')}
+                      disabled={isSaving}
+                    />
+                    {t('logoSourceUrl')}
+                  </label>
                 </div>
+                <small style={{ display: 'block', color: '#6b7280', marginTop: '0.4rem' }}>
+                  {t('logoSourceHint')}
+                </small>
               </div>
-              <small style={{ display: 'block', color: '#60a5fa', marginBottom: '0.75rem' }}>
-                {t('logoResolution')}
-              </small>
-              <div style={{ marginTop: '0.5rem', paddingTop: '0.75rem', borderTop: '1px solid #e5e7eb' }}>
-                <label htmlFor="logo_url" style={{ fontSize: '0.9rem', color: '#6b7280', display: 'block', marginBottom: '0.5rem' }}>
-                  {t('orEnterUrl')}
-                </label>
-                <input
-                  type="url"
-                  id="logo_url"
-                  name="logo_url"
-                  value={formData.logo_url}
-                  onChange={handleChange}
-                  disabled={isSaving}
-                  placeholder="https://example.com/logo.png"
-                />
-              </div>
+
+              {logoSource === 'upload' && (
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                  <div style={{ flex: 1 }}>
+                    <input
+                      type="file"
+                      id="logo_upload"
+                      accept="image/*"
+                      onChange={handleLogoUpload}
+                      disabled={uploadingLogo || isSaving}
+                      style={{ marginBottom: '0.5rem' }}
+                    />
+                    {uploadingLogo && (
+                      <p style={{ fontSize: '0.9rem', color: '#3498db', margin: '0.5rem 0' }}>
+                        {tCommon('uploading')}
+                      </p>
+                    )}
+                    <small style={{ display: 'block', color: '#60a5fa', marginBottom: '0.75rem' }}>
+                      {t('logoResolution')}
+                    </small>
+                  </div>
+                </div>
+              )}
+
+              {logoSource === 'url' && (
+                <div style={{ marginTop: '0.5rem' }}>
+                  <label
+                    htmlFor="logo_url"
+                    style={{ fontSize: '0.9rem', color: '#6b7280', display: 'block', marginBottom: '0.5rem' }}
+                  >
+                    {t('logoSourceUrl')}
+                  </label>
+                  <input
+                    type="url"
+                    id="logo_url"
+                    name="logo_url"
+                    value={formData.logo_url}
+                    onChange={handleChange}
+                    disabled={isSaving}
+                    placeholder="https://example.com/logo.png"
+                  />
+                </div>
+              )}
             </div>
             <small>{t('logoUrlHint')}</small>
-            {formData.logo_url && (
+            {logoPreviewUrl && (
               <div className={styles.preview}>
-                <img src={formData.logo_url} alt="Logo Preview" />
+                <img src={logoPreviewUrl} alt="Logo Preview" />
               </div>
             )}
           </div>
